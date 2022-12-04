@@ -1,6 +1,4 @@
-﻿using ApplicationPortal.Data;
-using ApplicationPortal.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using ApplicationPortal.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -48,6 +46,6 @@ namespace ApplicationPortal.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        
+
     }
 }

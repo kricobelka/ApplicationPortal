@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ApplicationPortal.Data;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using ApplicationPortal.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationPortal.Controllers
@@ -15,7 +13,6 @@ namespace ApplicationPortal.Controllers
         public RoleController(RoleManager<IdentityRole> roleManager,
             ApplicationDbContext context)
         {
-
             _roleManager = roleManager;
             _context = context;
         }
@@ -24,31 +21,19 @@ namespace ApplicationPortal.Controllers
         {
             await _roleManager.CreateAsync(new IdentityRole()
             { Name = "Admin", NormalizedName = "Admin" });
-
+            //уеж есть роль юзера? или добавлять надо?
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("GetRoles", "Admin");           
+            return RedirectToAction("GetRoles", "Role");
         }
-//создать отдельный контроллер UserRoleController с методом выбоора
-// между юзером и его ролью(userid, roleid)
+        //создать отдельный контроллер UserRoleController с методом выбоора
+        // между юзером и его ролью(userid, roleid)
+        //нужно ли для этого создавать отдельный класс юзер и юзать UserManager?
 
         public async Task<IActionResult> GetRoles()
         {
             var roles = await _roleManager.Roles.ToListAsync();
             return View(roles);
         }
-
-        //вывести юзеров (включая админа) и их роли:
-        //public async Task<IActionResult> GetUsersAndRoles()
-        //{
-        //    var users = _context.UserRoles.Select(q => new
-        //    {
-
-        //    });
-
-        //    return View(users);
-        //}
-        
-        
     }
 }
