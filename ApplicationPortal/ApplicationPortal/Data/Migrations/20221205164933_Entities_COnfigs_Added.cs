@@ -4,7 +4,7 @@
 
 namespace ApplicationPortal.Data.Migrations
 {
-    public partial class Entities_Config : Migration
+    public partial class Entities_COnfigs_Added : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,8 +30,7 @@ namespace ApplicationPortal.Data.Migrations
                 name: "CompanyId",
                 table: "AspNetUsers",
                 type: "int",
-                nullable: false,
-                defaultValue: 0);
+                nullable: true);
 
             migrationBuilder.AlterColumn<string>(
                 name: "ProviderKey",
@@ -78,8 +77,7 @@ namespace ApplicationPortal.Data.Migrations
                     Brand = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     OutputPower = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     OtherInformation = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    PathToFile = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    AntennaGainId = table.Column<int>(type: "int", nullable: false)
+                    PathToFile = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {

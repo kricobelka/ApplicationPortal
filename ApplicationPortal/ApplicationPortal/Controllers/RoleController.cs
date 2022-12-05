@@ -33,6 +33,7 @@ namespace ApplicationPortal.Controllers
         public async Task<IActionResult> GetRoles()
         {
             var roles = await _roleManager.Roles.ToListAsync();
+            await _context.SaveChangesAsync();
             return View(roles);
         }
     }

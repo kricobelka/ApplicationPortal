@@ -18,7 +18,5 @@
         public string PathToFile { get; set; }
 
         public AntennaGain AntennaGain { get; set; }
-        public int AntennaGainId { get; set; }
-
     }
 }

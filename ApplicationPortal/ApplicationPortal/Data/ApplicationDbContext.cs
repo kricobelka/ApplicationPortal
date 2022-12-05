@@ -17,15 +17,13 @@ namespace ApplicationPortal.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //modelBuilder.Entity<User>();
-            //modelBuilder.Entity<User>().ToTable("Users");
-
+            modelBuilder.Entity<User>().Property(q => q.CompanyId)
+                .IsRequired(false);
+            
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new CompanyConfiguration());
             modelBuilder.ApplyConfiguration(new FrequencyConfiguration());
             modelBuilder.ApplyConfiguration(new AntennaGainConfiguration());
-
-
 
             //if necessary, add new properties in class User,
             //then OnModelcreating
