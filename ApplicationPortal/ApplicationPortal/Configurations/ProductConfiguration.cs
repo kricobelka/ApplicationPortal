@@ -21,9 +21,9 @@ namespace ApplicationPortal.Configurations
             //отдельные конфигурации прописывать
             
             //builder.Property(q => q.Frequencies).IsRequired();
-            builder.Property(q => q.OutputPower).HasMaxLength(10).IsRequired();
+            builder.Property(q => q.OutputPower).HasMaxLength(10);
             //builder.Property(q => q.AntennaGain).IsRequired();
-            builder.Property(q => q.PathToFile).HasMaxLength(100).IsRequired();
+            builder.Property(q => q.PathToFile).HasMaxLength(100);
             builder.Property(q => q.OtherInformation).HasMaxLength(100);
             builder.HasIndex(q => new { q.Name, q.Model }).IsUnique();
             

@@ -19,9 +19,20 @@ namespace ApplicationPortal.Controllers
 
         public async Task<IActionResult> CreateAdminRole()
         {
-            await _roleManager.CreateAsync(new IdentityRole()
-            { Name = "Admin", NormalizedName = "Admin" });
-            //уеж есть роль юзера? или добавлять надо?
+            await _roleManager.CreateAsync(
+                new IdentityRole
+                {
+                    Name = "Admin",
+                    NormalizedName = "Admin"
+                });
+
+            await _roleManager.CreateAsync(
+                new IdentityRole
+
+                {
+                    Name = "User",
+                    NormalizedName = "User"
+                });
             await _context.SaveChangesAsync();
 
             return RedirectToAction("GetRoles", "Role");

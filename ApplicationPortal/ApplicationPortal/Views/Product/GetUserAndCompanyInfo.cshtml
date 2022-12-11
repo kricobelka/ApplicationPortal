@@ -1,0 +1,8 @@
+﻿@model UserCompaniesViewModel
+
+@using (@Html.BeginForm("VerifyUserAndGoNext", "Product", FormMethod.Post))
+{
+    <div>@Model.UserEmail</div>
+    <div>@Model.CompanyName</div>
+    <button>Next</button>
+}

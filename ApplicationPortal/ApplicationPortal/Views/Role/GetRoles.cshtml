@@ -1,3 +1,10 @@
-﻿@model IEnumerable<IdentityRole>
-
+﻿@*@model IEnumerable<IdentityRole>*@
+@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+@{
+    foreach (var element in Model)
+    {
+        <p>@element</p>
+    }
+}
+   
 

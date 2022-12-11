@@ -1,0 +1,23 @@
+﻿@using ApplicationPortal.Enums
+@model TechProductViewModel
+
+
+@using (Html.BeginForm("PostProductInfo", "Product", FormMethod.Post))
+{
+    @Html.HiddenFor(q => q.ProductId)
+
+    <div>
+        @Html.LabelFor(q => q.AntennaGainAmount)
+        @Html.TextBoxFor(q => q.AntennaGainAmount)
+    </div>
+    <div>
+        @Html.LabelFor(q => q.AntennaGainUnit)
+        @Html.DropDownListFor(q => q.AntennaGainUnit, Html.GetEnumSelectList<AntennaGainUnit>())
+    </div>
+    <div>
+        @Html.LabelFor(q => q.OutputPower)
+        @Html.TextBoxFor(q => q.OutputPower)
+    </div>
+
+    <button>Next</button>
+}

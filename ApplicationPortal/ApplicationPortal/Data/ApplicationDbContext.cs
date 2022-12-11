@@ -14,6 +14,11 @@ namespace ApplicationPortal.Data
             //this.Users.Add(new User());
         }
 
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<Frequency> Frequencies { get; set; }
+        public DbSet<AntennaGain> AntennaGains { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

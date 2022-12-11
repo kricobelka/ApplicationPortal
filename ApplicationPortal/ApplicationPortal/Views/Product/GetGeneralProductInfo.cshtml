@@ -1,0 +1,30 @@
+﻿@model GenProductViewModel
+
+
+@using (Html.BeginForm("CreateProductGeneralInfo", "Product", FormMethod.Post))
+{
+    <div>
+        @Html.LabelFor(q => q.Name)
+        @Html.TextBoxFor(q => q.Name)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.Brand)
+        @Html.TextBoxFor(q => q.Brand)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.Model)
+        @Html.TextBoxFor(q => q.Model)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.Manufacturer)
+        @Html.TextBoxFor(q => q.Manufacturer)
+    </div>
+
+    <button>Next</button>
+
+
+
+}

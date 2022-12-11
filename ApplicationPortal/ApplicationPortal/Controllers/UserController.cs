@@ -1,4 +1,5 @@
 ﻿using ApplicationPortal.Data;
+using ApplicationPortal.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +10,9 @@ namespace ApplicationPortal.Controllers
     {
         private readonly ApplicationDbContext _context;
         RoleManager<IdentityRole> _roleManager;
-        UserManager<IdentityUser> _userManager;
+        UserManager<User> _userManager;
 
-        public UserController(UserManager<IdentityUser> userManager,
+        public UserController(UserManager<User> userManager,
             RoleManager<IdentityRole> roleManager,
             ApplicationDbContext context)
         {

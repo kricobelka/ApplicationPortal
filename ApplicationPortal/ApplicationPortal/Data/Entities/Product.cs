@@ -13,7 +13,7 @@
 
         public string OutputPower { get; set; }    
 
-        public string ?OtherInformation { get; set; }
+        public string OtherInformation { get; set; }
 
         public string PathToFile { get; set; }
 
