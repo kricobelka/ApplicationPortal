@@ -1,0 +1,21 @@
+﻿@model ExtraProductViewModel
+
+@using (Html.BeginForm("PostExtraProductInfo", "Product", FormMethod.Post))
+{
+    @Html.HiddenFor(q => q.ProductId)
+
+    <div>
+        @Html.LabelFor(q => q.OtherInformation)
+        @Html.TextBoxFor(q => q.OtherInformation)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.PathToFile)
+        @Html.TextBoxFor(q => q.PathToFile)
+    </div>
+
+    <button>Save as a draft</button>
+    <button>Submit</button>
+    //<button>Verify inserted information</button>
+
+}

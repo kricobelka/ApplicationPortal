@@ -42,6 +42,7 @@ namespace ApplicationPortal.Services
         //в этом методе айдишник не нужен:
         public async Task<ProductViewModel> CreateProductGeneralInfo(GenProductViewModel product)
         {
+            //можно ли было вернуть новый продукт вместо продактмодели? и ющат айдишник того продукта
             var newProduct = new Product()
             {
                 Name = product.Name,
@@ -54,51 +55,88 @@ namespace ApplicationPortal.Services
 
             await _context.SaveChangesAsync();
 
-            return new ProductViewModel()
-            {
-                Id = newProduct.Id,
-                Name = newProduct.Name,
-                Brand = newProduct.Brand,
-                Model = newProduct.Model,
-                Manufacturer = newProduct.Manufacturer,
-            };
+            return FullMap(newProduct);
+            //return new ProductViewModel()
+            //{
+            //    Id = newProduct.Id,
+            //    Name = newProduct.Name,
+            //    Brand = newProduct.Brand,
+            //    Model = newProduct.Model,
+            //    Manufacturer = newProduct.Manufacturer,
+            //};
         }
         #endregion
-
 
         #region technical product info
 
         //return ProdViewModel to tarnsfer id to the next method:
-        public async Task<ProductViewModel> PostTechnicalProductInfo(int productId, TechProductViewModel product)
+        public async Task<ProductViewModel> UpdateProductWithTechnicalInfo(int productId, TechProductViewModel product)
         {
-            //var technicalproduct = await _context.Products.Where(q => q.Id == productId).FirstOrDefaultAsync();
-            //var technicalproduct = await _context.Products.FindAsync(productId);
-            
-            //technicalproduct.Frequencies = 
-            //await _context.SaveChangesAsync();
+            //можно ил так найти подукт?
+            //var technicalproductt = await _context.Products.Where(q => q.Id == productId && q.Id == product.ProductId).FirstOrDefaultAsync();
+            //var technicalproductt = await _context.Products.Where(q => q.Equals(productId) && q.Equals(product)).FirstOrDefaultAsync();
+            var technicalproduct = await _context.Products.FindAsync(productId);
 
-            return null;
+            //обязательно ли след действие? нельзя сразу врнуть ProductViewModel?
+            //нельзя потому что мы возвращали в контроллере techproductviewmodel для связ экшенов айдишниками?
+            technicalproduct.OutputPower = product.OutputPower;
+            //AntennaGainAmount = technicalproduct.AntennaGain.Amount,
+            //AntennaGainUnit = technicalproduct.AntennaGain.AntennaGainUnit.ToString()
+
+            await _context.SaveChangesAsync();
+
+            return FullMap(technicalproduct);
+
+            //return new ProductViewModel()
+            //{
+            //    OutputPower = technicalproduct.OutputPower,
+            //    //AntennaGainAmount = techproductinfo.AntennaGainAmount,
+            //    //AntennaGainUnit = techproductinfo.AntennaGainUnit
+            //};
         }
         #endregion
 
-
         #region other information + path to file
-        public async Task<List<ProductViewModel>> GetExtraProductInfo()
+        public async Task<ProductViewModel> UpdateProductWithExtraInfo(int productId, ExtraProductViewModel product)
         {
-            var extraInfo = await _context.Products.Select(q => new ProductViewModel
-            {
-                OtherInformation = q.OtherInformation,
-                PathToFile = q.PathToFile
-            }).ToListAsync();
+            var selectedProduct = await _context.Products.FindAsync(productId);
 
-            return extraInfo;
-        }
+            selectedProduct.OtherInformation = product.OtherInformation;
+            selectedProduct.PathToFile = product.PathToFile;
 
-        public async Task GetExtraProductInfo(ProductViewModel product)
-        {
-            await GetExtraProductInfo();
-            await _context.AddAsync(product);
             await _context.SaveChangesAsync();
+
+            return FullMap(selectedProduct);
+            //{
+            //    OtherInformation = selectedProduct.OtherInformation,
+            //    PathToFile = selectedProduct.PathToFile
+            //};
+        }
+        #endregion
+
+        #region full information about submitted product
+        public async Task<ProductViewModel> GetProductTotalInfo(int productId)
+        {
+            var product = await _context.Products.FindAsync(productId);
+
+            return FullMap(product);
+        }
+        #endregion
+
+        #region mapping of product to productVieMmodel
+        public ProductViewModel FullMap(Product product)
+        {
+            return new ProductViewModel()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Model = product.Model,
+                Brand = product.Brand,
+                Manufacturer = product.Manufacturer,
+                OutputPower = product.OutputPower,
+                OtherInformation = product.OtherInformation,
+                PathToFile = product.PathToFile,
+            };
         }
         #endregion
     }

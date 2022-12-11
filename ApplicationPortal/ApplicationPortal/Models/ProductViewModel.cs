@@ -18,9 +18,9 @@ namespace ApplicationPortal.Models
 
         public double AntennaGainAmount { get; set; }
 
-        public string AntennaGainUnit {get; set; }
+        public string AntennaGainUnit { get; set; }
 
-        public string? OtherInformation { get; set; }
+        public string OtherInformation { get; set; }
 
         public string PathToFile { get; set; }
 

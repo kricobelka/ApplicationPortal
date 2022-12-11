@@ -1,0 +1,43 @@
+﻿@model ProductViewModel
+
+@using (@Html.BeginForm("PostVerifiedProduct", "Product", FormMethod.Post))
+{
+    @Html.HiddenFor(q => q.Id)
+
+    <div>
+        @Html.LabelFor(q => q.Name)
+        @Html.TextBoxFor(q => q.Name)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.Model)
+        @Html.TextBoxFor(q => q.Model)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.Brand)
+        @Html.TextBoxFor(q => q.Brand)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.Manufacturer)
+        @Html.TextBoxFor(q => q.Manufacturer)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.OutputPower)
+        @Html.TextBoxFor(q => q.OutputPower)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.OtherInformation)
+        @Html.TextBoxFor(q => q.OtherInformation)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.PathToFile)
+        @Html.TextBoxFor(q => q.PathToFile)
+    </div>
+
+    <button>Submit</button>
+}
