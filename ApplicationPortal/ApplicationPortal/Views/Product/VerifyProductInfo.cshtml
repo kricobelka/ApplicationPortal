@@ -1,43 +1,47 @@
 ﻿@model ProductViewModel
 
-@using (@Html.BeginForm("PostVerifiedProduct", "Product", FormMethod.Post))
+@using (@Html.BeginForm("PostVerifiedProduct", "Product", new { productId = Model.Id }, FormMethod.Post))
 {
-    @Html.HiddenFor(q => q.Id)
+    //@Html.HiddenFor(q => q.Id)
 
     <div>
-        @Html.LabelFor(q => q.Name)
-        @Html.TextBoxFor(q => q.Name)
+        @Html.DisplayNameFor(q => q.Name)
+        @Html.DisplayTextFor(q => q.Name)
     </div>
 
     <div>
-        @Html.LabelFor(q => q.Model)
-        @Html.TextBoxFor(q => q.Model)
+        @Html.DisplayNameFor(q => q.Model)
+        @Html.DisplayTextFor(q => q.Model)
     </div>
 
     <div>
-        @Html.LabelFor(q => q.Brand)
-        @Html.TextBoxFor(q => q.Brand)
+        @Html.DisplayNameFor(q => q.Brand)
+        @Html.DisplayTextFor(q => q.Brand)
     </div>
 
     <div>
-        @Html.LabelFor(q => q.Manufacturer)
-        @Html.TextBoxFor(q => q.Manufacturer)
+        @Html.DisplayNameFor(q => q.Manufacturer)
+        @Html.DisplayTextFor(q => q.Manufacturer)
     </div>
 
     <div>
-        @Html.LabelFor(q => q.OutputPower)
-        @Html.TextBoxFor(q => q.OutputPower)
+        @Html.DisplayNameFor(q => q.OutputPower)
+        @Html.DisplayTextFor(q => q.OutputPower)
     </div>
 
     <div>
-        @Html.LabelFor(q => q.OtherInformation)
-        @Html.TextBoxFor(q => q.OtherInformation)
+        @Html.DisplayNameFor(q => q.OtherInformation)
+        @Html.DisplayTextFor(q => q.OtherInformation)
     </div>
 
     <div>
-        @Html.LabelFor(q => q.PathToFile)
-        @Html.TextBoxFor(q => q.PathToFile)
+        @Html.DisplayNameFor(q => q.PathToFile)
+        @Html.DisplayTextFor(q => q.PathToFile)
     </div>
 
-    <button>Submit</button>
+    //<button>Submit</button>
+    <button type="submit" name="action" value="getSubmittedProducts">Submit</button>
+    <button type="submit" name="action" value="cancelProduct">Cancel</button>
+    <button type="submit" name="action" value="editProduct">Edit</button>
+    <button type="submit" name="action" value="saveProduct">Save as a draft</button>
 }

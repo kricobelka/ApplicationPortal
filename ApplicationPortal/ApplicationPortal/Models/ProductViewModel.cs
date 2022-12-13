@@ -24,5 +24,7 @@ namespace ApplicationPortal.Models
 
         public string PathToFile { get; set; }
 
+        public string Status { get; set; }
+
     }
 }

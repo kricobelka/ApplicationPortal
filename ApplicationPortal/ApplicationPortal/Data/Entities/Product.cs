@@ -18,5 +18,7 @@
         public string PathToFile { get; set; }
 
         public AntennaGain AntennaGain { get; set; }
+
+        public string Status { get; set; }
     }
 }

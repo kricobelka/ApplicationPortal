@@ -32,17 +32,17 @@ namespace ApplicationPortal.Controllers
         [HttpPost]
         public async Task<IActionResult> VerifyUserAndGoNext()
         {
-            return RedirectToAction("GetGeneralProductInfo", "Product");
+            return RedirectToAction("GeneralProductInfo", "Product");
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetGeneralProductInfo()
+        public async Task<IActionResult> GeneralProductInfo()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProductGeneralInfo(GenProductViewModel product)
+        public async Task<IActionResult> GeneralProductInfo(GenProductViewModel product)
         {
             
             var result = await _productService.CreateProductGeneralInfo(product);
@@ -74,7 +74,7 @@ namespace ApplicationPortal.Controllers
         public async Task<IActionResult> PostExtraProductInfo (ExtraProductViewModel product)
         {
             var result = await _productService.UpdateProductWithExtraInfo(product.ProductId, product);
-            return RedirectToAction("GetSubmittedProductInfo", "Product", new { productId = result.Id });
+            return RedirectToAction("VerifyProductInfo", "Product", new { productId = result.Id });
             //return to VerificationOfInsertedDatePage
         }
 
@@ -87,24 +87,83 @@ namespace ApplicationPortal.Controllers
 
         //сделать 4  баттона (save as a draft, submit (submittedproducts), cancel, edit)
         [HttpPost]
-        public async Task<IActionResult> PostVerifiedProduct(int productId)
+        public async Task<IActionResult> PostVerifiedProduct(int productId, string action)
         {
-            Product product = new Product();
-            var result = await _productService.GetProductTotalInfo(productId);
+            //не совсем верно: нужно просто вернуть айдишник
+            //var product = await _productService.GetProductTotalInfo(productId);
 
-            if (product.Id == productId && product.Status == "TotallySubmitted")
+            if (action == "getSubmittedProducts")
             {
-                //создавать дяля этой цели отдельный контроллер?
-                return RedirectToAction("SubmittedProducts", "Product");
+                return await SubmitProduct(productId);
             }
 
-            else if (product.Id == productId && product.Status == "Cancelled")
+            //else if (action == "editProduct")
+            //{
+            //    return await EditProduct(productId);
+            //}
+
+            else if (action == "cancelProduct")
             {
-                await _context.Products.RemoveAsync(result);
-                await _context.SaveChangesAsync();
+                return await CancelProduct(productId);
             }
-            
-            
+
+            else if (action == "saveProduct")
+            {
+                return await SaveDraftAndRedirectToProducts();
+            }
+            //is productviewmodel necessary as a parameter and can I return View()?
+            return View();
         }
+
+        private async Task<IActionResult> SubmitProduct(int productId)
+        {
+            await _productService.SubmitProduct(productId);
+            return RedirectToAction("GetSubmittedProducts", "Product");
+        }
+
+        #region buttons
+        [HttpGet]
+        public async Task<IActionResult> GetSubmittedProducts()
+        {
+            var allProducts = await _productService.GetProducts();
+            return View(allProducts);
+        }
+
+        //public async Task<IActionResult> EditProduct(int productId)
+        //{
+        //    var product = await _productService.EditProduct(productId);
+        //    return View(product);
+        //}
+        private async Task<IActionResult> SaveDraftAndRedirectToProducts()
+        {
+            return RedirectToAction("GetSubmittedProducts", "Product");
+        }
+
+        private async Task<IActionResult> CancelProduct(int productId)
+        {
+            await _productService.CancelProduct(productId);
+            //ViewBag send to view. which view?
+            return RedirectToAction("GetSubmittedProducts", "Product");
+            //return View()?
+        }
+
+
+
+        //Product product = new Product();
+        //var result = await _productService.GetProductTotalInfo(productId);
+
+        //if (product.Id == productId && product.Status == "TotallySubmitted")
+        //{
+        //    //создавать дяля этой цели отдельный контроллер?
+        //    return RedirectToAction("SubmittedProducts", "Product");
+        //}
+
+        //else if (product.Id == productId && product.Status == "Cancelled")
+        //{
+        //    await _context.Products.RemoveAsync(result);
+        //    await _context.SaveChangesAsync();
+        //}
+
     }
 }
+#endregion
