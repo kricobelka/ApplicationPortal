@@ -4,14 +4,10 @@
     {
         public int ProductId { get; set; }
 
-        public double FrequencyRange { get; set; }
-
-        public string FrequencyUnit { get; set; }
+        public List<FrequencyViewModel> Frequencies { get; set; } = new List<FrequencyViewModel>();
 
         public string OutputPower { get; set; }
 
-        public double AntennaGainAmount { get; set; }
-
-        public string AntennaGainUnit { get; set; }
+        public AntennaGainViewModel AntennaGain { get; set; } = new AntennaGainViewModel();
     }
 }

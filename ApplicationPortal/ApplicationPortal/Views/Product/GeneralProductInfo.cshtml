@@ -3,6 +3,8 @@
 
 @using (Html.BeginForm(FormMethod.Post))
 {
+    @Html.HiddenFor(q => q.ProductId)
+
     <div>
         @Html.LabelFor(q => q.Name)
         @Html.TextBoxFor(q => q.Name)
@@ -23,8 +25,9 @@
         @Html.TextBoxFor(q => q.Manufacturer)
     </div>
 
+    if(@Model?.ProductId != null)
+    {
+        <button type="submit" name="action" value="submitEditedInfo">Apply changes</button>        
+    }
     <button>Next</button>
-
-
-
 }

@@ -10,15 +10,11 @@ namespace ApplicationPortal.Models
         public string Brand { get; set; }
         public string Manufacturer { get; set; }
 
-        public double FrequencyRange { get; set; }
-
-        public string FrequencyUnit { get; set; }
+        public List<FrequencyViewModel> Frequencies { get; set; }
 
         public string OutputPower { get; set; }
 
-        public double AntennaGainAmount { get; set; }
-
-        public string AntennaGainUnit { get; set; }
+        public AntennaGainViewModel AntennaGain { get; set; }
 
         public string OtherInformation { get; set; }
 

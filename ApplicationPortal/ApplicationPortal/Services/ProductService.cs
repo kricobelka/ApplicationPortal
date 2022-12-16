@@ -49,7 +49,8 @@ namespace ApplicationPortal.Services
                 Model = product.Model,
                 Brand = product.Brand,
                 Manufacturer = product.Manufacturer,
-                Status = "GeneralInfoSubmitted"
+                Status = "GeneralInfoSubmitted",
+                Frequencies = new List<Frequency>()
             };
 
             await _context.AddAsync(newProduct);
@@ -82,19 +83,23 @@ namespace ApplicationPortal.Services
             //нельзя потому что мы возвращали в контроллере techproductviewmodel для связ экшенов айдишниками?
             technicalproduct.OutputPower = product.OutputPower;
             technicalproduct.Status = "TechnicalInfoSubmitted";
-            //AntennaGainAmount = technicalproduct.AntennaGain.Amount,
-            //AntennaGainUnit = technicalproduct.AntennaGain.AntennaGainUnit.ToString()
+
+            technicalproduct.Frequencies = product.Frequencies.Select(q => new Frequency()
+            {
+                StartRange = q.StartRange,
+                EndRange = q.EndRange,
+                FrequencyUnit = q.FrequencyUnit
+            }).ToList();
+
+            technicalproduct.AntennaGain = new AntennaGain()
+            {
+                Amount = product.AntennaGain.Amount,
+                AntennaGainUnit = product.AntennaGain.AntennaGainUnit
+            };
 
             await _context.SaveChangesAsync();
 
             return FullMap(technicalproduct);
-
-            //return new ProductViewModel()
-            //{
-            //    OutputPower = technicalproduct.OutputPower,
-            //    //AntennaGainAmount = techproductinfo.AntennaGainAmount,
-            //    //AntennaGainUnit = techproductinfo.AntennaGainUnit
-            //};
         }
         #endregion
 
@@ -123,7 +128,7 @@ namespace ApplicationPortal.Services
         #region buttons
         public async Task<List<ProductViewModel>> GetProducts()
         {
-            var products = await _context.Products.Select(q => FullMap(q))
+            var products = await _context.Products.Include(q => q.Frequencies).Include(q => q.AntennaGain).Select(q => FullMap(q))
                 .ToListAsync();
 
             return products;
@@ -140,13 +145,19 @@ namespace ApplicationPortal.Services
             return FullMap(endProduct);
         }
 
-        //public async Task<ProductViewModel> EditProduct(int productId)
-        //{
-        //    //будет содержать вызов 4 методов с условиями (в зависимости от секции эдита)
-        //    var productForEdit = await GetProductPerId(productId);
-        //    productForEdit.Id = productModel.
-        //    productForEdit.Name = 
-        //}
+        public async Task<ProductViewModel> EditProduct(int productId, GenProductViewModel model)
+        {
+            //будет содержать вызов 4 методов с условиями (в зависимости от секции эдита)
+            var productForEdit = await GetProductPerId(productId);
+            productForEdit.Name = model.Name;
+            productForEdit.Brand = model.Brand;
+            productForEdit.Model = model.Model;
+            productForEdit.Manufacturer = model.Manufacturer;
+            
+            await _context.SaveChangesAsync();
+
+            return FullMap(productForEdit);
+        }
 
         public async Task CancelProduct (int productId)
         {
@@ -156,15 +167,18 @@ namespace ApplicationPortal.Services
         }
 
         #endregion
-        //unnecessary, action is enough
+
         private Task<Product> GetProductPerId(int productId)
         {
-            return _context.Products.FindAsync(productId).AsTask();
+            //to-do: check
+            return _context.Products.Include(q => q.Frequencies).Include(q => q.AntennaGain).SingleOrDefaultAsync(q => q.Id == productId);
         }
 
         #region mapping of product to productVieMmodel
         private static ProductViewModel FullMap(Product product)
         {
+            AntennaGainViewModel model = new AntennaGainViewModel();
+
             return new ProductViewModel()
             {
                 Id = product.Id,
@@ -172,13 +186,31 @@ namespace ApplicationPortal.Services
                 Model = product.Model,
                 Brand = product.Brand,
                 Manufacturer = product.Manufacturer,
-                OutputPower = product.OutputPower,
+                Frequencies = product.Frequencies.Select(q => new FrequencyViewModel
+                {
+                    StartRange = q.StartRange,
+                    EndRange = q.EndRange,
+                    FrequencyUnit = q.FrequencyUnit
+                }).ToList(),
+
+                AntennaGain = new AntennaGainViewModel()
+                {
+                    Amount = model.Amount,
+                    AntennaGainUnit = model.AntennaGainUnit
+                },
+
+            OutputPower = product.OutputPower,
                 OtherInformation = product.OtherInformation,
                 PathToFile = product.PathToFile,
                 Status = product.Status,
-                //add antenna gain frequency etc.
             };
         }
         #endregion
+
+        public async Task<ProductViewModel> GetProductById(int productId)
+        {
+            var product = FullMap(await GetProductPerId(productId));
+            return product;
+        }
     }
 }

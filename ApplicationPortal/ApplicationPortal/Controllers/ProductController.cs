@@ -28,7 +28,7 @@ namespace ApplicationPortal.Controllers
             //к ролям не могу так же обратиться
             return View(userAndCompany);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> VerifyUserAndGoNext()
         {
@@ -36,42 +36,86 @@ namespace ApplicationPortal.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GeneralProductInfo()
+        public async Task<IActionResult> GeneralProductInfo(int productId)
         {
-            return View();
+
+            if (productId == 0)
+            {
+                return View();
+            }
+            var product = await _productService.GetProductById(productId);
+            return View(new GenProductViewModel()
+            {
+                ProductId = productId,
+                Name = product.Name,
+                Brand = product.Brand,
+                Manufacturer = product.Manufacturer,
+                Model = product.Model
+            });
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> GeneralProductInfo(GenProductViewModel product)
+        public async Task<IActionResult> GeneralProductInfo(GenProductViewModel product, string action)
         {
-            
-            var result = await _productService.CreateProductGeneralInfo(product);
-            return RedirectToAction("GetTechProductInfo", "Product", new { productId = result.Id });
+            if (product.ProductId == null)
+            {
+                var result = await _productService.CreateProductGeneralInfo(product);
+                return RedirectToAction("TechnicalProductInfo", "Product", new { productId = result.Id });
+            }
+
+            var res = await _productService.EditProduct(product.ProductId.Value, product);
+
+            if (action == "submitEditedInfo")
+            {
+                return RedirectToAction("VerifyProductInfo", "Product", new { productId = res.Id });
+            }
+
+            return RedirectToAction("TechnicalProductInfo", "Product", new { productId = res.Id });
+            //hasvalue определяет налл ли свойство, value его получает
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTechProductInfo (int productId)
+        public async Task<IActionResult> TechnicalProductInfo(int productId)
         {
-            return View(new TechProductViewModel { ProductId = productId });
+            var viewModelPerId = new TechProductViewModel { ProductId = productId };
+            viewModelPerId.Frequencies.Add(new FrequencyViewModel());
+            return View(viewModelPerId);
         }
 
         [HttpPost]
         //почему мы называем вьюшку только именем метода гет? почему не берем названия метода пост?
-        public async Task<IActionResult> PostTechnicalProductInfo(TechProductViewModel techProduct)
+        public async Task<IActionResult> TechnicalProductInfo(TechProductViewModel techProduct, string action)
         {
-            var result = await _productService.UpdateProductWithTechnicalInfo(techProduct.ProductId, techProduct);
-            return RedirectToAction("GetExtraProductInfo", "Product", new { productId = result.Id });
+            if (action == "goToNextPage")
+            {
+                var result = await _productService.UpdateProductWithTechnicalInfo(techProduct.ProductId, techProduct);
+                return RedirectToAction("ExtraProductInfo", "Product", new { productId = result.Id });
+            }
+
+            if (action == "addNewFrequency")
+            {
+                if (techProduct.Frequencies.Count > 10)
+                {
+                    ModelState.AddModelError("", "The number of frequency models must be no more than 10");
+                    return View(techProduct);
+                }
+                techProduct.Frequencies.Add(new FrequencyViewModel());
+                return View(techProduct);
+            }
+            //todo: change parameter
+            return View();
         }
 
         //не передаем еще и айдишникв параметр экшена, т.к во вью можно передать одну модель?
         [HttpGet]
-        public async Task<IActionResult> GetExtraProductInfo (int productId)
+        public async Task<IActionResult> ExtraProductInfo(int productId)
         {
             return View(new ExtraProductViewModel { ProductId = productId });
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostExtraProductInfo (ExtraProductViewModel product)
+        public async Task<IActionResult> ExtraProductInfo(ExtraProductViewModel product)
         {
             var result = await _productService.UpdateProductWithExtraInfo(product.ProductId, product);
             return RedirectToAction("VerifyProductInfo", "Product", new { productId = result.Id });
