@@ -6,6 +6,11 @@
 {
     @Html.HiddenFor(q => q.ProductId)
 
+    <div>
+        @Html.LabelFor(q => q.OutputPower)
+        @Html.TextBoxFor(q => q.OutputPower)
+    </div>
+
     @for (int i = 0; i < Model.Frequencies.Count; i++)
     {
         <div class="row">
@@ -40,5 +45,8 @@
         </div>
     </div>
 
+
+    <button type="submit" name="action" value="submitEditedTechnicalInfo">Apply changes</button>
+    
     <button type="submit" name="action" value="goToNextPage">Next</button>
 }

@@ -38,14 +38,15 @@ namespace ApplicationPortal.Controllers
         [HttpGet]
         public async Task<IActionResult> GeneralProductInfo(int productId)
         {
-
             if (productId == 0)
             {
                 return View();
             }
+
             var product = await _productService.GetProductById(productId);
             return View(new GenProductViewModel()
             {
+                //product.Id - что в этом случае бы было
                 ProductId = productId,
                 Name = product.Name,
                 Brand = product.Brand,
@@ -53,7 +54,6 @@ namespace ApplicationPortal.Controllers
                 Model = product.Model
             });
         }
-
 
         [HttpPost]
         public async Task<IActionResult> GeneralProductInfo(GenProductViewModel product, string action)
@@ -64,14 +64,14 @@ namespace ApplicationPortal.Controllers
                 return RedirectToAction("TechnicalProductInfo", "Product", new { productId = result.Id });
             }
 
-            var res = await _productService.EditProduct(product.ProductId.Value, product);
+            var productForEdit = await _productService.EditProductGenInfo(product.ProductId.Value, product);
 
             if (action == "submitEditedInfo")
             {
-                return RedirectToAction("VerifyProductInfo", "Product", new { productId = res.Id });
+                return RedirectToAction("VerifyProductInfo", "Product", new { productId = productForEdit.Id });
             }
 
-            return RedirectToAction("TechnicalProductInfo", "Product", new { productId = res.Id });
+            return RedirectToAction("TechnicalProductInfo", "Product", new { productId = productForEdit.Id });
             //hasvalue определяет налл ли свойство, value его получает
         }
 
@@ -89,8 +89,8 @@ namespace ApplicationPortal.Controllers
         {
             if (action == "goToNextPage")
             {
-                var result = await _productService.UpdateProductWithTechnicalInfo(techProduct.ProductId, techProduct);
-                return RedirectToAction("ExtraProductInfo", "Product", new { productId = result.Id });
+                var productForSubmit = await _productService.UpdateProductWithTechnicalInfo(techProduct.ProductId, techProduct);
+                return RedirectToAction("ExtraProductInfo", "Product", new { productId = productForSubmit.Id });
             }
 
             if (action == "addNewFrequency")
@@ -103,8 +103,15 @@ namespace ApplicationPortal.Controllers
                 techProduct.Frequencies.Add(new FrequencyViewModel());
                 return View(techProduct);
             }
+
+            var productForEdit = await _productService.UpdateProductWithTechnicalInfo(techProduct.ProductId, techProduct);
+            if (action == "submitEditedTechnicalInfo")
+            {
+                return RedirectToAction("VerifyProductInfo", "Product", new { productId = productForEdit.Id });
+            }
+
             //todo: change parameter
-            return View();
+            return RedirectToAction("ExtraProductInfo", "Product", new { productId = productForEdit.Id });
         }
 
         //не передаем еще и айдишникв параметр экшена, т.к во вью можно передать одну модель?
@@ -115,10 +122,14 @@ namespace ApplicationPortal.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ExtraProductInfo(ExtraProductViewModel product)
+        public async Task<IActionResult> ExtraProductInfo(ExtraProductViewModel product, string action)
         {
-            var result = await _productService.UpdateProductWithExtraInfo(product.ProductId, product);
-            return RedirectToAction("VerifyProductInfo", "Product", new { productId = result.Id });
+            var productForEditOrSubmit = await _productService.UpdateProductWithExtraInfo(product.ProductId, product);
+            if (action == "submitEditedExtraInfo")
+            {
+                return RedirectToAction("VerifyProductInfo", "Product", new { productId = productForEditOrSubmit.Id });
+            }
+            return RedirectToAction("VerifyProductInfo", "Product", new { productId = productForEditOrSubmit.Id });
             //return to VerificationOfInsertedDatePage
         }
 

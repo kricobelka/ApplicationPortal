@@ -75,14 +75,15 @@ namespace ApplicationPortal.Services
         public async Task<ProductViewModel> UpdateProductWithTechnicalInfo(int productId, TechProductViewModel product)
         {
             //можно ил так найти подукт?
-            //var technicalproductt = await _context.Products.Where(q => q.Id == productId && q.Id == product.ProductId).FirstOrDefaultAsync();
-            //var technicalproductt = await _context.Products.Where(q => q.Equals(productId) && q.Equals(product)).FirstOrDefaultAsync();
+            //yes, only first value: var technicalproductt = await _context.Products.Where(q => q.Id == productId && q.Id == product.ProductId).FirstOrDefaultAsync();
+            //no: //var technicalproductt = await _context.Products.Where(q => q.Id.Equals(productId) && q.Equals(product)).FirstOrDefaultAsync();
             var technicalproduct = await GetProductPerId(productId);
-
+            
+            //TO-DO;    does the following property change smth"?
+            //technicalproduct.Id = productId;
             //обязательно ли след действие? нельзя сразу врнуть ProductViewModel?
             //нельзя потому что мы возвращали в контроллере techproductviewmodel для связ экшенов айдишниками?
             technicalproduct.OutputPower = product.OutputPower;
-            technicalproduct.Status = "TechnicalInfoSubmitted";
 
             technicalproduct.Frequencies = product.Frequencies.Select(q => new Frequency()
             {
@@ -97,6 +98,11 @@ namespace ApplicationPortal.Services
                 AntennaGainUnit = product.AntennaGain.AntennaGainUnit
             };
 
+            if (technicalproduct.Status == "GeneralInfoSubmitted")
+            {
+                technicalproduct.Status = "TechnicalInfoSubmitted";               
+            }
+
             await _context.SaveChangesAsync();
 
             return FullMap(technicalproduct);
@@ -110,7 +116,11 @@ namespace ApplicationPortal.Services
 
             selectedProduct.OtherInformation = product.OtherInformation;
             selectedProduct.PathToFile = product.PathToFile;
-            selectedProduct.Status = "ExtraInfoSubmitted";
+
+            if (selectedProduct.Status == "TechnicalInfoSubmitted")
+            {
+                selectedProduct.Status = "ExtraInfoSubmitted";
+            }
 
             await _context.SaveChangesAsync();
 
@@ -125,7 +135,7 @@ namespace ApplicationPortal.Services
             return FullMap(product);
         }
 
-        #region buttons
+        
         public async Task<List<ProductViewModel>> GetProducts()
         {
             var products = await _context.Products.Include(q => q.Frequencies).Include(q => q.AntennaGain).Select(q => FullMap(q))
@@ -134,7 +144,7 @@ namespace ApplicationPortal.Services
             return products;
         }
 
-        #endregion
+        #region buttons
         public async Task<ProductViewModel> SubmitProduct(int productId)
         {
           
@@ -145,7 +155,7 @@ namespace ApplicationPortal.Services
             return FullMap(endProduct);
         }
 
-        public async Task<ProductViewModel> EditProduct(int productId, GenProductViewModel model)
+        public async Task<ProductViewModel> EditProductGenInfo(int productId, GenProductViewModel model)
         {
             //будет содержать вызов 4 методов с условиями (в зависимости от секции эдита)
             var productForEdit = await GetProductPerId(productId);
@@ -166,6 +176,7 @@ namespace ApplicationPortal.Services
             await _context.SaveChangesAsync();
         }
 
+        #endregion
         #endregion
 
         private Task<Product> GetProductPerId(int productId)
