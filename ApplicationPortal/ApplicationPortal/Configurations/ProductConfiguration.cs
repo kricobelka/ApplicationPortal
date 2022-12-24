@@ -37,6 +37,11 @@ namespace ApplicationPortal.Configurations
                 .HasForeignKey<AntennaGain>(q => q.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasOne(q => q.User)
+                .WithMany(q => q.Products)
+                .HasForeignKey(q => q.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.ToTable("Products");
         }
     }

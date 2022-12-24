@@ -5,16 +5,20 @@ using Microsoft.EntityFrameworkCore;
 using ApplicationPortal.Services;
 using ApplicationPortal.Models;
 using ApplicationPortal.Data.Entities;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Security.Claims;
 
 namespace ApplicationPortal.Controllers
 {
     public class ProductController : Controller
     {
         private readonly ProductService _productService;
+        private readonly UserManager<User> _userManager;
 
-        public ProductController(ProductService productService)
+        public ProductController(ProductService productService, UserManager<User> userManager)
         {
             _productService = productService;
+            _userManager = userManager; 
         }
 
         //выводим информацию о залогиненном юзере (мэйл, название компаний)
@@ -40,10 +44,12 @@ namespace ApplicationPortal.Controllers
         {
             if (productId == 0)
             {
+                ViewBag.ShowApplyChanges = false;
                 return View();
             }
 
             var product = await _productService.GetProductById(productId);
+            ViewBag.ShowApplyChanges = true;
             return View(new GenProductViewModel()
             {
                 //product.Id - что в этом случае бы было
@@ -58,26 +64,43 @@ namespace ApplicationPortal.Controllers
         [HttpPost]
         public async Task<IActionResult> GeneralProductInfo(GenProductViewModel product, string action)
         {
-            if (product.ProductId == null)
+            if (ModelState.IsValid)
             {
-                var result = await _productService.CreateProductGeneralInfo(product);
-                return RedirectToAction("TechnicalProductInfo", "Product", new { productId = result.Id });
+                if (product.ProductId == null)
+                {
+                    var userId = _userManager.GetUserId(User);
+                    //показывает мэйл:
+                    // userId = _userManager.GetUserName(User);
+                    var result = await _productService.CreateProductGeneralInfo(userId, product);
+                    return RedirectToAction("TechnicalProductInfo", "Product", new { productId = result.Id });
+                }
+                var productForEdit = await _productService.EditProductGenInfo(product.ProductId.Value, product);
+
+                if (action == "submitEditedInfo")
+                {
+                    return RedirectToAction("VerifyProductInfo", "Product", new
+                    {
+                        productId = productForEdit.Id
+                    });
+                }
+
+                return RedirectToAction("TechnicalProductInfo", "Product", new { productId = productForEdit.Id });
             }
-
-            var productForEdit = await _productService.EditProductGenInfo(product.ProductId.Value, product);
-
-            if (action == "submitEditedInfo")
-            {
-                return RedirectToAction("VerifyProductInfo", "Product", new { productId = productForEdit.Id });
-            }
-
-            return RedirectToAction("TechnicalProductInfo", "Product", new { productId = productForEdit.Id });
             //hasvalue определяет налл ли свойство, value его получает
+            return View(product);
         }
 
         [HttpGet]
         public async Task<IActionResult> TechnicalProductInfo(int productId)
         {
+
+            var product = await _productService.GetProductById(productId);
+            //if (product.Status == Enums.ProductStatus.GeneralInfoSubmitted)
+            //{
+            //    ViewBag.ShowApplyChanges = false;
+            //}
+            ViewBag.ShowApplyChanges = product.Status >= Enums.ProductStatus.ExtraInfoSubmitted;
+
             var viewModelPerId = new TechProductViewModel { ProductId = productId };
             viewModelPerId.Frequencies.Add(new FrequencyViewModel());
             return View(viewModelPerId);
@@ -87,50 +110,60 @@ namespace ApplicationPortal.Controllers
         //почему мы называем вьюшку только именем метода гет? почему не берем названия метода пост?
         public async Task<IActionResult> TechnicalProductInfo(TechProductViewModel techProduct, string action)
         {
-            if (action == "goToNextPage")
+            if (ModelState.IsValid)
             {
-                var productForSubmit = await _productService.UpdateProductWithTechnicalInfo(techProduct.ProductId, techProduct);
-                return RedirectToAction("ExtraProductInfo", "Product", new { productId = productForSubmit.Id });
-            }
-
-            if (action == "addNewFrequency")
-            {
-                if (techProduct.Frequencies.Count > 10)
+                if (action == "goToNextPage")
                 {
-                    ModelState.AddModelError("", "The number of frequency models must be no more than 10");
+                    var productForSubmit = await _productService.UpdateProductWithTechnicalInfo(techProduct.ProductId, techProduct);
+                    return RedirectToAction("ExtraProductInfo", "Product", new { productId = productForSubmit.Id });
+                }
+
+                if (action == "addNewFrequency")
+                {
+                    if (techProduct.Frequencies.Count > 10)
+                    {
+                        ModelState.AddModelError("", "The number of frequency models must be no more than 10");
+                        return View(techProduct);
+                    }
+                    techProduct.Frequencies.Add(new FrequencyViewModel());
                     return View(techProduct);
                 }
-                techProduct.Frequencies.Add(new FrequencyViewModel());
-                return View(techProduct);
-            }
 
-            var productForEdit = await _productService.UpdateProductWithTechnicalInfo(techProduct.ProductId, techProduct);
-            if (action == "submitEditedTechnicalInfo")
-            {
-                return RedirectToAction("VerifyProductInfo", "Product", new { productId = productForEdit.Id });
-            }
+                var productForEdit = await _productService.UpdateProductWithTechnicalInfo(techProduct.ProductId, techProduct);
+                if (action == "submitEditedTechnicalInfo")
+                {
+                    return RedirectToAction("VerifyProductInfo", "Product", new { productId = productForEdit.Id });
+                }
 
-            //todo: change parameter
-            return RedirectToAction("ExtraProductInfo", "Product", new { productId = productForEdit.Id });
+                //todo: change parameter
+                return RedirectToAction("ExtraProductInfo", "Product", new { productId = productForEdit.Id });
+            }
+            return View(techProduct);
         }
 
         //не передаем еще и айдишникв параметр экшена, т.к во вью можно передать одну модель?
         [HttpGet]
         public async Task<IActionResult> ExtraProductInfo(int productId)
         {
+            var product = await _productService.GetProductById(productId);
+            ViewBag.ShowApplyChanges = product.Status >= Enums.ProductStatus.ExtraInfoSubmitted;
             return View(new ExtraProductViewModel { ProductId = productId });
         }
 
         [HttpPost]
         public async Task<IActionResult> ExtraProductInfo(ExtraProductViewModel product, string action)
         {
-            var productForEditOrSubmit = await _productService.UpdateProductWithExtraInfo(product.ProductId, product);
-            if (action == "submitEditedExtraInfo")
+            if (ModelState.IsValid)
             {
+                var productForEditOrSubmit = await _productService.UpdateProductWithExtraInfo(product.ProductId, product);
+                if (action == "submitEditedExtraInfo")
+                {
+                    return RedirectToAction("VerifyProductInfo", "Product", new { productId = productForEditOrSubmit.Id });
+                }
                 return RedirectToAction("VerifyProductInfo", "Product", new { productId = productForEditOrSubmit.Id });
+                //return to VerificationOfInsertedDatePage
             }
-            return RedirectToAction("VerifyProductInfo", "Product", new { productId = productForEditOrSubmit.Id });
-            //return to VerificationOfInsertedDatePage
+            return View(product);
         }
 
         [HttpGet]
@@ -142,7 +175,7 @@ namespace ApplicationPortal.Controllers
 
         //сделать 4  баттона (save as a draft, submit (submittedproducts), cancel, edit)
         [HttpPost]
-        public async Task<IActionResult> PostVerifiedProduct(int productId, string action)
+        public async Task<IActionResult> VerifyProductInfo(int productId, string action)
         {
             //не совсем верно: нужно просто вернуть айдишник
             //var product = await _productService.GetProductTotalInfo(productId);
@@ -178,9 +211,10 @@ namespace ApplicationPortal.Controllers
 
         #region buttons
         [HttpGet]
-        public async Task<IActionResult> GetSubmittedProducts()
+        //id to parameter
+        public async Task<IActionResult> GetSubmittedProducts(string userId)
         {
-            var allProducts = await _productService.GetProducts();
+            var allProducts = await _productService.GetProducts(userId);
             return View(allProducts);
         }
 
@@ -201,24 +235,6 @@ namespace ApplicationPortal.Controllers
             return RedirectToAction("GetSubmittedProducts", "Product");
             //return View()?
         }
-
-
-
-        //Product product = new Product();
-        //var result = await _productService.GetProductTotalInfo(productId);
-
-        //if (product.Id == productId && product.Status == "TotallySubmitted")
-        //{
-        //    //создавать дяля этой цели отдельный контроллер?
-        //    return RedirectToAction("SubmittedProducts", "Product");
-        //}
-
-        //else if (product.Id == productId && product.Status == "Cancelled")
-        //{
-        //    await _context.Products.RemoveAsync(result);
-        //    await _context.SaveChangesAsync();
-        //}
-
     }
 }
 #endregion

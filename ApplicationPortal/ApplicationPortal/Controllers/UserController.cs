@@ -3,14 +3,15 @@ using ApplicationPortal.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ApplicationPortal.Constants;
 
 namespace ApplicationPortal.Controllers
 {
     public class UserController : Controller
     {
         private readonly ApplicationDbContext _context;
-        RoleManager<IdentityRole> _roleManager;
-        UserManager<User> _userManager;
+        readonly RoleManager<IdentityRole> _roleManager;
+        readonly UserManager<User> _userManager;
 
         public UserController(UserManager<User> userManager,
             RoleManager<IdentityRole> roleManager,
@@ -21,7 +22,17 @@ namespace ApplicationPortal.Controllers
             _context = context;
         }
 
-        //добавить для юзера hijikatanya right of admin
+        public async Task<IActionResult> AddAdminRoleToUser()
+        {
+            var user = await _userManager.FindByNameAsync("hijikataanya@gmail.com");
+            await _userManager.AddToRoleAsync(user, Constants.AdminUserRoles._admin);
+            return RedirectToAction("GetRoles", "Role");
+        }
+
+        //public async Task<IActionResult> UsersAndTheirRoles()
+        //{
+
+        //}
 
         #region  методом выбоора между юзером и его ролью(userid, roleid)
         //где происходит выбор между ролями? после логина?

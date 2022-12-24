@@ -12,6 +12,7 @@ namespace ApplicationPortal.Configurations
             builder.Property(q => q.Amount).IsRequired();
 
             //обязательно указывать required для енама? тоже как бы навиг свойство
+            //=== не надо
             builder.Property(q => q.AntennaGainUnit).IsRequired();
 
             builder.ToTable("AntennaGains");

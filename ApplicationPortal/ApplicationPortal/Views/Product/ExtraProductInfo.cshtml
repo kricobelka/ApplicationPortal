@@ -2,22 +2,28 @@
 
 @using (Html.BeginForm(FormMethod.Post))
 {
+    @Html.ValidationSummary(false)
     @Html.HiddenFor(q => q.ProductId)
 
     <div>
         @Html.LabelFor(q => q.OtherInformation)
         @Html.TextBoxFor(q => q.OtherInformation)
+        @Html.ValidationMessageFor(q => q.OtherInformation)
     </div>
 
     <div>
         @Html.LabelFor(q => q.PathToFile)
         @Html.TextBoxFor(q => q.PathToFile)
+        @Html.ValidationMessageFor(q => q.PathToFile)
     </div>
 
-    //добавить ифы для выведения одной кнопки
-    <button type="submit" name="action" value="submitEditedExtraInfo">Apply changes</button>
 
-    <button>Submit</button>
-    //<button>Verify inserted information</button>
-
+    if (ViewBag.ShowApplyChanges == true)
+    {
+        <button type="submit" name="action" value="submitEditedExtraInfo">Apply changes</button>
+    }
+    else
+    {
+        <button>Verify product information</button>
+    }
 }

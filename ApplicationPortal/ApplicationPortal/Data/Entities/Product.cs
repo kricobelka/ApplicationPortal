@@ -1,8 +1,11 @@
-﻿namespace ApplicationPortal.Data.Entities
+﻿using ApplicationPortal.Enums;
+
+namespace ApplicationPortal.Data.Entities
 {
     public class Product
     {
         public int Id { get; set; }
+        
         public string Name { get; set; }
         public string Model { get; set; }
         public string Manufacturer { get; set; }
@@ -19,6 +22,9 @@
 
         public AntennaGain AntennaGain { get; set; }
 
-        public string Status { get; set; }
+        public ProductStatus? Status { get; set; }
+
+        public string UserId { get; set; }
+        public User User { get; set; }
     }
 }

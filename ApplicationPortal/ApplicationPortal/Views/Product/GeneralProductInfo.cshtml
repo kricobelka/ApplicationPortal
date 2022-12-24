@@ -4,30 +4,47 @@
 @using (Html.BeginForm(FormMethod.Post))
 {
     @Html.HiddenFor(q => q.ProductId)
+    @Html.ValidationSummary(false)
 
     <div>
         @Html.LabelFor(q => q.Name)
-        @Html.TextBoxFor(q => q.Name)
+        @Html.EditorFor(q => q.Name)
+        @Html.ValidationMessageFor(q => q.Name)
     </div>
+
+@*    <div class="editor-field">
+        @Html.EditorFor(q => q.Name)
+        @Html.ValidationMessageFor(q => q.Name)
+    </div>*@
 
     <div>
         @Html.LabelFor(q => q.Brand)
-        @Html.TextBoxFor(q => q.Brand)
+        @*@Html.TextBoxFor(q => q.Brand)*@
+        @Html.EditorFor(q => q.Brand)
+        @Html.ValidationMessageFor(q => q.Brand)
     </div>
 
     <div>
         @Html.LabelFor(q => q.Model)
-        @Html.TextBoxFor(q => q.Model)
+        @Html.EditorFor(q => q.Model)
+        @Html.ValidationMessageFor(q => q.Model)
     </div>
 
     <div>
         @Html.LabelFor(q => q.Manufacturer)
-        @Html.TextBoxFor(q => q.Manufacturer)
+         @Html.EditorFor(q => q.Manufacturer)
+        @Html.ValidationMessageFor(q => q.Manufacturer)
     </div>
 
-    if(@Model?.ProductId != null)
+
+
+    if (@ViewBag.ShowApplyChanges == true)
     {
-        <button type="submit" name="action" value="submitEditedInfo">Apply changes</button>        
+        <button type="submit" name="action" value="submitEditedInfo">Apply changes</button>
     }
-    <button>Next</button>
+
+    else
+    {
+        <button>Next</button>
+    }
 }

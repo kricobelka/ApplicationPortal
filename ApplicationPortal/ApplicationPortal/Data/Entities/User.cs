@@ -7,5 +7,7 @@ namespace ApplicationPortal.Data.Entities
         //dbset ne nado add for user, as it exists in db
         public int? CompanyId { get; set; }
         public Company Company { get; set; }
+
+        public List<Product> Products { get; set; }
     }
 }

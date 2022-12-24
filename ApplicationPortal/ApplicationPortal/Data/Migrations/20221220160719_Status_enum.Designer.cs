@@ -4,6 +4,7 @@ using ApplicationPortal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApplicationPortal.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221220160719_Status_enum")]
+    partial class Status_enum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,12 +147,7 @@ namespace ApplicationPortal.Data.Migrations
                     b.Property<int?>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("Name", "Model")
                         .IsUnique();
@@ -383,16 +380,6 @@ namespace ApplicationPortal.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ApplicationPortal.Data.Entities.Product", b =>
-                {
-                    b.HasOne("ApplicationPortal.Data.Entities.User", "User")
-                        .WithMany("Products")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("ApplicationPortal.Data.Entities.User", b =>
                 {
                     b.HasOne("ApplicationPortal.Data.Entities.Company", "Company")
@@ -464,11 +451,6 @@ namespace ApplicationPortal.Data.Migrations
                     b.Navigation("AntennaGain");
 
                     b.Navigation("Frequencies");
-                });
-
-            modelBuilder.Entity("ApplicationPortal.Data.Entities.User", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

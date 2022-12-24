@@ -1,5 +1,6 @@
 ﻿using ApplicationPortal.Data;
 using ApplicationPortal.Data.Entities;
+using ApplicationPortal.Enums;
 using ApplicationPortal.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@ namespace ApplicationPortal.Services
     public class ProductService
     {
         private readonly ApplicationDbContext _context;
+        //private readonly UserManager<User> _userManager;
 
-        public ProductService(ApplicationDbContext context)
+        public ProductService(ApplicationDbContext context/*бUserManager<User> userManageк*/)
         {
             _context = context;
+            //_userManager = userManager;
         }
 
         ////выводим информацию о залогиненном юзере (мэйл  и название компаний)
@@ -39,17 +42,17 @@ namespace ApplicationPortal.Services
 
         #region general product info
         
-        //в этом методе айдишник не нужен:
-        public async Task<ProductViewModel> CreateProductGeneralInfo(GenProductViewModel product)
+        
+        public async Task<ProductViewModel> CreateProductGeneralInfo(string userId, GenProductViewModel product)
         {
-            //можно ли было вернуть новый продукт вместо продактмодели? и ющат айдишник того продукта
             var newProduct = new Product()
             {
+                UserId = userId,
                 Name = product.Name,
                 Model = product.Model,
                 Brand = product.Brand,
                 Manufacturer = product.Manufacturer,
-                Status = "GeneralInfoSubmitted",
+                Status = ProductStatus.GeneralInfoSubmitted,
                 Frequencies = new List<Frequency>()
             };
 
@@ -94,13 +97,14 @@ namespace ApplicationPortal.Services
 
             technicalproduct.AntennaGain = new AntennaGain()
             {
+                ProductId = productId,
                 Amount = product.AntennaGain.Amount,
                 AntennaGainUnit = product.AntennaGain.AntennaGainUnit
             };
 
-            if (technicalproduct.Status == "GeneralInfoSubmitted")
+            if (technicalproduct.Status == ProductStatus.GeneralInfoSubmitted)
             {
-                technicalproduct.Status = "TechnicalInfoSubmitted";               
+                technicalproduct.Status = ProductStatus.TechnicalInfoSubmitted;               
             }
 
             await _context.SaveChangesAsync();
@@ -117,9 +121,9 @@ namespace ApplicationPortal.Services
             selectedProduct.OtherInformation = product.OtherInformation;
             selectedProduct.PathToFile = product.PathToFile;
 
-            if (selectedProduct.Status == "TechnicalInfoSubmitted")
+            if (selectedProduct.Status == ProductStatus.TechnicalInfoSubmitted)
             {
-                selectedProduct.Status = "ExtraInfoSubmitted";
+                selectedProduct.Status = ProductStatus.ExtraInfoSubmitted;
             }
 
             await _context.SaveChangesAsync();
@@ -134,11 +138,16 @@ namespace ApplicationPortal.Services
             var product = await GetProductPerId(productId);
             return FullMap(product);
         }
-
         
-        public async Task<List<ProductViewModel>> GetProducts()
+        //getproducts due to userid:
+        public async Task<List<ProductViewModel>> GetProducts(string userId)
         {
-            var products = await _context.Products.Include(q => q.Frequencies).Include(q => q.AntennaGain).Select(q => FullMap(q))
+            //var user = await _userManager.FindByIdAsync(userId);
+            //var user = _context.Products.Where(q => q.UserId == userId).ToString();
+            //adding string userName into parameter
+            var products = await _context.Products.Include(q => q.User).Include(q => q.Frequencies).Include(q => q.AntennaGain)
+                .Where(q => q.UserId == userId)
+            .Select(q => FullMap(q))
                 .ToListAsync();
 
             return products;
@@ -150,7 +159,7 @@ namespace ApplicationPortal.Services
           
             var endProduct = await GetProductPerId(productId);
 
-            endProduct.Status = "FinallySubmitted";
+            endProduct.Status = ProductStatus.FinallySubmitted;
             await _context.SaveChangesAsync();
             return FullMap(endProduct);
         }
@@ -182,7 +191,7 @@ namespace ApplicationPortal.Services
         private Task<Product> GetProductPerId(int productId)
         {
             //to-do: check
-            return _context.Products.Include(q => q.Frequencies).Include(q => q.AntennaGain).SingleOrDefaultAsync(q => q.Id == productId);
+            return _context.Products.Include(q => q.User).Include(q => q.Frequencies).Include(q => q.AntennaGain).SingleOrDefaultAsync(q => q.Id == productId);
         }
 
         #region mapping of product to productVieMmodel
@@ -193,6 +202,7 @@ namespace ApplicationPortal.Services
             return new ProductViewModel()
             {
                 Id = product.Id,
+                UserName = product.User?.UserName,
                 Name = product.Name,
                 Model = product.Model,
                 Brand = product.Brand,
@@ -223,5 +233,22 @@ namespace ApplicationPortal.Services
             var product = FullMap(await GetProductPerId(productId));
             return product;
         }
+
+        #region admin
+
+        public async Task <List<ProductViewModel>> GetProductsAndUser()
+        {
+            var products = await _context.Products.Include(q => q.User).Include(q => q.Frequencies).Include(q => q.AntennaGain).Select(q => FullMap(q))
+                .ToListAsync();
+            return products;
+        }
+
+        public async Task SaveChanges()
+        {
+            await _context.SaveChangesAsync();
+        }
+
+        #endregion
+
     }
 }

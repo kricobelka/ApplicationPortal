@@ -1,6 +1,6 @@
 ﻿@model ProductViewModel
 
-@using (@Html.BeginForm("PostVerifiedProduct", "Product", new { productId = Model.Id }, FormMethod.Post))
+@using (@Html.BeginForm("VerifyProductInfo", "Product", new { productId = Model.Id }, FormMethod.Post))
 {
                 //@Html.HiddenFor(q => q.Id)
 
@@ -84,8 +84,7 @@
         @Html.DisplayTextFor(q => q.PathToFile)
     </div>
         <hr />
-
-                //the same: <button>Submit</button>
+                @*the same: <button>Submit</button>*@
     <button type="submit" name="action" value="getSubmittedProducts">Submit</button>
     <button type="submit" name="action" value="cancelProduct">Cancel</button>
     <button type="submit" name="action" value="saveProduct">Save as a draft</button>

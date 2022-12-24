@@ -4,11 +4,13 @@
 
 @using (Html.BeginForm(FormMethod.Post))
 {
+    @Html.ValidationSummary(false)
     @Html.HiddenFor(q => q.ProductId)
 
     <div>
         @Html.LabelFor(q => q.OutputPower)
-        @Html.TextBoxFor(q => q.OutputPower)
+        @Html.EditorFor(q => q.OutputPower)
+        @Html.ValidationMessageFor(q => q.OutputPower)
     </div>
 
     @for (int i = 0; i < Model.Frequencies.Count; i++)
@@ -16,17 +18,21 @@
         <div class="row">
             <div class="col">
                 @Html.LabelFor(q => @Model.Frequencies[i].StartRange)
-                @Html.TextBoxFor(q => @Model.Frequencies[i].StartRange)
+                @Html.EditorFor(q => @Model.Frequencies[i].StartRange)
+                @Html.ValidationMessageFor(q => @Model.Frequencies[i].StartRange)
+                @*@Html.TextBoxFor(q => @Model.Frequencies[i].StartRange)*@
             </div>
 
             <div class="col">
                 @Html.LabelFor(q => @Model.Frequencies[i].EndRange)
-                @Html.TextBoxFor(q => @Model.Frequencies[i].EndRange)
+                @Html.EditorFor(q => @Model.Frequencies[i].EndRange)
+        @Html.ValidationMessageFor(q => @Model.Frequencies[i].EndRange)
             </div>
 
             <div class="col">
                 @Html.LabelFor(q => @Model.Frequencies[i].FrequencyUnit)
                 @Html.DropDownListFor(q => @Model.Frequencies[i].FrequencyUnit, Html.GetEnumSelectList<FrequencyUnit>())
+                @Html.ValidationMessageFor(q => @Model.Frequencies[i].FrequencyUnit)
             </div>
         </div>
     }
@@ -36,17 +42,25 @@
     <div class="row">
         <div class="col">
             @Html.LabelFor(q => @Model.AntennaGain.Amount)
-            @Html.TextBoxFor(q => @Model.AntennaGain.Amount)
+            @Html.TextBoxFor(q => @Model.AntennaGain.Amount)            
+            @Html.ValidationMessageFor(q => @Model.AntennaGain.Amount)
+        @*@Html.ValidationMessageFor(q => q.OutputPower)*@
         </div>
 
         <div class="col">
             @Html.LabelFor(q => @Model.AntennaGain.AntennaGainUnit)
             @Html.DropDownListFor(q => @Model.AntennaGain.AntennaGainUnit, Html.GetEnumSelectList<AntennaGainUnit>())
+            @Html.ValidationMessageFor(q => @Model.AntennaGain.AntennaGainUnit)     
         </div>
     </div>
 
-
-    <button type="submit" name="action" value="submitEditedTechnicalInfo">Apply changes</button>
+    if (ViewBag.ShowApplyChanges == true)
+    {
+        <button type="submit" name="action" value="submitEditedTechnicalInfo">Apply changes</button>
+    }
+    else
+    {
+        <button type="submit" name="action" value="goToNextPage">Next</button>
+    }
     
-    <button type="submit" name="action" value="goToNextPage">Next</button>
 }
