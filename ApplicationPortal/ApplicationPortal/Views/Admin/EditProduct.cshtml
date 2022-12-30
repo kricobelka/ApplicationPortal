@@ -1,33 +1,59 @@
 ﻿@using ApplicationPortal.Enums
-@model TechProductViewModel
+@model ProductViewModel
 
-
-@using (Html.BeginForm(FormMethod.Post))
+@using (@Html.BeginForm("EditProduct", "Admin", FormMethod.Post))
 {
+    @Html.HiddenFor(q => q.Id)
     @Html.ValidationSummary(false)
-    @Html.HiddenFor(q => q.ProductId)
+
+    <h5>Product info of Ref.No. @Model.Id</h5>
+
+    <div>
+        @Html.LabelFor(q => q.Name)
+        @Html.TextBoxFor(q => q.Name)
+        @Html.ValidationMessageFor(q => q.Name)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.Brand)
+        @Html.TextBoxFor(q => q.Brand)
+        @Html.ValidationMessageFor(q => q.Brand)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.Model)
+        @Html.TextBoxFor(q => q.Model)
+        @Html.ValidationMessageFor(q => q.Model)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.Manufacturer)
+         @Html.TextBoxFor(q => q.Manufacturer)
+        @Html.ValidationMessageFor(q => q.Manufacturer)
+    </div>
+    
+    <h5>Technical info of Ref.No. @Model.Id</h5>
 
     <div>
         @Html.LabelFor(q => q.OutputPower)
-        @Html.EditorFor(q => q.OutputPower)
+        @Html.TextBoxFor(q => q.OutputPower)
         @Html.ValidationMessageFor(q => q.OutputPower)
     </div>
 
     @for (int i = 0; i < Model.Frequencies.Count; i++)
     {
-        
+        @Html.HiddenFor(q => @Model.Frequencies[i].FrequencyId)
         <div class="row">
             <div class="col">
                 @Html.LabelFor(q => @Model.Frequencies[i].StartRange)
-                @Html.EditorFor(q => @Model.Frequencies[i].StartRange)
+                @Html.TextBoxFor(q => @Model.Frequencies[i].StartRange)
                 @Html.ValidationMessageFor(q => @Model.Frequencies[i].StartRange)
-                @*@Html.TextBoxFor(q => @Model.Frequencies[i].StartRange)*@
             </div>
 
             <div class="col">
                 @Html.LabelFor(q => @Model.Frequencies[i].EndRange)
-                @Html.EditorFor(q => @Model.Frequencies[i].EndRange)
-        @Html.ValidationMessageFor(q => @Model.Frequencies[i].EndRange)
+                @Html.TextBoxFor(q => @Model.Frequencies[i].EndRange)
+                @Html.ValidationMessageFor(q => @Model.Frequencies[i].EndRange)
             </div>
 
             <div class="col">
@@ -39,6 +65,7 @@
     }
     <button type="submit" name="action" value="addNewFrequency">Add new frequency</button>
     <button type="submit" name="action" value="removeFrequency">Remove frequency</button>
+
     <hr />
 
     <div class="row">
@@ -56,13 +83,19 @@
         </div>
     </div>
 
-    if (ViewBag.ShowApplyChanges == true)
-    {
-        <button type="submit" name="action" value="submitEditedTechnicalInfo">Apply changes</button>
-    }
-    else
-    {
-        <button type="submit" name="action" value="goToNextPage">Next</button>
-    }
-    
+    <h5>Additional info of Ref.No. @Model.Id</h5>
+
+    <div>
+        @Html.LabelFor(q => q.OtherInformation)
+        @Html.TextBoxFor(q => q.OtherInformation)
+        @Html.ValidationMessageFor(q => q.OtherInformation)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.PathToFile)
+        @Html.TextBoxFor(q => q.PathToFile)
+        @Html.ValidationMessageFor(q => q.PathToFile)
+    </div>
+
+    <button>Apply changes</button>
 }

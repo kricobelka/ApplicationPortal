@@ -20,9 +20,12 @@ builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.Requi
     .AddDefaultUI();
 
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    //.AddEntityFrameworkStores<ApplicationDbContext>();
+//.AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddControllersWithViews();
+builder.Services
+    .AddControllersWithViews();
+    //.AddRazorRuntimeCompilation();
+
 builder.Services.AddRazorPages();
 var app = builder.Build();
 

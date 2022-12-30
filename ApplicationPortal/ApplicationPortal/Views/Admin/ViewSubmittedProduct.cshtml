@@ -1,0 +1,84 @@
+﻿@model ProductViewModel
+
+<h5>Product info of Ref.No. @Model.Id</h5>
+
+<div>
+    @Html.DisplayNameFor(q => q.Name)
+    @Html.DisplayTextFor(q => q.Name)
+</div>
+
+<div>
+    @Html.DisplayNameFor(q => q.Model)
+    @Html.DisplayTextFor(q => q.Model)
+</div>
+
+<div>
+    @Html.DisplayNameFor(q => q.Brand)
+    @Html.DisplayTextFor(q => q.Brand)
+</div>
+
+<div>
+    @Html.DisplayNameFor(q => q.Manufacturer)
+    @Html.DisplayTextFor(q => q.Manufacturer)
+</div>
+
+<hr />
+
+<h5>Technical product info</h5>
+
+<div>
+    @Html.DisplayNameFor(q => q.OutputPower)
+    @Html.DisplayTextFor(q => q.OutputPower)
+</div>
+
+@for (int i = 0; i < Model.Frequencies.Count; i++)
+{
+    <div class="row">
+        <div class="col">
+            @Html.DisplayNameFor(q => @Model.Frequencies[i].StartRange)
+            @Html.DisplayTextFor(q => @Model.Frequencies[i].StartRange)
+        </div>
+
+        <div class="col">
+            @Html.DisplayNameFor(q => @Model.Frequencies[i].EndRange)
+            @Html.DisplayTextFor(q => @Model.Frequencies[i].EndRange)
+        </div>
+
+        <div class="col">
+            @Html.DisplayNameFor(q => @Model.Frequencies[i].FrequencyUnit)
+            @Html.DisplayTextFor(q => @Model.Frequencies[i].FrequencyUnit)
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col">
+        @Html.DisplayNameFor(q => @Model.AntennaGain.Amount)
+        @Html.DisplayTextFor(q => @Model.AntennaGain.Amount)
+    </div>
+
+    <div class="col">
+        @Html.DisplayNameFor(q => @Model.AntennaGain.AntennaGainUnit)
+        @Html.DisplayTextFor(q => @Model.AntennaGain.AntennaGainUnit)
+    </div>
+</div>
+
+<hr />
+
+<h5>Additional product info</h5>
+
+<div>
+    @Html.DisplayNameFor(q => q.OtherInformation)
+    @Html.DisplayTextFor(q => q.OtherInformation)
+</div>
+
+<div>
+    @Html.DisplayNameFor(q => q.PathToFile)
+    @Html.DisplayTextFor(q => q.PathToFile)
+</div>
+<hr />
+
+@Html.ActionLink("Go back", "GetSubmittedProductsAndUsers", "Admin")
+@Html.ActionLink("Delete", "DeleteProduct", "Admin", new {productId = @Model.Id})
+@Html.ActionLink("Confirm and go ahead", "AcceptProduct", "Admin", new {productId = @Model.Id})
+@Html.ActionLink("Edit", "EditProduct", "Admin", new {productId = @Model.Id})

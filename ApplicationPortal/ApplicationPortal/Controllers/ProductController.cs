@@ -18,7 +18,7 @@ namespace ApplicationPortal.Controllers
         public ProductController(ProductService productService, UserManager<User> userManager)
         {
             _productService = productService;
-            _userManager = userManager; 
+            _userManager = userManager;
         }
 
         //выводим информацию о залогиненном юзере (мэйл, название компаний)
@@ -99,11 +99,32 @@ namespace ApplicationPortal.Controllers
             //{
             //    ViewBag.ShowApplyChanges = false;
             //}
-            ViewBag.ShowApplyChanges = product.Status >= Enums.ProductStatus.ExtraInfoSubmitted;
 
-            var viewModelPerId = new TechProductViewModel { ProductId = productId };
-            viewModelPerId.Frequencies.Add(new FrequencyViewModel());
-            return View(viewModelPerId);
+            //ViewBag.ShowApplyChanges = product.Status >= Enums.ProductStatus.ExtraInfoSubmitted;
+
+            if (product.Status >= Enums.ProductStatus.TechnicalInfoSubmitted)
+            {
+                ViewBag.ShowApplyChanges = true;
+
+                return View(new TechProductViewModel
+                {
+                    ProductId = product.Id,
+                    OutputPower = product.OutputPower,
+                    Frequencies = product.Frequencies,
+                    AntennaGain = product.AntennaGain,
+                });
+            }
+            else
+            {
+                ViewBag.ShowApplyChanges = false;
+                return View(new TechProductViewModel
+                {
+                    ProductId = productId,
+                    //OutputPower = product.OutputPower,
+                    Frequencies = new List<FrequencyViewModel>() { new FrequencyViewModel() }
+                    //AntennaGain = product.AntennaGain
+                });
+            }
         }
 
         [HttpPost]
@@ -129,7 +150,21 @@ namespace ApplicationPortal.Controllers
                     return View(techProduct);
                 }
 
+                if (action == "removeFrequency")
+                {
+                    if (techProduct.Frequencies.Count < 1)
+                    {
+                        ModelState.AddModelError("", "There must be at least one frequency");
+                        return View(techProduct);
+                    }
+                    var frequencyAddedLast = techProduct.Frequencies.Last();
+                    techProduct.Frequencies.Remove(frequencyAddedLast);
+
+                    return View(techProduct);
+                }
+
                 var productForEdit = await _productService.UpdateProductWithTechnicalInfo(techProduct.ProductId, techProduct);
+
                 if (action == "submitEditedTechnicalInfo")
                 {
                     return RedirectToAction("VerifyProductInfo", "Product", new { productId = productForEdit.Id });
@@ -146,8 +181,29 @@ namespace ApplicationPortal.Controllers
         public async Task<IActionResult> ExtraProductInfo(int productId)
         {
             var product = await _productService.GetProductById(productId);
-            ViewBag.ShowApplyChanges = product.Status >= Enums.ProductStatus.ExtraInfoSubmitted;
-            return View(new ExtraProductViewModel { ProductId = productId });
+
+            if (product.Status >= Enums.ProductStatus.ExtraInfoSubmitted)
+            {
+                ViewBag.ShowApplyChanges = true;
+
+                return View(new ExtraProductViewModel
+                {
+                    ProductId = product.Id,
+                    OtherInformation = product.OtherInformation,
+                    PathToFile = product.PathToFile
+                });
+            }
+
+            else
+            {
+                ViewBag.ShowApplyChanges = false;
+                return View(new ExtraProductViewModel
+                {
+                    ProductId = productId
+                });
+                //ViewBag.ShowApplyChanges = product.Status >= Enums.ProductStatus.ExtraInfoSubmitted;
+                //return View(new ExtraProductViewModel { ProductId = productId });
+            }
         }
 
         [HttpPost]
@@ -173,7 +229,7 @@ namespace ApplicationPortal.Controllers
             return View(result);
         }
 
-        //сделать 4  баттона (save as a draft, submit (submittedproducts), cancel, edit)
+        //сделать 4  баттона (save as a draft, submit (submittedproducts), cancel, t)
         [HttpPost]
         public async Task<IActionResult> VerifyProductInfo(int productId, string action)
         {
@@ -212,8 +268,9 @@ namespace ApplicationPortal.Controllers
         #region buttons
         [HttpGet]
         //id to parameter
-        public async Task<IActionResult> GetSubmittedProducts(string userId)
+        public async Task<IActionResult> GetSubmittedProducts()
         {
+            var userId = _userManager.GetUserId(User);
             var allProducts = await _productService.GetProducts(userId);
             return View(allProducts);
         }
@@ -234,6 +291,87 @@ namespace ApplicationPortal.Controllers
             //ViewBag send to view. which view?
             return RedirectToAction("GetSubmittedProducts", "Product");
             //return View()?
+        }
+
+        #region buttons by user(cancel, continue, view)
+        public async Task<IActionResult> ViewApplicationNotSubmitted(int productId)
+        {
+            var application = await _productService.GetProductById(productId);
+            return View(application);
+        }
+
+        public async Task<IActionResult> CancelNotSubmittedApplication(int productId)
+        {
+            await _productService.CancelProduct(productId);
+
+            return RedirectToAction("GetSubmittedProducts", "Product");
+        }
+
+        public async Task<IActionResult> SubmitSavedProduct(int productId)
+        {
+            await _productService.AcceptProduct(productId);
+            return RedirectToAction("GetSubmittedProducts", "Product");
+        }
+
+        public async Task<IActionResult> EditNotSubmittedProduct(int productId)
+        {            
+            var product = await _productService.GetProductById(productId);
+
+            if (product.Status == Enums.ProductStatus.GeneralInfoSubmitted)
+            {
+                return RedirectToAction("TechnicalProductInfo", new { productId = product.Id });
+            }
+
+            else if (product.Status == Enums.ProductStatus.TechnicalInfoSubmitted)
+            {
+                return RedirectToAction("ExtraProductInfo", new { productId = product.Id });
+            }
+
+            else
+            {
+                return RedirectToAction("ExtraProductInfo", new { productId = product.Id });
+            }
+            //    if (product.Frequencies.Any() == false)
+            //    {
+            //        product.Frequencies.Add(new FrequencyViewModel());
+            //    }
+            //    return View(product);
+            //}
+
+            //[HttpPost]
+            //public async Task<IActionResult> EditNotSubmittedProduct(ProductViewModel product, string action)
+            //{
+            //    if (action == "addNewFrequency")
+            //    {
+            //        if (product.Frequencies.Count > 10)
+            //        {
+            //            ModelState.AddModelError("", "The number of frequency models must be no more than 10");
+            //            return View(product);
+            //        }
+
+            //        product.Frequencies.Add(new FrequencyViewModel());
+            //        return View(product);
+            //    }
+
+            //    if (action == "removeFrequency")
+            //    {
+            //        if (product.Frequencies.Count < 1)
+            //        {
+            //            ModelState.AddModelError("", "There must be at least one frequency");
+            //            return View(product);
+            //        }
+            //        var frequencyAddedLast = product.Frequencies.Last();
+            //        product.Frequencies.Remove(frequencyAddedLast);
+
+            //        return View(product);
+            //    }
+
+            //    await _productService.EditProductFullInfo(product);
+
+            //    return RedirectToAction("ViewSubmittedProduct", new { productId = product.Id });
+            //}
+
+            #endregion
         }
     }
 }

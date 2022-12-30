@@ -31,13 +31,13 @@ namespace ApplicationPortal.Models
 
         public AntennaGainViewModel AntennaGain { get; set; }
 
-        [Display(Name = "Status of the application:")]
+        [Display(Name = "Additional information:")]
         public string OtherInformation { get; set; }
 
         [Display(Name = "Path to file:")]
         public string PathToFile { get; set; }
 
-        [Display(Name = "Path to file:")]
+        [Display(Name = "Status:")]
         public ProductStatus? Status { get; set; }
     }
 }

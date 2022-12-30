@@ -5,6 +5,7 @@ namespace ApplicationPortal.Models
 {
     public class FrequencyViewModel
     {
+        public int? FrequencyId { get; set; }
         [Required(ErrorMessage = "Please insert actual frequency range")]
         [Display(Name = "Frequency: from")]
         public double StartRange { get; set; }

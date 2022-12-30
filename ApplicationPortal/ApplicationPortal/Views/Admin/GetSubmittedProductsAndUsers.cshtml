@@ -28,35 +28,11 @@
                 <td>@product.Model</td>
                 <td>@product.Manufacturer</td>
                 <td>@product.Status</td>
-                <td>@Html.ActionLink("View", "ViewSubmittedProduct", "Admin")</td>
-                <td>@Html.ActionLink("Delete", "DeleteProduct", "Admin")</td>                
-                <td>@Html.ActionLink("Confirm and go ahead", "AcceptProduct", "Admin")</td>
-                <td>@Html.ActionLink("Edit", "EditProduct", "Admin")</td>
+                <td>@Html.ActionLink("View", "ViewSubmittedProduct", "Admin", new {productId = product.Id})</td>
+                <td>@Html.ActionLink("Delete", "DeleteProduct", "Admin", new {productId = product.Id})</td>                
+                <td>@Html.ActionLink("Confirm and go ahead", "AcceptProduct", "Admin", new {productId = product.Id})</td>
+                <td>@Html.ActionLink("Edit", "EditProduct", "Admin", new {productId = product.Id})</td>
             </tr>
         }
     </tbody>
 </table>
-}
-@*
- if (ViewBag.ShowApplyChanges == true)
-    {
-        <button type="submit" name="action" value="submitEditedTechnicalInfo">Apply changes</button>
-    }
-    else
-    {
-        <button type="submit" name="action" value="goToNextPage">Next</button>
-    }*@
-@*
-<div>Edit general product info</div>
-@Html.ActionLink("Edit", "GeneralProductInfo", new {productId = @Model.Id})
-*@
-@*<hr />
-
-<div>Edit technical product info</div>
-@Html.ActionLink("Edit", "TechnicalProductInfo", new {productId = @Model.Id})
-<hr />
-
-<h5>Edit additional product info</h5>
-
-@Html.ActionLink("Edit", "ExtraProductInfo", new {productId = @Model.Id})*@
-
