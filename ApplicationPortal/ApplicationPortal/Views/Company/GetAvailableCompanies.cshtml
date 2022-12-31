@@ -1,0 +1,36 @@
+﻿@model IEnumerable<CompanyViewModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(q => q.CompanyId)</th>
+            <th>@Html.DisplayNameFor(q => q.CompanyName)</th>
+            <th>@Html.DisplayNameFor(q => q.Address)</th>
+            <th>@Html.DisplayNameFor(q => q.BusinessId)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.CompanyId</td>
+                <td>@product.CompanyName</td>
+                <td>@product.Address</td>
+                <td>@product.BusinessId</td>
+                @* <td>@Html.ActionLink("View", "ViewApplicationNotSubmitted", "Product", new {productId = product.Id})</td>
+            <td>@if (product.Status < ProductStatus.FinallySubmitted)
+            {
+            @Html.ActionLink("Cancel", "CancelNotSubmittedApplication", "Product", new {productId = product.Id})
+            }
+            </td>
+            <td>@if(product.Status < ProductStatus.FinallySubmitted)
+            {
+            @Html.ActionLink("Submit", "SubmitSavedProduct", "Product", new {productId = product.Id})
+            }</td>*@
+            </tr>
+        }
+    </tbody>
+    <thead />
+</table>
+
+@Html.ActionLink("Add a new company", "CreateCompany")

@@ -1,4 +1,6 @@
 ﻿@page
+@using ApplicationPortal.Data.Entities
+@using ApplicationPortal.Enums
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
@@ -17,6 +19,11 @@
                 <label asp-for="Input.Email"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
+            @*<div class="form-floating">
+                @Html.LabelFor(q => @Model.Input.CompanyId)
+                @Html.DropDownListFor(q => @Model.Input.CompanyId, List <Company>)
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>*@
             <div class="form-floating">
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="Input.Password"></label>
@@ -39,8 +46,10 @@
                 {
                     <div>
                         <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
+                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                                article
+                                about setting up this ASP.NET application to support logging in via external services
+                            </a>.
                         </p>
                     </div>
                 }

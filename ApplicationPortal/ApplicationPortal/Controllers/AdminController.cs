@@ -94,7 +94,7 @@ namespace ApplicationPortal.Controllers
             await _productService.EditProductFullInfo(product);
             
             return RedirectToAction("ViewSubmittedProduct", new {productId = product.Id});
-        }
+        } 
         #endregion
     }
 }

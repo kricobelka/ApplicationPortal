@@ -1,0 +1,31 @@
+﻿@model CompanyViewModel
+
+<h5>Page for adding a new company</h5>
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+    @Html.ValidationSummary(false)
+
+    <div>
+        @Html.LabelFor(q => q.CompanyName)
+        @Html.EditorFor(q => q.CompanyName)
+        @Html.ValidationMessageFor(q => q.CompanyName)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.Address)
+        @Html.EditorFor(q => q.Address)
+        @Html.ValidationMessageFor(q => q.Address)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.BusinessId)
+        @Html.EditorFor(q => q.BusinessId)
+        @Html.ValidationMessageFor(q => q.BusinessId)
+    </div>
+
+    <button>Submit</button>
+}
+
+
+@Html.ActionLink("Registered companies", "GetAvailableCompanies")
