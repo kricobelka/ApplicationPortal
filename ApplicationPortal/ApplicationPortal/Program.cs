@@ -24,8 +24,8 @@ builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.Requi
 //.AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services
-    .AddControllersWithViews();
-    //.AddRazorRuntimeCompilation();
+    .AddControllersWithViews()
+    .AddRazorRuntimeCompilation();
 
 builder.Services.AddRazorPages();
 var app = builder.Build();

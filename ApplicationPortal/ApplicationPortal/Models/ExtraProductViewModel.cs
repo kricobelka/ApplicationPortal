@@ -11,6 +11,7 @@ namespace ApplicationPortal.Models
 
         [Required(ErrorMessage = "Please provide the link to the documents")]
         [Display(Name = "Path to file")]
+        [Url]
         public string PathToFile { get; set; }
     }
 }

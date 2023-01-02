@@ -1,0 +1,27 @@
+﻿@model CompanyViewModel
+
+<h5>Company info: @Model.CompanyId</h5>
+
+<div>
+    <b>@Html.DisplayNameFor(q => q.CompanyId)</b>: 
+    @Html.DisplayTextFor(q => q.CompanyId)
+</div>
+
+<div>
+    <b>@Html.DisplayNameFor(q => q.CompanyName)</b>: 
+    @Html.DisplayTextFor(q => q.CompanyName)
+</div>
+
+<div>
+    <b>@Html.DisplayNameFor(q => q.Address)</b>: 
+    @Html.DisplayTextFor(q => q.Address)
+</div>
+
+<div>
+    <b>@Html.DisplayNameFor(q => q.BusinessId)</b>: 
+    @Html.DisplayTextFor(q => q.BusinessId)
+</div>
+
+@Html.ActionLink("Go back", "GetAvailableCompanies", "Company")
+@Html.ActionLink("Delete company", "DeleteCompany", "Company", new {companyId = @Model.CompanyId})
+@Html.ActionLink("Edit company", "EditCompany", "Company", new {companyId = @Model.CompanyId})

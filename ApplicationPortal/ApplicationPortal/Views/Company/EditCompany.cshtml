@@ -1,0 +1,31 @@
+﻿@model CompanyViewModel 
+
+@using (@Html.BeginForm("EditCompany", "Company", FormMethod.Post))
+{
+    @Html.HiddenFor(q => q.CompanyId)
+    @Html.ValidationSummary(false)
+
+    <h5>Edit information of company No.@Model.CompanyId</h5>
+
+    <div>
+        @Html.LabelFor(q => q.CompanyName): 
+        @Html.TextBoxFor(q => q.CompanyName)
+        @Html.ValidationMessageFor(q => q.CompanyName)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.Address): 
+        @Html.TextBoxFor(q => q.Address)
+        @Html.ValidationMessageFor(q => q.Address)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.BusinessId): 
+        @Html.TextBoxFor(q => q.BusinessId)
+        @Html.ValidationMessageFor(q => q.BusinessId)
+    </div>
+
+    <button>Apply changes</button>
+}
+
+@Html.ActionLink("Go back to the company list", "GetAvailableCompanies", "Company")

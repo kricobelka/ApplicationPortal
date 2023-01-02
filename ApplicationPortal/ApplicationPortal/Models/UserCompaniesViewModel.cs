@@ -1,4 +1,7 @@
-﻿namespace ApplicationPortal.Models
+﻿using DataAnnotationsExtensions;
+using System.ComponentModel.DataAnnotations;
+
+namespace ApplicationPortal.Models
 {
     public class UserCompaniesViewModel
     {

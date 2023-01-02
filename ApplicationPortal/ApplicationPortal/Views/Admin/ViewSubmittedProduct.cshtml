@@ -3,22 +3,22 @@
 <h5>Product info of Ref.No. @Model.Id</h5>
 
 <div>
-    @Html.DisplayNameFor(q => q.Name)
+    <b>@Html.DisplayNameFor(q => q.Name)</b>
     @Html.DisplayTextFor(q => q.Name)
 </div>
 
 <div>
-    @Html.DisplayNameFor(q => q.Model)
+    <b>@Html.DisplayNameFor(q => q.Model)</b>
     @Html.DisplayTextFor(q => q.Model)
 </div>
 
 <div>
-    @Html.DisplayNameFor(q => q.Brand)
+    <b>@Html.DisplayNameFor(q => q.Brand)</b>
     @Html.DisplayTextFor(q => q.Brand)
 </div>
 
 <div>
-    @Html.DisplayNameFor(q => q.Manufacturer)
+    <b>@Html.DisplayNameFor(q => q.Manufacturer)</b>
     @Html.DisplayTextFor(q => q.Manufacturer)
 </div>
 
@@ -27,7 +27,7 @@
 <h5>Technical product info</h5>
 
 <div>
-    @Html.DisplayNameFor(q => q.OutputPower)
+    <b>@Html.DisplayNameFor(q => q.OutputPower)</b>
     @Html.DisplayTextFor(q => q.OutputPower)
 </div>
 
@@ -45,7 +45,7 @@
         </div>
 
         <div class="col">
-            @Html.DisplayNameFor(q => @Model.Frequencies[i].FrequencyUnit)
+            <b>@Html.DisplayNameFor(q => @Model.Frequencies[i].FrequencyUnit)</b>
             @Html.DisplayTextFor(q => @Model.Frequencies[i].FrequencyUnit)
         </div>
     </div>
@@ -53,12 +53,12 @@
 
 <div class="row">
     <div class="col">
-        @Html.DisplayNameFor(q => @Model.AntennaGain.Amount)
+        <b>@Html.DisplayNameFor(q => @Model.AntennaGain.Amount)</b>
         @Html.DisplayTextFor(q => @Model.AntennaGain.Amount)
     </div>
 
     <div class="col">
-        @Html.DisplayNameFor(q => @Model.AntennaGain.AntennaGainUnit)
+        <b>@Html.DisplayNameFor(q => @Model.AntennaGain.AntennaGainUnit)</b>
         @Html.DisplayTextFor(q => @Model.AntennaGain.AntennaGainUnit)
     </div>
 </div>
@@ -68,12 +68,12 @@
 <h5>Additional product info</h5>
 
 <div>
-    @Html.DisplayNameFor(q => q.OtherInformation)
+    <b>@Html.DisplayNameFor(q => q.OtherInformation)</b>
     @Html.DisplayTextFor(q => q.OtherInformation)
 </div>
 
 <div>
-    @Html.DisplayNameFor(q => q.PathToFile)
+    <b>@Html.DisplayNameFor(q => q.PathToFile)</b>
     @Html.DisplayTextFor(q => q.PathToFile)
 </div>
 <hr />

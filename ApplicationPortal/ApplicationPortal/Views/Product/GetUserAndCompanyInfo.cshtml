@@ -2,7 +2,17 @@
 
 @using (@Html.BeginForm("VerifyUserAndGoNext", "Product", FormMethod.Post))
 {
-    <div>@Model.UserEmail</div>
-    <div>@Model.CompanyName</div>
+    <div>Please confirm user information:</div>
+
+    <div>
+        <b>@Html.DisplayNameFor(q => q.UserEmail): </b> 
+        @Model.UserEmail
+    </div>
+
+    <div>
+        <b>@Html.DisplayNameFor(q => q.CompanyName): </b> 
+        @Model.CompanyName
+    </div>
+
     <button>Next</button>
 }

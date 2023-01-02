@@ -62,5 +62,24 @@ namespace ApplicationPortal.Services
             _context.Companies.Remove(companyForDelete);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<CompanyViewModel> EditCompany(CompanyViewModel model)
+        {
+            var companyForEdit = await _context.Companies.FindAsync(model.CompanyId);
+
+            companyForEdit.CompanyId = model.CompanyId;
+            companyForEdit.CompanyName = model.CompanyName;
+            companyForEdit.Address = model.Address;
+            companyForEdit.BusinessId = model.BusinessId;
+
+            await _context.SaveChangesAsync();
+            return FullCompanyMap(companyForEdit);           
+        }
+
+        public async Task<CompanyViewModel> GetCompanyById(int companyId)
+        {
+            var company = await _context.Companies.FindAsync(companyId);
+            return FullCompanyMap(company);
+        }
     }
 }

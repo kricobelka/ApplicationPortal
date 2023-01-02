@@ -6,8 +6,8 @@
     @Html.HiddenFor(q => q.Id)
     @Html.ValidationSummary(false)
 
-    <h5>Product info of Ref.No. @Model.Id</h5>
-
+    <h5>Edit product info of Ref. No. @Model.Id</h5>
+    <p></p>
     <div>
         @Html.LabelFor(q => q.Name)
         @Html.TextBoxFor(q => q.Name)
@@ -28,12 +28,14 @@
 
     <div>
         @Html.LabelFor(q => q.Manufacturer)
-         @Html.TextBoxFor(q => q.Manufacturer)
+        @Html.TextBoxFor(q => q.Manufacturer)
         @Html.ValidationMessageFor(q => q.Manufacturer)
     </div>
-    
-    <h5>Technical info of Ref.No. @Model.Id</h5>
 
+    <hr />
+
+    <h5>Technical info of Ref.No. @Model.Id</h5>
+    <p></p>
     <div>
         @Html.LabelFor(q => q.OutputPower)
         @Html.TextBoxFor(q => q.OutputPower)
@@ -63,28 +65,32 @@
             </div>
         </div>
     }
+    <p></p>
+
     <button type="submit" name="action" value="addNewFrequency">Add new frequency</button>
     <button type="submit" name="action" value="removeFrequency">Remove frequency</button>
+    <p></p>
 
-    <hr />
 
     <div class="row">
         <div class="col">
             @Html.LabelFor(q => @Model.AntennaGain.Amount)
-            @Html.TextBoxFor(q => @Model.AntennaGain.Amount)            
+            @Html.TextBoxFor(q => @Model.AntennaGain.Amount)
             @Html.ValidationMessageFor(q => @Model.AntennaGain.Amount)
-        @*@Html.ValidationMessageFor(q => q.OutputPower)*@
+            @*@Html.ValidationMessageFor(q => q.OutputPower)*@
         </div>
 
         <div class="col">
             @Html.LabelFor(q => @Model.AntennaGain.AntennaGainUnit)
             @Html.DropDownListFor(q => @Model.AntennaGain.AntennaGainUnit, Html.GetEnumSelectList<AntennaGainUnit>())
-            @Html.ValidationMessageFor(q => @Model.AntennaGain.AntennaGainUnit)     
+            @Html.ValidationMessageFor(q => @Model.AntennaGain.AntennaGainUnit)
         </div>
     </div>
 
-    <h5>Additional info of Ref.No. @Model.Id</h5>
+    <hr />
 
+    <h5>Additional info of Ref.No. @Model.Id</h5>
+    <p></p>
     <div>
         @Html.LabelFor(q => q.OtherInformation)
         @Html.TextBoxFor(q => q.OtherInformation)
@@ -96,6 +102,7 @@
         @Html.TextBoxFor(q => q.PathToFile)
         @Html.ValidationMessageFor(q => q.PathToFile)
     </div>
-
+    <br />
     <button>Apply changes</button>
 }
+

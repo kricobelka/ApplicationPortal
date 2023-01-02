@@ -29,7 +29,7 @@
                 <td>@product.Manufacturer</td>
                 <td>@product.Status</td>
                 <td>@Html.ActionLink("View", "ViewSubmittedProduct", "Admin", new {productId = product.Id})</td>
-                <td>@Html.ActionLink("Delete", "DeleteProduct", "Admin", new {productId = product.Id})</td>                
+                <td>@Html.ActionLink("Delete", "DeleteProduct", "Admin", new {productId =product.Id})</td>                
                 <td>@Html.ActionLink("Confirm and go ahead", "AcceptProduct", "Admin", new {productId = product.Id})</td>
                 <td>@Html.ActionLink("Edit", "EditProduct", "Admin", new {productId = product.Id})</td>
             </tr>

@@ -7,7 +7,7 @@
     @Html.ValidationSummary(false)
 
     <div>
-        @Html.LabelFor(q => q.Name)
+        @Html.LabelFor(q => q.Name): 
         @Html.EditorFor(q => q.Name)
         @Html.ValidationMessageFor(q => q.Name)
     </div>
@@ -18,20 +18,20 @@
     </div>*@
 
     <div>
-        @Html.LabelFor(q => q.Brand)
+        @Html.LabelFor(q => q.Brand): 
         @*@Html.TextBoxFor(q => q.Brand)*@
         @Html.EditorFor(q => q.Brand)
         @Html.ValidationMessageFor(q => q.Brand)
     </div>
 
     <div>
-        @Html.LabelFor(q => q.Model)
+        @Html.LabelFor(q => q.Model): 
         @Html.EditorFor(q => q.Model)
         @Html.ValidationMessageFor(q => q.Model)
     </div>
 
     <div>
-        @Html.LabelFor(q => q.Manufacturer)
+        @Html.LabelFor(q => q.Manufacturer): 
          @Html.EditorFor(q => q.Manufacturer)
         @Html.ValidationMessageFor(q => q.Manufacturer)
     </div>

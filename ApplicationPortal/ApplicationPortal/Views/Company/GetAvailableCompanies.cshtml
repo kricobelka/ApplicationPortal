@@ -10,23 +10,16 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var product in Model)
+        @foreach (var company in Model)
         {
             <tr>
-                <td>@product.CompanyId</td>
-                <td>@product.CompanyName</td>
-                <td>@product.Address</td>
-                <td>@product.BusinessId</td>
-                @* <td>@Html.ActionLink("View", "ViewApplicationNotSubmitted", "Product", new {productId = product.Id})</td>
-            <td>@if (product.Status < ProductStatus.FinallySubmitted)
-            {
-            @Html.ActionLink("Cancel", "CancelNotSubmittedApplication", "Product", new {productId = product.Id})
-            }
-            </td>
-            <td>@if(product.Status < ProductStatus.FinallySubmitted)
-            {
-            @Html.ActionLink("Submit", "SubmitSavedProduct", "Product", new {productId = product.Id})
-            }</td>*@
+                <td>@company.CompanyId</td>
+                <td>@company.CompanyName</td>
+                <td>@company.Address</td>
+                <td>@company.BusinessId</td>                            
+                <td>@Html.ActionLink("View", "ViewCompanyPerId", "Company", new {companyId = company.CompanyId})</td>
+                <td>@Html.ActionLink("Delete", "DeleteCompany", "Company", new {companyId = company.CompanyId})</td>                
+                <td>@Html.ActionLink("Edit", "EditCompany", "Company", new {companyId = company.CompanyId})</td>
             </tr>
         }
     </tbody>

@@ -6,13 +6,13 @@
     @Html.HiddenFor(q => q.ProductId)
 
     <div>
-        @Html.LabelFor(q => q.OtherInformation)
+        @Html.LabelFor(q => q.OtherInformation): 
         @Html.TextBoxFor(q => q.OtherInformation)
         @Html.ValidationMessageFor(q => q.OtherInformation)
     </div>
 
     <div>
-        @Html.LabelFor(q => q.PathToFile)
+        @Html.LabelFor(q => q.PathToFile): 
         @Html.TextBoxFor(q => q.PathToFile)
         @Html.ValidationMessageFor(q => q.PathToFile)
     </div>

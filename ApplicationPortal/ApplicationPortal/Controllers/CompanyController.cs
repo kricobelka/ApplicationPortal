@@ -36,7 +36,7 @@ namespace ApplicationPortal.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCompany(CompanyViewModel company)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 await _companyService.AddNewCompany(company);
                 return RedirectToAction("GetAvailableCompanies");
@@ -45,9 +45,44 @@ namespace ApplicationPortal.Controllers
             return View(company);
         }
 
-        public async Task DeleteCompany(int companyId)
+        public async Task<IActionResult> DeleteCompany(int companyId)
         {
-                await _companyService.DeleteCompany(companyId);
+            await _companyService.DeleteCompany(companyId);
+            return RedirectToAction("GetAvailableCompanies");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditCompany(int companyId)
+        {
+            if (ModelState.IsValid)
+            {
+                var product = await _companyService.GetCompanyById(companyId);
+                return View(product);
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditCompany(CompanyViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var company = await _companyService.EditCompany(model);
+                return RedirectToAction("ViewCompanyPerId", new { companyId = company.CompanyId });
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> ViewCompanyPerId(int companyId)
+        {
+            if (ModelState.IsValid)
+            {
+                var companyById = await _companyService.GetCompanyById(companyId);
+                return View(companyById);
+            }
+
+            return View();
         }
 
     }

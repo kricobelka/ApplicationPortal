@@ -93,7 +93,6 @@ namespace ApplicationPortal.Controllers
         [HttpGet]
         public async Task<IActionResult> TechnicalProductInfo(int productId)
         {
-
             var product = await _productService.GetProductById(productId);
             //if (product.Status == Enums.ProductStatus.GeneralInfoSubmitted)
             //{
@@ -309,28 +308,36 @@ namespace ApplicationPortal.Controllers
 
         public async Task<IActionResult> SubmitSavedProduct(int productId)
         {
-            await _productService.AcceptProduct(productId);
-            return RedirectToAction("GetSubmittedProducts", "Product");
+            if (ModelState.IsValid)
+            {
+                await _productService.AcceptProduct(productId);
+                return RedirectToAction("GetSubmittedProducts", "Product");
+            }
+            return View();
         }
 
         public async Task<IActionResult> EditNotSubmittedProduct(int productId)
-        {            
-            var product = await _productService.GetProductById(productId);
-
-            if (product.Status == Enums.ProductStatus.GeneralInfoSubmitted)
+        {
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("TechnicalProductInfo", new { productId = product.Id });
-            }
+                var product = await _productService.GetProductById(productId);
 
-            else if (product.Status == Enums.ProductStatus.TechnicalInfoSubmitted)
-            {
-                return RedirectToAction("ExtraProductInfo", new { productId = product.Id });
-            }
+                if (product.Status == Enums.ProductStatus.GeneralInfoSubmitted)
+                {
+                    return RedirectToAction("TechnicalProductInfo", new { productId = product.Id });
+                }
 
-            else
-            {
-                return RedirectToAction("ExtraProductInfo", new { productId = product.Id });
+                else if (product.Status == Enums.ProductStatus.TechnicalInfoSubmitted)
+                {
+                    return RedirectToAction("ExtraProductInfo", new { productId = product.Id });
+                }
+
+                else
+                {
+                    return RedirectToAction("ExtraProductInfo", new { productId = product.Id });
+                }
             }
+            return View();
             //    if (product.Frequencies.Any() == false)
             //    {
             //        product.Frequencies.Add(new FrequencyViewModel());
@@ -370,7 +377,6 @@ namespace ApplicationPortal.Controllers
 
             //    return RedirectToAction("ViewSubmittedProduct", new { productId = product.Id });
             //}
-
             #endregion
         }
     }
