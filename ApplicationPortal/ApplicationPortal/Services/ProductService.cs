@@ -41,8 +41,9 @@ namespace ApplicationPortal.Services
         #endregion
 
         #region general product info
+        
 
-
+        
         public async Task<ProductViewModel> CreateProductGeneralInfo(string userId, GenProductViewModel product)
         {
             var newProduct = new Product()

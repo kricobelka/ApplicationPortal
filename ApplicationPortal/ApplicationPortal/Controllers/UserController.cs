@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApplicationPortal.Constants;
+using ApplicationPortal.Services;
+using ApplicationPortal.Models;
 
 namespace ApplicationPortal.Controllers
 {
@@ -12,14 +14,16 @@ namespace ApplicationPortal.Controllers
         private readonly ApplicationDbContext _context;
         readonly RoleManager<IdentityRole> _roleManager;
         readonly UserManager<User> _userManager;
+        readonly UserService _userService;
 
         public UserController(UserManager<User> userManager,
             RoleManager<IdentityRole> roleManager,
-            ApplicationDbContext context)
+            ApplicationDbContext context, UserService userService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _context = context;
+            _userService = userService;
         }
 
         public async Task<IActionResult> AddAdminRoleToUser()
@@ -29,53 +33,81 @@ namespace ApplicationPortal.Controllers
             return RedirectToAction("GetRoles", "Role");
         }
 
-        //public async Task<IActionResult> UsersAndTheirRoles()
-        //{
+        //#region userprofile
 
-        //}
+        public async Task<IActionResult> GetUserProfile()
+        {
+            string userId = GetUserId();
+            var userProfile = await _userService.GetUserProfile(userId);
+            return View(userProfile);
+        }
 
-        #region  методом выбоора между юзером и его ролью(userid, roleid)
-        //где происходит выбор между ролями? после логина?
+        [HttpGet]
+        public async Task<IActionResult> EditUserProfile()
+        {
+            string userId = GetUserId();
+            var userProfile = await _userService.GetUserProfile(userId);
+            return View(userProfile);
+        }
 
-        //[HttpGet]
-        ////indicate it or string? in userroles table id = nvarchar 
-        //public async Task<IActionResult> SelectRole(int id)
-        //{
-        //    var selectedUser = await _context.Users.FindAsync(id);
-        //    var selectedRole = await _context.Roles.ToListAsync();
-        //    var userAndRoles = await _context.UserRoles.Select(q => new
-        //    {
-        //        User = selectedUser,
-        //        Role = selectedRole
-        //    }).ToListAsync();
+        [HttpPost]
+        public async Task<IActionResult> EditUserProfile(UserViewModelRequest requestModel)
+        {
+            string userId = GetUserId();
+            await _userService.EditUserProfile(userId, requestModel);
+            return RedirectToAction("GetUserProfile", "User");
+        }
 
-        //    return View(userAndRoles);
-        //}
+        public string GetUserId()
+        {
+            var userId = _userManager.GetUserId(User);
+            return userId;
+            //public async Task<IActionResult> UsersAndTheirRoles()
+            //{
 
-        ////UserRoles: набор объектов IdentityUserRole, 
-        ////    соответствует таблице, которая сопоставляет 
-        ////    пользователей и их роли
+            //}
 
-        //[HttpPost]
-        //public async Task<IActionResult> SelectRole(IdentityUser userId, IdentityRole roleId)
-        //{
-        //    await _context.Users.FindAsync(userId);
-        //    if (roleId == await _roleManager.FindByNameAsync("Admin"))
-        //    {
-        //        var selectedRole = await _roleManager.UpdateAsync(roleId);
-        //        return View(selectedRole);
-        //        //_roleManager.SetRoleNameAsync
-        //    }
-        //    // нужно ко всем остальным юзерам кроме админа повесить роль "юзер" или она сама вешается
-        //    else if (roleId == await _roleManager.FindByNameAsync("User"))
-        //    {
-        //        //var selectedRole = await _roleManager.UpdateAsync(roleId);   
-        //        return View(await _roleManager.UpdateAsync(roleId));
-        //    }
-        //    return RedirectToAction();
-        //}
-        #endregion
+            #region  методом выбоора между юзером и его ролью(userid, roleid)
+            //где происходит выбор между ролями? после логина?
+
+            //[HttpGet]
+            ////indicate it or string? in userroles table id = nvarchar 
+            //public async Task<IActionResult> SelectRole(int id)
+            //{
+            //    var selectedUser = await _context.Users.FindAsync(id);
+            //    var selectedRole = await _context.Roles.ToListAsync();
+            //    var userAndRoles = await _context.UserRoles.Select(q => new
+            //    {
+            //        User = selectedUser,
+            //        Role = selectedRole
+            //    }).ToListAsync();
+
+            //    return View(userAndRoles);
+            //}
+
+            ////UserRoles: набор объектов IdentityUserRole, 
+            ////    соответствует таблице, которая сопоставляет 
+            ////    пользователей и их роли
+
+            //[HttpPost]
+            //public async Task<IActionResult> SelectRole(IdentityUser userId, IdentityRole roleId)
+            //{
+            //    await _context.Users.FindAsync(userId);
+            //    if (roleId == await _roleManager.FindByNameAsync("Admin"))
+            //    {
+            //        var selectedRole = await _roleManager.UpdateAsync(roleId);
+            //        return View(selectedRole);
+            //        //_roleManager.SetRoleNameAsync
+            //    }
+            //    // нужно ко всем остальным юзерам кроме админа повесить роль "юзер" или она сама вешается
+            //    else if (roleId == await _roleManager.FindByNameAsync("User"))
+            //    {
+            //        //var selectedRole = await _roleManager.UpdateAsync(roleId);   
+            //        return View(await _roleManager.UpdateAsync(roleId));
+            //    }
+            //    return RedirectToAction();
+            //}
+            #endregion
+        }
     }
 }
-
-
