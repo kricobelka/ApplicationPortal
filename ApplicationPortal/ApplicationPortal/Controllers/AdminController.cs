@@ -8,11 +8,14 @@ namespace ApplicationPortal.Controllers
     public class AdminController : Controller
     {
         private readonly ProductService _productService;
+        private readonly CommentService _commentService;
 
-        public AdminController(ProductService productService)
+        public AdminController(ProductService productService, CommentService commentService)
         {
             _productService = productService;
+            _commentService = commentService;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -30,6 +33,8 @@ namespace ApplicationPortal.Controllers
         public async Task<IActionResult> ViewSubmittedProduct(int productId)
         {
             var product = await _productService.GetProductById(productId);
+            var comments = await _commentService.GetCommentsPerProductId(productId);
+            ViewBag.Comments = comments;
             return View(product);
         }
 

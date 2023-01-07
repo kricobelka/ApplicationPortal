@@ -14,6 +14,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<CompanyService>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<CommentService>();
 
 builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -24,8 +26,8 @@ builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.Requi
 //.AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services
-    .AddControllersWithViews()
-    .AddRazorRuntimeCompilation();
+    .AddControllersWithViews();
+    //.AddRazorRuntimeCompilation();
 
 builder.Services.AddRazorPages();
 var app = builder.Build();

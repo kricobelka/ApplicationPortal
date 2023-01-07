@@ -1,9 +1,9 @@
 ﻿@model ProductViewModel
 
-@using (@Html.BeginForm("VerifyProductInfo", "Product", new { productId = Model.Id }, FormMethod.Post))
+
+@using (@Html.BeginForm("VerifyProductInfoByUser", "Product", new { productId = Model.Id }, FormMethod.Post))
 {
                 //@Html.HiddenFor(q => q.Id)
-
     <h5>General product info</h5>
     @Html.ActionLink("Edit", "GeneralProductInfo", new {productId = @Model.Id})
 
@@ -83,8 +83,7 @@
         @Html.DisplayNameFor(q => q.PathToFile)
         @Html.DisplayTextFor(q => q.PathToFile)
     </div>
-        <hr />
-                @*the same: <button>Submit</button>*@
+    <hr />
     <button type="submit" name="action" value="getSubmittedProducts">Submit</button>
     <button type="submit" name="action" value="cancelProduct">Cancel</button>
     <button type="submit" name="action" value="saveProduct">Save as a draft</button>

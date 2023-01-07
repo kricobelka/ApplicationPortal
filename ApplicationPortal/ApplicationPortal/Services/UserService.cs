@@ -20,7 +20,9 @@ namespace ApplicationPortal.Services
 
         public async Task<UserViewModelResponse> GetUserProfile(string userId)
         {
+            //add id in responsemodel?
             var userProfileInfo = await _context.Users.Where(q => q.Id == userId)
+                .Include(q => q.Company)
                 .Select(q => new UserViewModelResponse
                 {
                     FirstName  = q.FirstName,
@@ -28,6 +30,7 @@ namespace ApplicationPortal.Services
                     UserEmail = q.Email,
                     Phone = q.PhoneNumber,
                     BirthDate = q.BirthDate,
+                    //достать компанию из бд по юзерайди и потом мапить?
                     Company = new CompanyViewModel
                     {
                         CompanyId = q.Company.CompanyId,
@@ -60,13 +63,13 @@ namespace ApplicationPortal.Services
                 LastName = user.LastName,
                 UserEmail = user.Email,
                 Phone = user.PhoneNumber,
-                BirthDate = user.BirthDate,
+                BirthDate = user.BirthDate
                 //Company = new CompanyViewModel
                 //{
                 //    CompanyId = user.Company.CompanyId,
                 //    CompanyName = user.Company.CompanyName,
                 //    Address = user.Company.Address,
-                ////    BusinessId = user.Company.BusinessId
+                //    BusinessId = user.Company.BusinessId
                 //}
             };
         }

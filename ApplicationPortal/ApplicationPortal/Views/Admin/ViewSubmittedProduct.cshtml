@@ -1,6 +1,27 @@
 ﻿@model ProductViewModel
 
-<h5>Product info of Ref.No. @Model.Id</h5>
+<h5>Product info of @Model.Id</h5>
+
+@*@Html.HiddenFor(q => q.Id)*@
+
+@{
+    var comments = ViewBag.Comments as List<CommentViewModelResponse>;
+}
+<br />
+
+<p>Comments left for the product No. @Model.Id</p>
+<ul>
+    @foreach (var comment in comments)
+    {
+        <li>
+            <div>@comment.Text</div>
+            @comment.UserEmail
+            @comment.CreatedDate
+        </li>
+    }
+</ul>
+
+@Html.ActionLink("Add a comment", "CreateAComment", "Comment", new { productId = @Model.Id, isAdmin = true })
 
 <div>
     <b>@Html.DisplayNameFor(q => q.Name)</b>

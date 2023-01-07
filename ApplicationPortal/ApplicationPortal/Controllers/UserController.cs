@@ -39,6 +39,7 @@ namespace ApplicationPortal.Controllers
         {
             string userId = GetUserId();
             var userProfile = await _userService.GetUserProfile(userId);
+            //include Company in the db
             return View(userProfile);
         }
 

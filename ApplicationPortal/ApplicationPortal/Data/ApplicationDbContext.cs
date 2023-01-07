@@ -18,6 +18,7 @@ namespace ApplicationPortal.Data
         public DbSet<Company> Companies { get; set; }
         public DbSet<Frequency> Frequencies { get; set; }
         public DbSet<AntennaGain> AntennaGains { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,7 +30,7 @@ namespace ApplicationPortal.Data
             modelBuilder.ApplyConfiguration(new CompanyConfiguration());
             modelBuilder.ApplyConfiguration(new FrequencyConfiguration());
             modelBuilder.ApplyConfiguration(new AntennaGainConfiguration());
-
+            modelBuilder.ApplyConfiguration(new CommentConfiguration());
             //if necessary, add new properties in class User,
             //then OnModelcreating
             //-----------------------

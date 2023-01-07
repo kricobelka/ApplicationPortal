@@ -18,6 +18,7 @@
         </tr>
     </thead>
     <tbody>
+
         @foreach (var product in Model)
         {
             <tr>
@@ -30,12 +31,15 @@
                 <td>@if (product.Status < ProductStatus.FinallySubmitted)
                     {
                         @Html.ActionLink("Cancel", "CancelNotSubmittedApplication", "Product", new {productId = product.Id})
+                        @TempData["cancelProduct"]
                     }
                 </td>                
                 <td>@if(product.Status < ProductStatus.FinallySubmitted)
                     {
-                        @Html.ActionLink("Submit", "SubmitSavedProduct", "Product", new {productId = product.Id})
-                    }</td>
+                        @Html.ActionLink("Submit", "SubmitSavedProduct", "Product", new { productId = product.Id })
+                        @TempData["submitProduct"]
+                    }
+                </td>
             </tr>
         }
     </tbody>

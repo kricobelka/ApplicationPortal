@@ -1,0 +1,26 @@
+﻿@model CommentViewModelResponse
+
+<h5>Comments connected with @Model.ProductId</h5>
+
+    @Html.HiddenFor(q => q.ProductId)
+
+<div>
+    @Html.DisplayNameFor(q => q.Text)
+    @Html.DisplayTextFor(q => q.Text)
+</div>
+
+<div>
+    @Html.DisplayNameFor(q => q.UserEmail)
+    @Html.DisplayTextFor(q => q.UserEmail)
+</div>
+
+<div>
+    @Html.DisplayNameFor(q => q.FirstName)
+    @Html.DisplayTextFor(q => q.FirstName)
+    @Html.DisplayNameFor(q => q.LastName)
+    @Html.DisplayTextFor(q => q.LastName)
+</div>
+<div>
+    @Html.DisplayNameFor(q => q.CreatedDate)
+    @Html.DisplayTextFor(q => q.CreatedDate)
+</div>

@@ -1,2 +1,81 @@
 ﻿@model UserViewModelResponse
 
+<h5>User profile of @Model.UserEmail</h5>
+
+@Html.HiddenFor(q => User.Identity.IsAuthenticated)
+
+<div>
+    <b>@Html.DisplayNameFor(q => q.FirstName)</b>:
+
+    @*    если в текстоксе вывест,будет ли норм?*@
+    @if (Model.FirstName == null)
+    {
+        <p>To add your firstname, please edit profile</p>
+    }
+
+    @Html.DisplayTextFor(q => q.FirstName)
+</div>
+
+<div>
+    <b>@Html.DisplayNameFor(q => q.LastName)</b>:
+    @if (Model.LastName == null)
+    {
+        <p>To add your lastname, please edit profile</p>
+    }
+
+    @Html.DisplayTextFor(q => q.LastName)
+</div>
+
+<div>
+    <b>@Html.DisplayNameFor(q => q.UserEmail)</b>:
+
+    @Html.DisplayTextFor(q => q.UserEmail)
+</div>
+
+<div>
+    <b>@Html.DisplayNameFor(q => q.BirthDate)</b>:
+    @if (Model.BirthDate == null)
+    {
+        <p>To add birthdate, please edit profile</p>
+    }
+
+    @Html.DisplayTextFor(q => q.BirthDate)
+</div>
+
+<div>
+    <b>@Html.DisplayNameFor(q => q.Phone)</b>:
+    @if (Model.Phone == null)
+    {
+        <p>To add phone, please edit profile</p>
+    }
+
+    @Html.DisplayTextFor(q => q.Phone)
+</div>
+
+<div>
+    <b>@Html.DisplayNameFor(q => q.Company.CompanyName)</b>:
+    @Html.DisplayTextFor(q => q.Company.CompanyName)
+</div>
+
+<div>
+    <b>@Html.DisplayNameFor(q => q.Company.Address)</b>:
+    @if (Model.Company.Address == null)
+    {
+        <p>To add company registered address, please edit profile</p>
+    }
+
+    @Html.DisplayTextFor(q => q.Company.Address)
+</div>
+
+<div>
+    <b>@Html.DisplayNameFor(q => q.Company.BusinessId)</b>:
+
+    @if (Model.Company.BusinessId == null)
+    {
+        <p>To add company business id, please edit profile</p>
+    }
+    @Html.DisplayTextFor(q => q.Company.BusinessId)
+</div>
+
+<hr />
+@Html.ActionLink("Edit user profile", "EditUserProfile", "User", new { userId = @Model.UserId})

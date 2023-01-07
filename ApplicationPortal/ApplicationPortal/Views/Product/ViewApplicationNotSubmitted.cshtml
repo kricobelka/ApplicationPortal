@@ -2,7 +2,32 @@
 
 @model ProductViewModel
 
-<h5>Product info of Ref.No. @Model.Id</h5>
+<h5>General product info of @Model.Id</h5>
+
+@{
+    var comments = ViewBag.Comments as List<CommentViewModelResponse>;
+}
+<br />
+@if (comments != null)
+{
+    <p>Comments left for the product No. @Model.Id</p>
+    <ul>
+        @foreach (var comment in comments)
+        {
+            <li>
+                <div>@comment.Text</div>
+                @comment.UserEmail
+                @comment.CreatedDate
+            </li>
+        }
+    </ul>
+
+@Html.ActionLink("Add a comment", "CreateAComment", "Comment", new { productId = @Model.Id, isAdmin = false })
+<br />
+@Html.ActionLink("Edit product", "EditNotSubmittedProduct", "Product", new { productId = @Model.Id})
+}
+
+<hr />
 
 <div>
     @Html.DisplayNameFor(q => q.Name)
@@ -87,12 +112,12 @@
     @Html.ActionLink("Cancel application", "CancelNotSubmittedApplication", "Product", new {productId = @Model.Id})
 }
 
-@if(Model.Status <= ProductStatus.ExtraInfoSubmitted)
+@if (Model.Status <= ProductStatus.ExtraInfoSubmitted)
 {
     @Html.ActionLink("Continue to fill in", "EditNotSubmittedProduct", "Product", new {productId = @Model.Id})
 }
 
-@if(Model.Status == ProductStatus.ExtraInfoSubmitted)
+@if (Model.Status == ProductStatus.ExtraInfoSubmitted)
 {
     @Html.ActionLink("Submit for verification", "SubmitSavedProduct", "Product", new {productId = @Model.Id})
 }

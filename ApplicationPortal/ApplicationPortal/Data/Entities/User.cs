@@ -12,5 +12,6 @@ namespace ApplicationPortal.Data.Entities
         public Company Company { get; set; }
 
         public List<Product> Products { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

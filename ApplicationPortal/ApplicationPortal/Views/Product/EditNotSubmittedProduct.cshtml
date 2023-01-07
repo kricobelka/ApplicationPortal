@@ -28,10 +28,10 @@
 
     <div>
         @Html.LabelFor(q => q.Manufacturer)
-         @Html.TextBoxFor(q => q.Manufacturer)
+        @Html.TextBoxFor(q => q.Manufacturer)
         @Html.ValidationMessageFor(q => q.Manufacturer)
     </div>
-    
+
     <h5>Technical info of Ref.No. @Model.Id</h5>
 
     <div>
@@ -71,15 +71,15 @@
     <div class="row">
         <div class="col">
             @Html.LabelFor(q => @Model.AntennaGain.Amount)
-            @Html.TextBoxFor(q => @Model.AntennaGain.Amount)            
+            @Html.TextBoxFor(q => @Model.AntennaGain.Amount)
             @Html.ValidationMessageFor(q => @Model.AntennaGain.Amount)
-        @*@Html.ValidationMessageFor(q => q.OutputPower)*@
+            @*@Html.ValidationMessageFor(q => q.OutputPower)*@
         </div>
 
         <div class="col">
             @Html.LabelFor(q => @Model.AntennaGain.AntennaGainUnit)
             @Html.DropDownListFor(q => @Model.AntennaGain.AntennaGainUnit, Html.GetEnumSelectList<AntennaGainUnit>())
-            @Html.ValidationMessageFor(q => @Model.AntennaGain.AntennaGainUnit)     
+            @Html.ValidationMessageFor(q => @Model.AntennaGain.AntennaGainUnit)
         </div>
     </div>
 

@@ -1,4 +1,6 @@
-﻿@model IEnumerable<ProductViewModel>
+﻿@using ApplicationPortal.Enums
+
+@model IEnumerable<ProductViewModel>
 
 @{
     ViewBag.Title = "Products submitted for type approval";
@@ -21,18 +23,21 @@
 
         @foreach (var product in Model)
         {
-            <tr>
-                <td>@product.UserName</td>
-                <td>@product.Id</td>
-                <td>@product.Name</td>
-                <td>@product.Model</td>
-                <td>@product.Manufacturer</td>
-                <td>@product.Status</td>
-                <td>@Html.ActionLink("View", "ViewSubmittedProduct", "Admin", new {productId = product.Id})</td>
-                <td>@Html.ActionLink("Delete", "DeleteProduct", "Admin", new {productId =product.Id})</td>                
-                <td>@Html.ActionLink("Confirm and go ahead", "AcceptProduct", "Admin", new {productId = product.Id})</td>
-                <td>@Html.ActionLink("Edit", "EditProduct", "Admin", new {productId = product.Id})</td>
-            </tr>
+            @if (@product.Status > ProductStatus.ExtraInfoSubmitted)
+            {
+                <tr>
+                    <td>@product.UserName</td>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Model</td>
+                    <td>@product.Manufacturer</td>
+                    <td>@product.Status</td>
+                    <td>@Html.ActionLink("View", "ViewSubmittedProduct", "Admin", new {productId = product.Id})</td>
+                    <td>@Html.ActionLink("Delete", "DeleteProduct", "Admin", new {productId =product.Id})</td>
+                    <td>@Html.ActionLink("Confirm and go ahead", "AcceptProduct", "Admin", new {productId = product.Id})</td>
+                    <td>@Html.ActionLink("Edit", "EditProduct", "Admin", new {productId = product.Id})</td>
+                </tr>
+            }
         }
     </tbody>
 </table>

@@ -14,11 +14,13 @@ namespace ApplicationPortal.Controllers
     {
         private readonly ProductService _productService;
         private readonly UserManager<User> _userManager;
+        private readonly CommentService _commentService;
 
-        public ProductController(ProductService productService, UserManager<User> userManager)
+        public ProductController(ProductService productService, UserManager<User> userManager, CommentService commentService)
         {
             _productService = productService;
             _userManager = userManager;
+            _commentService = commentService;
         }
 
         //выводим информацию о залогиненном юзере (мэйл, название компаний)
@@ -78,7 +80,7 @@ namespace ApplicationPortal.Controllers
 
                 if (action == "submitEditedInfo")
                 {
-                    return RedirectToAction("VerifyProductInfo", "Product", new
+                    return RedirectToAction("VerifyProductInfoByUser", "Product", new
                     {
                         productId = productForEdit.Id
                     });
@@ -166,7 +168,7 @@ namespace ApplicationPortal.Controllers
 
                 if (action == "submitEditedTechnicalInfo")
                 {
-                    return RedirectToAction("VerifyProductInfo", "Product", new { productId = productForEdit.Id });
+                    return RedirectToAction("VerifyProductInfoByUser", "Product", new { productId = productForEdit.Id });
                 }
 
                 //todo: change parameter
@@ -213,24 +215,24 @@ namespace ApplicationPortal.Controllers
                 var productForEditOrSubmit = await _productService.UpdateProductWithExtraInfo(product.ProductId, product);
                 if (action == "submitEditedExtraInfo")
                 {
-                    return RedirectToAction("VerifyProductInfo", "Product", new { productId = productForEditOrSubmit.Id });
+                    return RedirectToAction("VerifyProductInfoByUser", "Product", new { productId = productForEditOrSubmit.Id });
                 }
-                return RedirectToAction("VerifyProductInfo", "Product", new { productId = productForEditOrSubmit.Id });
+                return RedirectToAction("VerifyProductInfoByUser", "Product", new { productId = productForEditOrSubmit.Id });
                 //return to VerificationOfInsertedDatePage
             }
             return View(product);
         }
 
         [HttpGet]
-        public async Task<IActionResult> VerifyProductInfo(int productId)
+        public async Task<IActionResult> VerifyProductInfoByUser(int productId)
         {
-            var result = await _productService.GetProductTotalInfo(productId);
+            var result = await _productService.GetProductTotalInfo(productId);            
             return View(result);
         }
 
         //сделать 4  баттона (save as a draft, submit (submittedproducts), cancel, t)
         [HttpPost]
-        public async Task<IActionResult> VerifyProductInfo(int productId, string action)
+        public async Task<IActionResult> VerifyProductInfoByUser(int productId, string action)
         {
             //не совсем верно: нужно просто вернуть айдишник
             //var product = await _productService.GetProductTotalInfo(productId);
@@ -260,7 +262,9 @@ namespace ApplicationPortal.Controllers
 
         private async Task<IActionResult> SubmitProduct(int productId)
         {
+            var product = await _productService.GetProductById(productId);
             await _productService.SubmitProduct(productId);
+            TempData["submitProduct"] = $"The product {product.Name}, {product.Model} has been submitted under Ref.No. {productId}";
             return RedirectToAction("GetSubmittedProducts", "Product");
         }
 
@@ -278,24 +282,29 @@ namespace ApplicationPortal.Controllers
         //{
         //    var product = await _productService.EditProduct(productId);
         //    return View(product);
-        //}
+        //
         private async Task<IActionResult> SaveDraftAndRedirectToProducts()
         {
+            //how? transfer id? var productId = _productService.GetProductById()
+            //TempData["saveProduct"] = $"The product with {productId} has been saved in the drafts";
             return RedirectToAction("GetSubmittedProducts", "Product");
         }
 
         private async Task<IActionResult> CancelProduct(int productId)
         {
             await _productService.CancelProduct(productId);
-            //ViewBag send to view. which view?
+
+            TempData["deleteProduct"] = $"The product with {productId} has been deleted";
+
             return RedirectToAction("GetSubmittedProducts", "Product");
-            //return View()?
         }
 
         #region buttons by user(cancel, continue, view)
         public async Task<IActionResult> ViewApplicationNotSubmitted(int productId)
         {
             var application = await _productService.GetProductById(productId);
+            var comments = await _commentService.GetCommentsPerProductId(productId);
+            ViewBag.Comments = comments;
             return View(application);
         }
 
@@ -330,6 +339,11 @@ namespace ApplicationPortal.Controllers
                 else if (product.Status == Enums.ProductStatus.TechnicalInfoSubmitted)
                 {
                     return RedirectToAction("ExtraProductInfo", new { productId = product.Id });
+                }
+
+                else if (product.Status > Enums.ProductStatus.ExtraInfoSubmitted)
+                {
+                    return RedirectToAction("VerifyProductInfoByUser", "Product", new { productId = product.Id });
                 }
 
                 else

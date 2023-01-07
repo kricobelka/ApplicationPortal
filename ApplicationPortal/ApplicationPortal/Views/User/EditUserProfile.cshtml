@@ -1,2 +1,56 @@
 ﻿@model UserViewModelResponse
 
+<h5>Here you can edit your user profile</h5>
+
+@using (@Html.BeginForm("EditUserProfile", "User", FormMethod.Post))
+{
+    @* поймет ли чтоюзерайди? раз мы доставлали его с identity?*@
+    @Html.HiddenFor(q => User.Identity.IsAuthenticated)
+    @Html.ValidationSummary(false)
+
+    <div>
+        @Html.LabelFor(q => q.FirstName):
+        @Html.TextBoxFor(q => q.FirstName)
+        @Html.ValidationMessageFor(q => q.FirstName)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.LastName):
+        @Html.TextBoxFor(q => q.LastName)
+        @Html.ValidationMessageFor(q => q.LastName)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.UserEmail):
+
+        @Html.TextBoxFor(q => q.UserEmail)
+        @Html.ValidationMessageFor(q => q.UserEmail)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.BirthDate):
+        @Html.TextBoxFor(q => q.BirthDate)
+        @Html.ValidationMessageFor(q => q.BirthDate)
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.Phone):
+        @Html.TextBoxFor(q => q.Phone)
+        @Html.ValidationMessageFor(q => q.Phone)
+    </div>
+
+    <div>
+        @Html.DisplayNameFor(q => q.Company.CompanyName):
+        @Html.DisplayTextFor(q => q.Company.CompanyName)
+
+        @Html.LabelFor(q => q.Company.Address):
+        @Html.TextBoxFor(q => q.Company.Address)
+        @Html.ValidationMessageFor(q => q.Company.Address)
+
+        @Html.LabelFor(q => q.Company.BusinessId):
+        @Html.TextBoxFor(q => q.Company.BusinessId)
+        @Html.ValidationMessageFor(q => q.Company.BusinessId)
+    </div>
+
+    <button>Apply changes</button>
+}

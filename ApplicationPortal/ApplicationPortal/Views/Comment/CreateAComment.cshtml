@@ -1,0 +1,52 @@
+﻿@model CommentViewModelResponse
+
+
+@using (Html.BeginForm("CreateAComment", "Comment", new { ProductId = @Model.ProductId, isAdmin = ViewBag.IsAdmin }, FormMethod.Post))
+{
+    @Html.ValidationSummary(false)
+
+    <div>
+        @Html.LabelFor(q => q.Text):
+        @Html.TextAreaFor(q => q.Text)
+        @Html.ValidationMessageFor(q => q.Text)
+    </div>
+
+    <div>
+        @Html.DisplayNameFor(q => q.UserEmail):
+        @Html.DisplayTextFor(q => q.UserEmail)
+        @Html.ValidationMessageFor(q => q.UserEmail)
+    </div>
+
+    @if (Model.FirstName != null)
+    {
+        <div>
+            @Html.DisplayNameFor(q => q.FirstName):
+            @Html.DisplayTextFor(q => q.FirstName)
+            @Html.ValidationMessageFor(q => q.FirstName)
+        </div>
+
+        <div>
+            @Html.DisplayNameFor(q => q.LastName):
+            @Html.DisplayTextFor(q => q.LastName)
+            @Html.ValidationMessageFor(q => q.LastName)
+        </div>
+    }
+
+    <div>
+        @Html.DisplayNameFor(q => q.CreatedDate):
+        @Html.DisplayTextFor(q => q.CreatedDate)
+        @Html.ValidationMessageFor(q => q.CreatedDate)
+    </div>
+
+    <button>Leave a comment</button>
+}
+
+@if (ViewBag.IsAdmin == true)
+{
+    @Html.ActionLink("Go back", "ViewSubmittedProduct", "Admin", new {ProductId = @Model.ProductId})
+}
+else
+{
+    @Html.ActionLink("Go back", "ViewApplicationNotSubmitted", "Product", new {ProductId = @Model.ProductId})
+}
+

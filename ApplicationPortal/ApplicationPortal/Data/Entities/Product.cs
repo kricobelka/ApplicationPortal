@@ -26,5 +26,7 @@ namespace ApplicationPortal.Data.Entities
 
         public string UserId { get; set; }
         public User User { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 }
