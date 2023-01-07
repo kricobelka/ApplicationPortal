@@ -59,7 +59,7 @@
 
 <div>
     <b>@Html.DisplayNameFor(q => q.Company.Address)</b>:
-    @if (Model.Company.Address == null)
+    @if (Model.Company?.Address == null)
     {
         <p>To add company registered address, please edit profile</p>
     }
@@ -70,7 +70,7 @@
 <div>
     <b>@Html.DisplayNameFor(q => q.Company.BusinessId)</b>:
 
-    @if (Model.Company.BusinessId == null)
+    @if (Model.Company?.BusinessId == null)
     {
         <p>To add company business id, please edit profile</p>
     }

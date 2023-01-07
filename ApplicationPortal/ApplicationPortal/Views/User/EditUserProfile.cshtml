@@ -42,11 +42,15 @@
     <div>
         @Html.DisplayNameFor(q => q.Company.CompanyName):
         @Html.DisplayTextFor(q => q.Company.CompanyName)
+    </div>
 
+    <div>
         @Html.LabelFor(q => q.Company.Address):
         @Html.TextBoxFor(q => q.Company.Address)
         @Html.ValidationMessageFor(q => q.Company.Address)
 
+    </div>
+    <div>
         @Html.LabelFor(q => q.Company.BusinessId):
         @Html.TextBoxFor(q => q.Company.BusinessId)
         @Html.ValidationMessageFor(q => q.Company.BusinessId)

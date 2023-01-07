@@ -226,7 +226,7 @@ namespace ApplicationPortal.Controllers
         [HttpGet]
         public async Task<IActionResult> VerifyProductInfoByUser(int productId)
         {
-            var result = await _productService.GetProductTotalInfo(productId);            
+            var result = await _productService.GetProductTotalInfo(productId);
             return View(result);
         }
 
@@ -283,19 +283,16 @@ namespace ApplicationPortal.Controllers
         //    var product = await _productService.EditProduct(productId);
         //    return View(product);
         //
-        private async Task<IActionResult> SaveDraftAndRedirectToProducts()
+        private async Task<IActionResult> SaveDraftAndRedirectToProducts(int productId)
         {
-            //how? transfer id? var productId = _productService.GetProductById()
-            //TempData["saveProduct"] = $"The product with {productId} has been saved in the drafts";
+            TempData["saveProduct"] = $"The product with {productId} has been saved in the drafts";
             return RedirectToAction("GetSubmittedProducts", "Product");
         }
 
         private async Task<IActionResult> CancelProduct(int productId)
         {
             await _productService.CancelProduct(productId);
-
-            TempData["deleteProduct"] = $"The product with {productId} has been deleted";
-
+            TempData["cancelProduct"] = $"The product with {productId} has been deleted";
             return RedirectToAction("GetSubmittedProducts", "Product");
         }
 
@@ -311,18 +308,19 @@ namespace ApplicationPortal.Controllers
         public async Task<IActionResult> CancelNotSubmittedApplication(int productId)
         {
             await _productService.CancelProduct(productId);
+            TempData["cancelProduct"] = $"The product with {productId} has been deleted";
 
             return RedirectToAction("GetSubmittedProducts", "Product");
         }
 
         public async Task<IActionResult> SubmitSavedProduct(int productId)
         {
-            if (ModelState.IsValid)
-            {
-                await _productService.AcceptProduct(productId);
-                return RedirectToAction("GetSubmittedProducts", "Product");
-            }
-            return View();
+            //if (ModelState.IsValid)
+            //{
+            await _productService.AcceptProduct(productId);
+            TempData["submitProduct"] = $"The product  has been submitted under Ref.No.{productId}";
+            return RedirectToAction("GetSubmittedProducts", "Product");
+            //return View();
         }
 
         public async Task<IActionResult> EditNotSubmittedProduct(int productId)

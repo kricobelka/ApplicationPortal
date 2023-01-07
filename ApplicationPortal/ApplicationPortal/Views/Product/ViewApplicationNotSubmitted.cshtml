@@ -7,11 +7,13 @@
 @{
     var comments = ViewBag.Comments as List<CommentViewModelResponse>;
 }
-<br />
-@if (comments != null)
+
+@if (comments.Count() != 0)
 {
-    <p>Comments left for the product No. @Model.Id</p>
+    <br />
+    <p>Comments left for the product No. @Model.Id:</p>
     <ul>
+
         @foreach (var comment in comments)
         {
             <li>
@@ -22,11 +24,13 @@
         }
     </ul>
 
-@Html.ActionLink("Add a comment", "CreateAComment", "Comment", new { productId = @Model.Id, isAdmin = false })
-<br />
-@Html.ActionLink("Edit product", "EditNotSubmittedProduct", "Product", new { productId = @Model.Id})
+    @Html.ActionLink("Add a comment", "CreateAComment", "Comment", new { productId = @Model.Id, isAdmin = false })
+    <br />
+    @if (Model.Status == ProductStatus.FinallySubmitted)
+    {
+        @Html.ActionLink("Edit product", "EditNotSubmittedProduct", "Product", new { productId = @Model.Id})
+    }
 }
-
 <hr />
 
 <div>
@@ -111,6 +115,7 @@
 {
     @Html.ActionLink("Cancel application", "CancelNotSubmittedApplication", "Product", new {productId = @Model.Id})
 }
+@TempData["cancelProduct"]
 
 @if (Model.Status <= ProductStatus.ExtraInfoSubmitted)
 {

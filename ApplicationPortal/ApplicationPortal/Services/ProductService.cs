@@ -227,6 +227,7 @@ namespace ApplicationPortal.Services
         public async Task CancelProduct(int productId)
         {
             var endProduct = await GetProductPerId(productId);
+            _context.Comments.RemoveRange(endProduct.Comments);
             _context.Products.Remove(endProduct);
             await _context.SaveChangesAsync();
         }
@@ -237,7 +238,10 @@ namespace ApplicationPortal.Services
         private Task<Product> GetProductPerId(int productId)
         {
             //to-do: check
-            return _context.Products.Include(q => q.User).Include(q => q.Frequencies).Include(q => q.AntennaGain).SingleOrDefaultAsync(q => q.Id == productId);
+            return _context.Products.Include(q => q.User).Include(q => q.Comments)
+                .Include(q => q.Frequencies)
+                .Include(q => q.AntennaGain)
+                .SingleOrDefaultAsync(q => q.Id == productId);
         }
 
         #region mapping of product to productVieMmodel
