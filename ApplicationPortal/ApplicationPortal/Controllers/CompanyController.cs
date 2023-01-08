@@ -19,7 +19,7 @@ namespace ApplicationPortal.Controllers
             _companyService = companyService;
         }
 
-        //delete, edit creation of companies{
+        //delete, edit creation of companies by admin{
 
         public async Task<IActionResult> GetAvailableCompanies()
         {
@@ -54,13 +54,13 @@ namespace ApplicationPortal.Controllers
         [HttpGet]
         public async Task<IActionResult> EditCompany(int companyId)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 var product = await _companyService.GetCompanyById(companyId);
                 return View(product);
-            }
+            //}
 
-            return View();
+            //return View();
         }
 
         [HttpPost]
@@ -76,14 +76,8 @@ namespace ApplicationPortal.Controllers
 
         public async Task<IActionResult> ViewCompanyPerId(int companyId)
         {
-            if (ModelState.IsValid)
-            {
                 var companyById = await _companyService.GetCompanyById(companyId);
                 return View(companyById);
-            }
-
-            return View();
         }
-
     }
 }

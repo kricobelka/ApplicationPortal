@@ -63,8 +63,8 @@
             </div>
         </div>
     }
-    <button type="submit" name="action" value="addNewFrequency">Add new frequency</button>
-    <button type="submit" name="action" value="removeFrequency">Remove frequency</button>
+    <button type="submit" class="btn btn-light" name="action" value="addNewFrequency">Add new frequency</button>
+    <button type="submit" class="btn btn-secondary" name="action" value="removeFrequency">Remove frequency</button>
 
     <hr />
 
@@ -97,5 +97,6 @@
         @Html.ValidationMessageFor(q => q.PathToFile)
     </div>
 
-    <button>Apply changes</button>
+    <button type="button" class="btn btn-primary">Apply changes</button>
+   @* <button>Apply changes</button>*@
 }

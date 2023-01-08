@@ -24,11 +24,11 @@
         }
     </ul>
 
-    @Html.ActionLink("Add a comment", "CreateAComment", "Comment", new { productId = @Model.Id, isAdmin = false })
+    @Html.ActionLink("Add a comment", "CreateAComment", "Comment", new { productId = @Model.Id, isAdmin = false }, new {@class ="btn btn-outline-info"})
     <br />
     @if (Model.Status == ProductStatus.FinallySubmitted)
     {
-        @Html.ActionLink("Edit product", "EditNotSubmittedProduct", "Product", new { productId = @Model.Id})
+        @Html.ActionLink("Edit product", "EditNotSubmittedProduct", "Product", new { productId = @Model.Id}, new {@class = "btn btn-primary"/* @style = "color:white"*/})
     }
 }
 <hr />
@@ -113,16 +113,16 @@
 
 @if (Model.Status < ProductStatus.FinallySubmitted)
 {
-    @Html.ActionLink("Cancel application", "CancelNotSubmittedApplication", "Product", new {productId = @Model.Id})
+    @Html.ActionLink("Cancel application", "CancelNotSubmittedApplication", "Product", new {productId = @Model.Id}, new {@class="btn btn-danger"})
 }
 @TempData["cancelProduct"]
 
 @if (Model.Status <= ProductStatus.ExtraInfoSubmitted)
 {
-    @Html.ActionLink("Continue to fill in", "EditNotSubmittedProduct", "Product", new {productId = @Model.Id})
+    @Html.ActionLink("Continue to fill in", "EditNotSubmittedProduct", "Product", new {productId = @Model.Id}, new {@class="btn btn-outline-success"})
 }
 
 @if (Model.Status == ProductStatus.ExtraInfoSubmitted)
 {
-    @Html.ActionLink("Submit for verification", "SubmitSavedProduct", "Product", new {productId = @Model.Id})
+    @Html.ActionLink("Submit for verification", "SubmitSavedProduct", "Product", new {productId = @Model.Id}, new {@class="btn btn-success"})
 }

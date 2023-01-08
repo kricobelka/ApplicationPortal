@@ -40,11 +40,12 @@
 
     if (@ViewBag.ShowApplyChanges == true)
     {
-        <button type="submit" name="action" value="submitEditedInfo">Apply changes</button>
+        <button class = "btn btn-primary" type="submit" name="action" value="submitEditedInfo">Apply changes</button>
     }
 
     else
     {
-        <button>Next</button>
+        <button type="submit" class ="btn btn-outline-success">Next</button>
+@*        <button>Next</button>*@
     }
 }

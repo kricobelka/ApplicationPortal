@@ -30,15 +30,15 @@
                 <td>@product.Model</td>
                 <td>@product.Manufacturer</td>
                 <td>@product.Status</td>
-                <td>@Html.ActionLink("View", "ViewApplicationNotSubmitted", "Product", new {productId = product.Id})</td>
+                <td>@Html.ActionLink("View", "ViewApplicationNotSubmitted", "Product", new {productId = product.Id}, new {@class = "btn btn-outline-primary"})</td>
                 <td>@if (product.Status < ProductStatus.FinallySubmitted)
                     {
-                        @Html.ActionLink("Cancel", "CancelNotSubmittedApplication", "Product", new {productId = product.Id})
+                        @Html.ActionLink("Cancel", "CancelNotSubmittedApplication", "Product", new {productId = product.Id}, new {@class = "btn btn-danger btn .text-nowrap"})
                     }
                 </td>                
                 <td>@if(product.Status < ProductStatus.FinallySubmitted)
                     {
-                        @Html.ActionLink("Submit", "SubmitSavedProduct", "Product", new { productId = product.Id })
+                        @Html.ActionLink("Submit", "SubmitSavedProduct", "Product", new { productId = product.Id }, new {@class="btn btn-success"})
                     }
                 </td>
             </tr>
@@ -46,4 +46,5 @@
     </tbody>
 </table>
 
-@Html.ActionLink("Submit a new product", "GetUserAndCompanyInfo")
+@*@Html.ActionLink("Submit a new product", "GetUserAndCompanyInfo", "Product", new {@class = "btn btn-outline-primary"})*@
+@Html.ActionLink("Submit a new product", "GetUserAndCompanyInfo", "Product")

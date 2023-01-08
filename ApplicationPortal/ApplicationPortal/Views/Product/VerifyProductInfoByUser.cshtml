@@ -5,7 +5,7 @@
 {
                 //@Html.HiddenFor(q => q.Id)
     <h5>General product info</h5>
-    @Html.ActionLink("Edit", "GeneralProductInfo", new {productId = @Model.Id})
+    @Html.ActionLink("Edit", "GeneralProductInfo", new {productId = @Model.Id}, new {@class = "btn btn-primary"})
 
     <div>
         @Html.DisplayNameFor(q => q.Name)
@@ -30,7 +30,7 @@
     <hr />
 
     <h5>Technical product info</h5>
-    @Html.ActionLink("Edit", "TechnicalProductInfo", new {productId = @Model.Id})
+    @Html.ActionLink("Edit", "TechnicalProductInfo", new {productId = @Model.Id}, new {@class = "btn btn-primary"})
 
     <div>
         @Html.DisplayNameFor(q => q.OutputPower)
@@ -73,7 +73,7 @@
 
     <h5>Additional product info</h5>
     //будет справа
-    @Html.ActionLink("Edit", "ExtraProductInfo", new {productId = @Model.Id})
+    @Html.ActionLink("Edit", "ExtraProductInfo", new {productId = @Model.Id}, new {@class = "btn btn-primary"})
     <div>
         @Html.DisplayNameFor(q => q.OtherInformation)
         @Html.DisplayTextFor(q => q.OtherInformation)
@@ -84,7 +84,7 @@
         @Html.DisplayTextFor(q => q.PathToFile)
     </div>
     <hr />
-    <button type="submit" name="action" value="getSubmittedProducts">Submit</button>
-    <button type="submit" name="action" value="cancelProduct">Cancel</button>
-    <button type="submit" name="action" value="saveProduct">Save as a draft</button>
+    <button type="submit" class="btn btn-success" name="action" value="getSubmittedProducts">Submit</button>
+    <button type="submit" class="btn btn-danger" name="action" value="cancelProduct">Cancel</button>
+    <button type="submit" class="btn btn-outline-success" name="action" value="saveProduct">Save as a draft</button>
 }

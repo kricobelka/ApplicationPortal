@@ -10,7 +10,6 @@ namespace ApplicationPortal.Data.Entities
         public string Model { get; set; }
         public string Manufacturer { get; set; }
         public string Brand { get; set; }
-        //будет выбор между Mhz/Khz
 
         public ICollection<Frequency> Frequencies { get; set; }
 

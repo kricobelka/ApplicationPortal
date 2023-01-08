@@ -254,7 +254,7 @@ namespace ApplicationPortal.Controllers
 
             else if (action == "saveProduct")
             {
-                return await SaveDraftAndRedirectToProducts();
+                return await SaveDraftAndRedirectToProducts(productId);
             }
             //is productviewmodel necessary as a parameter and can I return View()?
             return View();
@@ -278,11 +278,6 @@ namespace ApplicationPortal.Controllers
             return View(allProducts);
         }
 
-        //public async Task<IActionResult> EditProduct(int productId)
-        //{
-        //    var product = await _productService.EditProduct(productId);
-        //    return View(product);
-        //
         private async Task<IActionResult> SaveDraftAndRedirectToProducts(int productId)
         {
             TempData["saveProduct"] = $"The product with {productId} has been saved in the drafts";

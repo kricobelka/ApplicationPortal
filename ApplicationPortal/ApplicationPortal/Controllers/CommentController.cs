@@ -48,17 +48,22 @@ namespace ApplicationPortal.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAComment(CommentViewModelRequest modelRequest, bool isAdmin)
         {
-            var userId = _userManager.GetUserId(User);
-            
-            //bool == true, когда админ оставляет комменты на админ-
-            //false, когда юзер будет оставлять комменты на своей части
-            await _commentService.CreateComment(modelRequest, userId);
-
-            if (isAdmin == true)
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction("ViewSubmittedProduct", "Admin", new { ProductId = modelRequest.ProductId });     
+                var userId = _userManager.GetUserId(User);
+
+                //bool == true, когда админ оставляет комменты на админ-
+                //false, когда юзер будет оставлять комменты на своей части
+                await _commentService.CreateComment(modelRequest, userId);
+
+                if (isAdmin == true)
+                {
+                    return RedirectToAction("ViewSubmittedProduct", "Admin", new { ProductId = modelRequest.ProductId });
+                }
+                return RedirectToAction("ViewApplicationNotSubmitted", "Product", new { ProductId = modelRequest.ProductId });
             }
-            return RedirectToAction("ViewApplicationNotSubmitted", "Product", new { ProductId = modelRequest.ProductId });
+
+            return View(modelRequest);
         }
     }
 }
