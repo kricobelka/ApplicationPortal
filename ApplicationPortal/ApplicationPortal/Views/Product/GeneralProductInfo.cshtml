@@ -1,51 +1,47 @@
 ﻿@model GenProductViewModel
 
-
-@using (Html.BeginForm(FormMethod.Post))
+<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">General information</h1>
+<p class="lead mark mb-3 text-dark">Please indicate general information of product</p>
+<hr />
+@using (Html.BeginForm(FormMethod.Post, new { @class = "form-group" }))
 {
     @Html.HiddenFor(q => q.ProductId)
-    @Html.ValidationSummary(false)
 
     <div>
-        @Html.LabelFor(q => q.Name): 
-        @Html.EditorFor(q => q.Name)
-        @Html.ValidationMessageFor(q => q.Name)
-    </div>
-
-@*    <div class="editor-field">
-        @Html.EditorFor(q => q.Name)
-        @Html.ValidationMessageFor(q => q.Name)
-    </div>*@
-
-    <div>
-        @Html.LabelFor(q => q.Brand): 
-        @*@Html.TextBoxFor(q => q.Brand)*@
-        @Html.EditorFor(q => q.Brand)
-        @Html.ValidationMessageFor(q => q.Brand)
+        @Html.LabelFor(q => q.Name, new {@class="col-form-label col-sm-4"})
+        @Html.TextBoxFor(q => q.Name, new {@class="form-control col-sm-4"})
+        @Html.ValidationMessageFor(q => q.Name, "Please insert name of product", new {@class = "form-text text-muted"})
     </div>
 
     <div>
-        @Html.LabelFor(q => q.Model): 
-        @Html.EditorFor(q => q.Model)
-        @Html.ValidationMessageFor(q => q.Model)
+        @Html.LabelFor(q => q.Brand, new {@class="col-form-label col-sm-4"})
+        @Html.TextBoxFor(q => q.Brand, new {@class="form-control col-sm-4"})
+        @Html.ValidationMessageFor(q => q.Brand, "Please insert brand of product", new {@class = "form-text text-muted"})
     </div>
 
     <div>
-        @Html.LabelFor(q => q.Manufacturer): 
-         @Html.EditorFor(q => q.Manufacturer)
-        @Html.ValidationMessageFor(q => q.Manufacturer)
+        @Html.LabelFor(q => q.Model, new {@class="col-form-label col-sm-4"})
+        @Html.TextBoxFor(q => q.Model, new {@class="form-control col-sm-4"})
+        @Html.ValidationMessageFor(q => q.Model, "Please insert model of product", new {@class = "form-text text-muted"})
     </div>
 
-
+    <div>
+        @Html.LabelFor(q => q.Manufacturer, new {@class="col-form-label col-sm-4"})
+        @Html.TextBoxFor(q => q.Manufacturer, new {@class="form-control col-sm-4"})
+        @Html.ValidationMessageFor(q => q.Manufacturer, "Please insert manufacturer of product", new {@class = "form-text text-muted"})
+    </div>
 
     if (@ViewBag.ShowApplyChanges == true)
     {
-        <button class = "btn btn-primary" type="submit" name="action" value="submitEditedInfo">Apply changes</button>
+        <button class="btn btn-primary mt-2" type="submit" name="action" value="submitEditedInfo">Apply changes</button>
     }
 
     else
     {
-        <button type="submit" class ="btn btn-outline-success">Next</button>
-@*        <button>Next</button>*@
+        <button type="submit" class="btn btn-outline-success mt-2">Next</button>
+        @*        <button>Next</button>*@
     }
 }
+<div class="mt-2">
+    @Html.ActionLink("Save for later submission", "GetSubmittedProducts", "Product", @Model, new {@class = "btn btn-outline-warning"})
+</div>

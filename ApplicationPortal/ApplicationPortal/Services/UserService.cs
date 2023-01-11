@@ -12,11 +12,13 @@ namespace ApplicationPortal.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
 
-        public UserService(ApplicationDbContext context, SignInManager<User> signInManager)
+        public UserService(ApplicationDbContext context, SignInManager<User> signInManager, UserManager<User> userManager)
         {
             _context = context;
             _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         public async Task<UserViewModelResponse> GetUserProfile(string userId)
@@ -57,6 +59,8 @@ namespace ApplicationPortal.Services
             user.PhoneNumber = requestModel.Phone;
             user.BirthDate = requestModel.BirthDate;
             user.UserName = requestModel.UserEmail;
+            user.NormalizedEmail = _userManager.NormalizeEmail(requestModel.UserEmail);
+            user.NormalizedUserName = _userManager.NormalizeEmail(requestModel.UserEmail);
            
             if (user.Company == null)
             {

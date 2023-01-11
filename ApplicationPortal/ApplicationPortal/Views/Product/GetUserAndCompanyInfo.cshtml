@@ -1,19 +1,27 @@
 ﻿@model UserCompaniesViewModel
 
-@using (@Html.BeginForm("VerifyUserAndGoNext", "Product", FormMethod.Post))
+<h4 class="display-6 text-bg-success align-content-md-center text-lg-center text-lg mb-5">Registration of a new product</h4>
+<p class="lead mark mb-3 text-dark">Please confirm your credentials:</p>
+
+@using (@Html.BeginForm("VerifyUserAndGoNext", "Product", FormMethod.Post, new { @class = "form-group row" }))
 {
-    <div>Please confirm user information:</div>
+    <div class="mb-2">
+        @*@Html.TextBoxFor(q => q.UserEmail, new {@class="form-control readonly"})*@
 
-    <div>
-        <b>@Html.DisplayNameFor(q => q.UserEmail): </b> 
-        @Model.UserEmail
+        <b>@Html.DisplayNameFor(q => q.UserEmail)</b>
+        <input class="form-control col-form-label col-sm-4" type="text" placeholder="@Model.UserEmail" readonly>
+        @*@Model.UserEmail*@
     </div>
 
     <div>
-        <b>@Html.DisplayNameFor(q => q.CompanyName): </b> 
-        @Model.CompanyName
+        <b>@Html.DisplayNameFor(q => q.CompanyName)</b>
+        <input class="form-control col-form-label col-sm-4" type="text" placeholder="@Model.CompanyName" readonly>
+        @*@Model.CompanyName*@
     </div>
 
-    <button type="submit" class ="btn btn-outline-success">Next</button>
-    @*<button>Next</button>*@
+    <button type="submit" class="btn btn-outline-success mt-3">Next</button>
 }
+<div class="mt-2 col-sm-4">
+    @Html.ActionLink("Edit user information", "EditUserProfile", "User", @Model.UserEmail, new {@class ="btn btn-outline-warning"})
+</div>
+

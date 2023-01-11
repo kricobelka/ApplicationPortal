@@ -1,4 +1,4 @@
-﻿@model CommentViewModelResponse
+﻿@model CommentViewModelRequest
 
 
 @using (Html.BeginForm("CreateAComment", "Comment", new { ProductId = @Model.ProductId, isAdmin = ViewBag.IsAdmin }, FormMethod.Post))

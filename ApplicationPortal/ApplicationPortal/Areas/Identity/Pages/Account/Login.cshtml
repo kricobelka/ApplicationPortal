@@ -5,12 +5,12 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h3>@ViewData["Title"]</h3>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 mt-3" >
         <section>
             <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
+                <p>Enter your email address and password to login.</p>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating">
@@ -41,15 +41,15 @@
                     <p>
                         <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
                     </p>
-                    <p>
+@*                    <p>
                         <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
+                    </p>*@
                 </div>
             </form>
         </section>
     </div>
     <div class="col-md-6 col-md-offset-2">
-        <section>
+@*        <section>
             <h3>Use another service to log in.</h3>
             <hr />
             @{
@@ -76,7 +76,7 @@
                     </form>
                 }
             }
-        </section>
+        </section>*@
     </div>
 </div>
 

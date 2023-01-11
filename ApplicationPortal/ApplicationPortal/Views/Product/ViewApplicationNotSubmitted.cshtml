@@ -109,7 +109,7 @@
 </div>
 <hr />
 
-@Html.ActionLink("Go back", "GetSubmittedProducts", "Product")
+@Html.ActionLink("Go back", "GetSubmittedProducts", "Product", @Model, new {@class="btn btn-outline-info"})
 
 @if (Model.Status < ProductStatus.FinallySubmitted)
 {

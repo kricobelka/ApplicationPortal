@@ -54,14 +54,16 @@ namespace ApplicationPortal.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUserProfile(UserViewModelRequest requestModel)
         {
+            string userId = GetUserId();
             if (ModelState.IsValid)
             {
-                string userId = GetUserId();
                 await _userService.EditUserProfile(userId, requestModel);
                 return RedirectToAction("GetUserProfile", "User");
             }
 
-            return View(requestModel);
+            var userProfile = await _userService.GetUserProfile(userId);
+
+            return View(userProfile);
         }
 
         public string GetUserId()

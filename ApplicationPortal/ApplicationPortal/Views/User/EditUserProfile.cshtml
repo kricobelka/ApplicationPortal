@@ -41,6 +41,7 @@
     <div>
         @Html.DisplayNameFor(q => q.Company.CompanyName):
         @Html.DisplayTextFor(q => q.Company.CompanyName)
+        @Html.HiddenFor(q => q.Company.CompanyName)
     </div>
 
     <div>
@@ -55,5 +56,5 @@
         @Html.ValidationMessageFor(q => q.Company.BusinessId)
     </div>
 
-    <button>Apply changes</button>
+    <button type="submit" class ="btn btn-success">Apply changes</button>
 }
