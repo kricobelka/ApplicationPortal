@@ -1,29 +1,39 @@
 ﻿@model IEnumerable<CompanyViewModel>
 
+@{
+    ViewBag.Title = "Registered companies";
+}
+
+<p class="h3 text-bg-primary align-content-md-center text-lg-center mt-5 mb-5 mark p-2">Companies registered on the Portal
+<p />
+
 <table class="table">
-    <thead>
-        <tr>
+    <thead class="table-primary">
+        <tr class="text-center">
             <th>@Html.DisplayNameFor(q => q.CompanyId)</th>
             <th>@Html.DisplayNameFor(q => q.CompanyName)</th>
             <th>@Html.DisplayNameFor(q => q.Address)</th>
             <th>@Html.DisplayNameFor(q => q.BusinessId)</th>
+            <th></th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var company in Model)
-        {
-            <tr>
+            @foreach (var company in Model)
+            {
+            <tr class="list-group-item-action">
                 <td>@company.CompanyId</td>
                 <td>@company.CompanyName</td>
                 <td>@company.Address</td>
-                <td>@company.BusinessId</td>                            
-                <td>@Html.ActionLink("View", "ViewCompanyPerId", "Company", new {companyId = company.CompanyId})</td>
-                <td>@Html.ActionLink("Delete", "DeleteCompany", "Company", new {companyId = company.CompanyId})</td>                
-                <td>@Html.ActionLink("Edit", "EditCompany", "Company", new {companyId = company.CompanyId})</td>
+                <td>@company.BusinessId</td>
+                <td>@Html.ActionLink("View", "ViewCompanyPerId", "Company", new {companyId = company.CompanyId}, new {@class="btn btn-primary"})</td>
+                <td>@Html.ActionLink("Delete", "DeleteCompany", "Company", new {companyId = company.CompanyId}, new {@class="btn btn-outline-danger"})</td>
+                <td>@Html.ActionLink("Edit", "EditCompany", "Company", new {companyId = company.CompanyId}, new {@class="btn btn-outline-primary"})</td>
             </tr>
-        }
+            }
     </tbody>
     <thead />
 </table>
 
-@Html.ActionLink("Add a new company", "CreateCompany")
+    @Html.ActionLink("Add a new company", "CreateCompany", "Company", null, new {@class="btn btn-primary w-25"})

@@ -1,80 +1,114 @@
 ﻿@model UserViewModelResponse
 
-<h5>User profile of @Model.UserEmail</h5>
+@{
+    ViewBag.Title = "User Profile";
+    var divList = "col-2";
+}
+
+<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">User profile</h1>
+
+<p class="lead text-dark mark">Here you can view/edit user information.</p>
+<hr />
 
 @Html.HiddenFor(q => User.Identity.IsAuthenticated)
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.FirstName)</b>:
+<div class="row">
+    <div class="@divList">
+        <b>@Html.DisplayNameFor(q => q.FirstName)</b>:
 
-    @*    если в текстоксе вывест,будет ли норм?*@
-    @if (Model.FirstName == null)
-    {
-        <p>To add your firstname, please edit profile</p>
-    }
-
-    @Html.DisplayTextFor(q => q.FirstName)
+        @*    если в текстоксе вывест,будет ли норм?*@
+        @if (Model.FirstName == null)
+        {
+            <p>To add your firstname, please edit profile</p>
+        }
+    </div>
+    <div class="@divList">
+        @Html.DisplayTextFor(q => q.FirstName)
+    </div>
 </div>
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.LastName)</b>:
-    @if (Model.LastName == null)
-    {
-        <p>To add your lastname, please edit profile</p>
-    }
-
-    @Html.DisplayTextFor(q => q.LastName)
+<div class="row">
+    <div class="@divList">
+        <b>@Html.DisplayNameFor(q => q.LastName)</b>:
+        @if (Model.LastName == null)
+        {
+            <p>To add your lastname, please edit profile</p>
+        }
+    </div>
+    <div class="@divList">
+        @Html.DisplayTextFor(q => q.LastName)
+    </div>
 </div>
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.UserEmail)</b>:
-
-    @Html.DisplayTextFor(q => q.UserEmail)
+<div class="row">
+    <div class="@divList">
+        <b>@Html.DisplayNameFor(q => q.UserEmail)</b>:
+    </div>
+    <div class="@divList">
+        @Html.DisplayTextFor(q => q.UserEmail)
+    </div>
 </div>
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.BirthDate)</b>:
-    @if (Model.BirthDate == null)
-    {
-        <p>To add birthdate, please edit profile</p>
-    }
-
-    @Html.DisplayTextFor(q => q.BirthDate)
+<div class="row">
+    <div class="@divList">
+        <b>@Html.DisplayNameFor(q => q.BirthDate)</b>:
+        @if (Model.BirthDate == null)
+        {
+            <p>To add birthdate, please edit profile</p>
+        }
+    </div>
+    <div class="@divList">
+        @Html.DisplayTextFor(q => q.BirthDate)
+    </div>
 </div>
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.Phone)</b>:
-    @if (Model.Phone == null)
-    {
-        <p>To add phone, please edit profile</p>
-    }
-
-    @Html.DisplayTextFor(q => q.Phone)
+<div class="row">
+    <div class="@divList">
+        <b>@Html.DisplayNameFor(q => q.Phone)</b>:
+        @if (Model.Phone == null)
+        {
+            <p>To add phone, please edit profile</p>
+        }
+    </div>
+    <div class="@divList">
+        @Html.DisplayTextFor(q => q.Phone)
+    </div>
 </div>
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.Company.CompanyName)</b>:
-    @Html.DisplayTextFor(q => q.Company.CompanyName)
+<div class="row">
+    <div class="@divList">
+        <b>@Html.DisplayNameFor(q => q.Company.CompanyName)</b>:
+    </div>
+    <div class="@divList">
+        @Html.DisplayTextFor(q => q.Company.CompanyName)
+    </div>
 </div>
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.Company.Address)</b>:
-    @if (Model.Company?.Address == null)
-    {
-        <p>To add company registered address, please edit profile</p>
-    }
-
-    @Html.DisplayTextFor(q => q.Company.Address)
+<div class="row">
+    <div class="col-lg-4">
+        <b>@Html.DisplayNameFor(q => q.Company.Address)</b>:
+        @if (Model.Company?.Address == null)
+        {
+            <p>To add company registered address, please edit profile</p>
+        }
+    </div>
+    <div class="@divList">
+        @Html.DisplayTextFor(q => q.Company.Address)
+    </div>
 </div>
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.Company.BusinessId)</b>:
+<div class="row">
+    <div class="@divList">
+        <b>@Html.DisplayName("Business license number/ registration number:")</b>
 
-    @if (Model.Company?.BusinessId == null)
-    {
-        <p>To add company business id, please edit profile</p>
-    }
-    @Html.DisplayTextFor(q => q.Company.BusinessId)
+        @if (Model.Company?.BusinessId == null)
+        {
+            <p>To add company business id, please edit profile</p>
+        }
+    </div>
+    <div class="@divList">
+        @Html.DisplayTextFor(q => q.Company.BusinessId)
+    </div>
 </div>
 
 <hr />

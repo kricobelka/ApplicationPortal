@@ -4,13 +4,13 @@ namespace ApplicationPortal.Models
 {
     public class CompanyViewModel
     {
-        [Display(Name = "Reference company number")]
+        [Display(Name = "Reference no.")]
         public int CompanyId { get; set; }
 
         [Required]
         [MaxLength(50, ErrorMessage = "The company name cannot exceed 50 characters. ")]
         [MinLength(3, ErrorMessage = "The company name cannot be less than 3 characters.")]
-        [Display(Name = "Company name")]
+        [Display(Name = "Name")]
         public string CompanyName { get; set; }
 
         [Required]
@@ -21,7 +21,7 @@ namespace ApplicationPortal.Models
         [Required]
         [MaxLength(25, ErrorMessage = "The registration number cannot exceed 50 characters. ")]
         [MinLength(5, ErrorMessage = "The registration number cannot be less than 5 characters.")]
-        [Display(Name = "Business license number/ registration number")]
+        [Display(Name = "Business license no.")]
         public string BusinessId { get; set; }
     }
 }

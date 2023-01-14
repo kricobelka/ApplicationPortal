@@ -313,7 +313,7 @@ namespace ApplicationPortal.Controllers
             //if (ModelState.IsValid)
             //{
             await _productService.AcceptProduct(productId);
-            TempData["submitProduct"] = $"The product  has been submitted under Ref.No.{productId}";
+            TempData["submitProduct"] = $"The product has been submitted under Ref.No.{productId}";
             return RedirectToAction("GetSubmittedProducts", "Product");
             //return View();
         }

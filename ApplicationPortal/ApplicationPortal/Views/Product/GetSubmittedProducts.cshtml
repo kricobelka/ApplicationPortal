@@ -6,44 +6,57 @@
     ViewBag.Title = "My products";
 }
 
-@TempData["cancelProduct"]
-@TempData["submitProduct"]
-@TempData["saveProduct"]
+<i class="alert-success">@TempData["cancelProduct"]</i>
+<i class="alert-success">@TempData["submitProduct"]</i>
+<i class="alert-success">@TempData["saveProduct"]</i>
 
-<table class="table">
-    <thead>
-        <tr>
+<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">My products</h1>
+
+<p class="lead text-dark mark">Here you can view/submit/delete products submitted/not submitted and their actual status.</p>
+
+<table class="table table-striped">
+    <thead class="table-primary">
+        <tr class="text-center">
             <th>@Html.DisplayNameFor(q => q.Id)</th>
             <th>@Html.DisplayNameFor(q => q.Name)</th>
             <th>@Html.DisplayNameFor(q => q.Model)</th>
             <th>@Html.DisplayNameFor(q => q.Manufacturer)</th>
             <th>@Html.DisplayNameFor(q => q.Status)</th>
+            <th></th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
 
-        @foreach (var product in Model)
-        {
-            <tr>
+            @foreach (var product in Model)
+            {
+            <tr class="text-center list-group-item-action">
                 <td>@product.Id</td>
                 <td>@product.Name</td>
                 <td>@product.Model</td>
                 <td>@product.Manufacturer</td>
                 <td>@product.Status</td>
                 <td>@Html.ActionLink("View", "ViewApplicationNotSubmitted", "Product", new {productId = product.Id}, new {@class = "btn btn-outline-primary"})</td>
-                <td>@if (product.Status < ProductStatus.FinallySubmitted)
-                    {
-                        @Html.ActionLink("Cancel", "CancelNotSubmittedApplication", "Product", new {productId = product.Id}, new {@class = "btn btn-danger btn .text-nowrap"})
-                    }
-                </td>                
-                <td>@if(product.Status < ProductStatus.FinallySubmitted)
-                    {
-                        @Html.ActionLink("Submit", "SubmitSavedProduct", "Product", new { productId = product.Id }, new {@class="btn btn-success"})
-                    }
+                <td>
+                        @if (product.Status < ProductStatus.FinallySubmitted)
+                        {
+                            @Html.ActionLink("Cancel", "CancelNotSubmittedApplication", "Product", new {productId = product.Id}, new {@class = "btn btn-danger btn .text-nowrap"})
+                        }
+                </td>
+                <td>
+                        @if (product.Status < ProductStatus.FinallySubmitted)
+                        {
+                            @Html.ActionLink("Submit", "SubmitSavedProduct", "Product", new { productId = product.Id }, new {@class="btn btn-success"})
+                        }
                 </td>
             </tr>
-        }
+            }
     </tbody>
 </table>
 
-@Html.ActionLink("Submit a new product", "GetUserAndCompanyInfo", "Product", @Model, new {@class = "btn btn-success"})
+<div>
+        @Html.ActionLink("Submit a new product", "GetUserAndCompanyInfo", "Product", null, new {@class = "btn btn-primary mb-4"})
+</div>
+
+<div><i>If you have another product for approval, please submit a new product.</i></div>

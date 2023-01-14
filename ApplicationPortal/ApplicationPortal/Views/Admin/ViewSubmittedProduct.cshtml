@@ -1,6 +1,6 @@
 ﻿@model ProductViewModel
 
-<h5 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">Product information No. @Model.Id</h5>
+<h5 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">Product information</h5>
 
 @*@Html.HiddenFor(q => q.Id)*@
 
@@ -16,10 +16,10 @@
     <ul>
         @foreach (var comment in comments)
         {
-            <li>
+            <li class="list-group-item list-group-item-action">
                 <div><i>Comment:</i> @comment.Text</div>
                 <div><i>Left by: </i> @comment.UserEmail</div>
-                <div class="mb-1"><i>On</i> @comment.CreatedDate</div>
+                @*<div class="mb-1"><i>On</i> @comment.CreatedDate</div>*@
             </li>
         }
     </ul>
@@ -90,7 +90,7 @@
         </div>
         <div class="@divList">
             @Html.DisplayTextFor(q => @Model.Frequencies[i].StartRange)
-            @Html.DisplayTextFor(q => @Model.Frequencies[i].FrequencyUnit)
+            <i>@Html.DisplayTextFor(q => @Model.Frequencies[i].FrequencyUnit)</i>
         </div>
 
         <div class="col-1">
@@ -98,7 +98,7 @@
         </div>
         <div class="@divList">
             @Html.DisplayTextFor(q => @Model.Frequencies[i].EndRange)
-            @Html.DisplayTextFor(q => @Model.Frequencies[i].FrequencyUnit)
+            <i>@Html.DisplayTextFor(q => @Model.Frequencies[i].FrequencyUnit)</i>
         </div>
     </div>
 }
@@ -109,7 +109,7 @@
     </div>
     <div class="@divList">
         @Html.DisplayTextFor(q => Model.AntennaGain.Amount)
-        @Html.DisplayTextFor(q => @Model.AntennaGain.AntennaGainUnit)
+        <i>@Html.DisplayTextFor(q => @Model.AntennaGain.AntennaGainUnit)</i>
     </div>
 </div>
 
@@ -136,16 +136,16 @@
 <hr />
 
 <div class="row">
-    <div class="col-2">
+    <div class="@divList">
         @Html.ActionLink("Go back", "GetSubmittedProductsAndUsers", "Admin", null, new {@class="btn btn-outline-secondary"})
     </div>
-    <div class="col-3">
-        @Html.ActionLink("Confirm and go ahead", "AcceptProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-success"})
+    <div class="@divList">
+        @Html.ActionLink("Accept", "AcceptProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-outline-success"})
     </div>
-    <div class="col-2">
+    <div class="@divList">
         @Html.ActionLink("Edit", "EditProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-outline-primary"})
     </div>
-    <div class="col-3">
-        @Html.ActionLink("Delete", "DeleteProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-danger"})
+    <div class="@divList">
+        @Html.ActionLink("Delete", "DeleteProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-outline-danger"})
     </div>
 </div>
