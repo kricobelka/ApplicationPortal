@@ -1,47 +1,75 @@
 ﻿@model CommentViewModelRequest
 
-@using (Html.BeginForm("CreateAComment", "Comment", new { ProductId = @Model.ProductId, isAdmin = ViewBag.IsAdmin }, FormMethod.Post))
+@{
+    var divList = "col-2";
+}
+
+<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mt-2 mb-5">Comments</h1>
+<p class="lead mark text-dark">Please add a comment for product Ref. # @Model.ProductId if necessary</p>
+<hr />
+
+@using (Html.BeginForm("CreateAComment", "Comment", new { ProductId = @Model.ProductId, isAdmin = ViewBag.IsAdmin }, FormMethod.Post, null, new { @class = "form-group" }))
 {
-    @Html.ValidationSummary(false)
+    <div class="form-text text-muted col-lg">@Html.ValidationSummary(false)</div>
 
     <div>
-        @Html.LabelFor(q => q.Text):
-        @Html.TextAreaFor(q => q.Text)
-        @Html.ValidationMessageFor(q => q.Text)
+        @Html.LabelFor(q => q.Text, new {@class="col-form-label col-lg"})
+        <div class="form-floating">
+            @Html.TextAreaFor(q => q.Text, new {@class="form-control col-sm-4 mb-3"})
+            <label for="Text">Please type a text</label>
+            @*@Html.ValidationMessageFor(q => q.Text)*@
+        </div>
     </div>
 
-    <div>
-        @Html.DisplayNameFor(q => q.UserEmail):
-        @Html.DisplayTextFor(q => q.UserEmail)
+    <p><i>Left By:</i></p>
+    <div class="row">
+        <div class="@divList">
+            @Html.DisplayNameFor(q => q.UserEmail):
+        </div>
+        <div class="@divList">
+            @Html.DisplayTextFor(q => q.UserEmail)
+        </div>
     </div>
 
     @if (Model.FirstName != null)
     {
-        <div>
-            @Html.DisplayNameFor(q => q.FirstName):
-            @Html.DisplayTextFor(q => q.FirstName)
+        <div class="row">
+            <div class="@divList">
+                @Html.DisplayNameFor(q => q.FirstName):
+            </div>
+            <div class="@divList">
+                @Html.DisplayTextFor(q => q.FirstName)
+            </div>
         </div>
 
-        <div>
-            @Html.DisplayNameFor(q => q.LastName):
-            @Html.DisplayTextFor(q => q.LastName)
+        <div class="row">
+            <div class="@divList">
+                @Html.DisplayNameFor(q => q.LastName):
+            </div>
+            <div class="@divList">
+                @Html.DisplayTextFor(q => q.LastName)
+            </div>
         </div>
     }
 
-    <div>
-        @Html.DisplayNameFor(q => q.CreatedDate):
-        @Html.DisplayTextFor(q => q.CreatedDate)
+    <div class="row">
+        <div class="@divList">
+            @Html.DisplayNameFor(q => q.CreatedDate):
+        </div>
+        <div class="@divList">
+            @Html.DisplayTextFor(q => q.CreatedDate)
+        </div>
     </div>
 
-    <button>Leave a comment</button>
-}
+    <button type="submit" class="btn btn-primary @divList mt-2">Leave a comment</button>
 
-@if (ViewBag.IsAdmin == true)
-{
-    @Html.ActionLink("Go back", "ViewSubmittedProduct", "Admin", new {ProductId = @Model.ProductId}, new {@class="btn btn-outline-primary"})
-}
-else
-{
-    @Html.ActionLink("Go back", "ViewApplicationNotSubmitted", "Product", new {ProductId = @Model.ProductId}, new {@class="btn btn-outline-primary"})
+    @if (ViewBag.IsAdmin == true)
+    {
+        @Html.ActionLink("Go back", "ViewSubmittedProduct", "Admin", new {ProductId = @Model.ProductId}, new {@class="btn btn-outline-secondary col mt-2"})
+    }
+    else
+    {
+        @Html.ActionLink("Go back", "ViewApplicationNotSubmitted", "Product", new {ProductId = @Model.ProductId}, new {@class="btn btn-outline-secondary col mt-2"})
+    }
 }
 

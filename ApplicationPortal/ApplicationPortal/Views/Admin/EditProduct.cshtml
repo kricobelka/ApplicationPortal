@@ -10,7 +10,7 @@
     @Html.HiddenFor(q => q.Id)
     <div class="form-text text-muted col-lg">@Html.ValidationSummary(false)</div>
 
-    <h5>General product info of Ref. No. @Model.Id</h5>
+    <h5 class="p-3 border mb-1 text-light bg-primary">General product info</h5>
 
     <div>
         @Html.LabelFor(q => q.Name, new {@class="col-form-label col-sm-4"})
@@ -45,7 +45,7 @@
     </div>
     <hr />
 
-    <h5>Technical product info of Ref.No. @Model.Id</h5>
+    <h5 class="p-3 border mb-1 text-light bg-primary">Technical product info</h5>
 
     <div>
         @Html.LabelFor(q => q.OutputPower, new {@class="col-form-label col-lg"})
@@ -107,7 +107,7 @@
     </div>
     <hr />
 
-    <h5>Extra product info of Ref.No. @Model.Id</h5>
+    <h5 class="p-3 border mb-1 text-light bg-primary">Extra product info</h5>
 
    <div class="form-text text-muted col-lg">@Html.ValidationSummary(false)</div>
 
@@ -130,6 +130,6 @@
         @*"Please attach link to the documents"*@
     </div>
 
-    <button type="submit" class="btn btn-primary mt-2 w-25">Apply changes</button>
+    <button type="submit" class="btn btn-primary mt-3 w-25">Apply changes</button>
 }
 

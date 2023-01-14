@@ -9,23 +9,26 @@
     var divList = "col-2";
 }
 
-<p class="lead mark mb-3 text-dark">Comments left for the product No. @Model.Id</p>
+<p class="lead mark text-dark">Comments left for the product No. @Model.Id</p>
 <hr />
 
-<ul>
-    @foreach (var comment in comments)
-    {
-        <li>
-            <div>@comment.Text</div>
-            @comment.UserEmail
-            @comment.CreatedDate
-        </li>
-    }
-</ul>
+<div class="row">
+    <ul>
+        @foreach (var comment in comments)
+        {
+            <li>
+                <div><i>Comment:</i> @comment.Text</div>
+                <div><i>Left by: </i> @comment.UserEmail</div>
+                <div class="mb-1"><i>On</i> @comment.CreatedDate</div>
+            </li>
+        }
+    </ul>
+</div>
 
-@Html.ActionLink("Add a comment", "CreateAComment", "Comment", new { productId = @Model.Id, isAdmin = true }, new {@class = "btn btn-outline-warning mb-2"})
+@Html.ActionLink("Add a new comment", "CreateAComment", "Comment", new { productId = @Model.Id, isAdmin = true }, new {@class = "btn btn-outline-warning"})
+<hr />
 
-<h5>General product info</h5>
+<h5 class="lead mark text-dark">General product info</h5>
 
 <div class="row">
     <div class="@divList">
@@ -63,9 +66,12 @@
     </div>
 </div>
 
-<hr />
+@*<hr />*@
 
-<h5>Technical product info</h5>
+@*<h5 class="mark bg-primary text-light">Technical product info</h5>*@
+
+<h5 class="lead mark text-dark mt-3">Technical product info</h5>
+
 
 <div class="row">
     <div class="@divList">
@@ -107,9 +113,7 @@
     </div>
 </div>
 
-<hr />
-
-<h5>Additional product info</h5>
+<h5 class="lead mark text-dark mt-3">Additional product info</h5>
 
 <div class="row">
     <div class="@divList">
@@ -133,15 +137,15 @@
 
 <div class="row">
     <div class="col-2">
-        @Html.ActionLink("Go back", "GetSubmittedProductsAndUsers", "Admin", null, new {@class="btn btn-outline-info"})
-    </div>
-    <div class="col-2">
-        @Html.ActionLink("Delete", "DeleteProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-danger"})
+        @Html.ActionLink("Go back", "GetSubmittedProductsAndUsers", "Admin", null, new {@class="btn btn-outline-secondary"})
     </div>
     <div class="col-3">
         @Html.ActionLink("Confirm and go ahead", "AcceptProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-success"})
     </div>
-    <div class="col-4">
+    <div class="col-2">
         @Html.ActionLink("Edit", "EditProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-outline-primary"})
+    </div>
+    <div class="col-3">
+        @Html.ActionLink("Delete", "DeleteProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-danger"})
     </div>
 </div>
