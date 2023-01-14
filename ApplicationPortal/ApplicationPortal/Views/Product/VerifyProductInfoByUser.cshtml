@@ -1,90 +1,139 @@
 ﻿@model ProductViewModel
+@{
+    var divList = "col-2";
+}
 
+<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">Verification of product</h1>
+<p class="lead mark mb-3 text-dark">Before submitting please scrutinize the information provided</p>
+<hr />
 
-@using (@Html.BeginForm("VerifyProductInfoByUser", "Product", new { productId = Model.Id }, FormMethod.Post))
+@*@using (@Html.BeginForm("VerifyProductInfoByUser", "Product", new { productId = Model.Id }, FormMethod.Post))
+*@
+@using (@Html.BeginForm("VerifyProductInfoByUser", "Product", new { productId = Model.Id }, FormMethod.Post, null, new { @class = "form-group" }))
 {
-                //@Html.HiddenFor(q => q.Id)
-    <h5>General product info</h5>
-    @Html.ActionLink("Edit", "GeneralProductInfo", new {productId = @Model.Id}, new {@class = "btn btn-primary"})
+    //@Html.HiddenFor(q => q.Id)
+    <h5 class="text-lg-left">General product info</h5>
+    @Html.ActionLink("Edit", "GeneralProductInfo", new {productId = @Model.Id}, new {@class = "btn btn-primary col-1 mb-2"})
 
-    <div>
-        @Html.DisplayNameFor(q => q.Name)
-        @Html.DisplayTextFor(q => q.Name)
+    <div class="row">
+        <div class="@divList">
+            @Html.DisplayNameFor(q => q.Name)
+        </div>
+        <div class="@divList">
+            @Html.DisplayTextFor(q => q.Name)
+        </div>
     </div>
 
-    <div>
-        @Html.DisplayNameFor(q => q.Model)
-        @Html.DisplayTextFor(q => q.Model)
+    <div class="row">
+        <div class="@divList">
+            @Html.DisplayNameFor(q => q.Model)
+        </div>
+        <div class="@divList">
+            @Html.DisplayTextFor(q => q.Model)
+
+        </div>
     </div>
 
-    <div>
-        @Html.DisplayNameFor(q => q.Brand)
-        @Html.DisplayTextFor(q => q.Brand)
+    <div class="row">
+        <div class="@divList">
+            @Html.DisplayNameFor(q => q.Brand)
+        </div>
+        <div class="@divList">
+            @Html.DisplayTextFor(q => q.Brand)
+        </div>
     </div>
 
-    <div>
-        @Html.DisplayNameFor(q => q.Manufacturer)
-        @Html.DisplayTextFor(q => q.Manufacturer)
+    <div class="row">
+        <div class="@divList">
+            @Html.DisplayNameFor(q => q.Manufacturer)
+        </div>
+        <div class="@divList">
+            @Html.DisplayTextFor(q => q.Manufacturer)
+        </div>
     </div>
 
     <hr />
+    <h5 class="text-lg-left">Technical product info</h5>
+    @Html.ActionLink("Edit", "TechnicalProductInfo", new {productId = @Model.Id}, new {@class = "btn btn-primary mb-2 col-1"})
 
-    <h5>Technical product info</h5>
-    @Html.ActionLink("Edit", "TechnicalProductInfo", new {productId = @Model.Id}, new {@class = "btn btn-primary"})
-
-    <div>
-        @Html.DisplayNameFor(q => q.OutputPower)
-        @Html.DisplayTextFor(q => q.OutputPower)
+    <div class="row">
+        <div class="@divList">
+            @Html.DisplayNameFor(q => q.OutputPower)
+        </div>
+        <div class="@divList">
+            @Html.DisplayTextFor(q => q.OutputPower)
+        </div>
     </div>
 
     @for (int i = 0; i < Model.Frequencies.Count; i++)
     {
         <div class="row">
-            <div class="col">
-                @Html.DisplayNameFor(q => @Model.Frequencies[i].StartRange)
+            <div class="@divList">
+                <b>@Html.DisplayNameFor(q => @Model.Frequencies[i].StartRange)</b>
+            </div>
+            <div class="@divList">
                 @Html.DisplayTextFor(q => @Model.Frequencies[i].StartRange)
+                @Html.DisplayTextFor(q => @Model.Frequencies[i].FrequencyUnit)
             </div>
 
-            <div class="col">
-                @Html.DisplayNameFor(q => @Model.Frequencies[i].EndRange)
+            <div class="col-1">
+                <b>@Html.DisplayNameFor(q => @Model.Frequencies[i].EndRange)</b>
+            </div>
+            <div class="@divList">
                 @Html.DisplayTextFor(q => @Model.Frequencies[i].EndRange)
-            </div>
-
-            <div class="col">
-                @Html.DisplayNameFor(q => @Model.Frequencies[i].FrequencyUnit)
                 @Html.DisplayTextFor(q => @Model.Frequencies[i].FrequencyUnit)
             </div>
         </div>
     }
 
-    <div class="row">
-        <div class="col">
-            @Html.DisplayNameFor(q => @Model.AntennaGain.Amount)
-            @Html.DisplayTextFor(q => @Model.AntennaGain.Amount)
-        </div>
-
-        <div class="col">
-            @Html.DisplayNameFor(q => @Model.AntennaGain.AntennaGainUnit)
-            @Html.DisplayTextFor(q => @Model.AntennaGain.AntennaGainUnit)
-        </div>
+<div class="row">
+    <div class="@divList">
+        <b>@Html.DisplayNameFor(q => @Model.AntennaGain.Amount)</b>
     </div>
+    <div class="@divList">
+        @Html.DisplayTextFor(q => Model.AntennaGain.Amount)
+        @Html.DisplayTextFor(q => @Model.AntennaGain.AntennaGainUnit)
+    </div>
+</div>
 
     <hr />
 
-    <h5>Additional product info</h5>
+    <h5 class="text-lg-left">Additional product info</h5>
     //будет справа
-    @Html.ActionLink("Edit", "ExtraProductInfo", new {productId = @Model.Id}, new {@class = "btn btn-primary"})
-    <div>
-        @Html.DisplayNameFor(q => q.OtherInformation)
-        @Html.DisplayTextFor(q => q.OtherInformation)
+    @Html.ActionLink("Edit", "ExtraProductInfo", new {productId = @Model.Id}, new {@class = "col-1 btn btn-primary mb-2"})
+
+    <div class="row">
+        <div class="@divList">
+            @Html.DisplayNameFor(q => q.OtherInformation)
+        </div>
+        <div class="@divList">
+            @Html.DisplayTextFor(q => q.OtherInformation)
+        </div>
     </div>
 
-    <div>
-        @Html.DisplayNameFor(q => q.PathToFile)
-        @Html.DisplayTextFor(q => q.PathToFile)
+    <div class="row">
+        <div class="@divList">
+            @Html.DisplayNameFor(q => q.PathToFile)
+        </div>
+        <div class="col-lg">
+            @Html.DisplayTextFor(q => q.PathToFile)
+        </div>
     </div>
+
     <hr />
-    <button type="submit" class="btn btn-success" name="action" value="getSubmittedProducts">Submit</button>
-    <button type="submit" class="btn btn-danger" name="action" value="cancelProduct">Cancel</button>
-    <button type="submit" class="btn btn-outline-success" name="action" value="saveProduct">Save as a draft</button>
+
+    <div class="container px-1">
+        <div class="row gx-5">
+            <div class="col-2">
+                <button type="submit" class="btn btn-success" name="action" value="getSubmittedProducts">Submit</button>
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-danger" name="action" value="cancelProduct">Cancel</button>
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-outline-success" name="action" value="saveProduct">Save as a draft</button>
+            </div>
+        </div>
+    </div>
 }
+@*distance between buttons*@

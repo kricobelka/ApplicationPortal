@@ -54,6 +54,10 @@ button.accept-policy {
   font-size: 1rem;
   line-height: inherit;
 }
+/*
+.btn:last-child {
+    margin-right: 10px;
+}*/
 
 /*/ Sticky footer styles
 -------------------------------------------------- /*/

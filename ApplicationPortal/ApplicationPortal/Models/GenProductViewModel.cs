@@ -8,7 +8,7 @@ namespace ApplicationPortal.Models
 
         [Required(ErrorMessage = "Please type name")]
         [MaxLength(50, ErrorMessage = "The product name cannot exceed 50 characters. ")]
-        [MinLength(2, ErrorMessage = "The product name cannot be less than 3 characters.")]
+        [MinLength(3, ErrorMessage = "The product name cannot be less than 3 characters.")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Please type model")]

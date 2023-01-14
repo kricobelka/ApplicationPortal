@@ -11,7 +11,7 @@ namespace ApplicationPortal.Models
         [Display(Name = "Frequency: from")]
         public double StartRange { get; set; }
 
-        [Display(Name = "to")]
+        [Display(Name = "to:")]
         [Required(ErrorMessage = "Please insert actual frequency range")]
         public double EndRange { get; set; }
 

@@ -1,15 +1,17 @@
 ﻿@model ProductViewModel
 
-<h5>Product info of @Model.Id</h5>
+<h5 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">Product information No. @Model.Id</h5>
 
 @*@Html.HiddenFor(q => q.Id)*@
 
 @{
     var comments = ViewBag.Comments as List<CommentViewModelResponse>;
+    var divList = "col-2";
 }
-<br />
 
-<p>Comments left for the product No. @Model.Id</p>
+<p class="lead mark mb-3 text-dark">Comments left for the product No. @Model.Id</p>
+<hr />
+
 <ul>
     @foreach (var comment in comments)
     {
@@ -21,65 +23,86 @@
     }
 </ul>
 
-@Html.ActionLink("Add a comment", "CreateAComment", "Comment", new { productId = @Model.Id, isAdmin = true })
+@Html.ActionLink("Add a comment", "CreateAComment", "Comment", new { productId = @Model.Id, isAdmin = true }, new {@class = "btn btn-outline-warning mb-2"})
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.Name)</b>
-    @Html.DisplayTextFor(q => q.Name)
+<h5>General product info</h5>
+
+<div class="row">
+    <div class="@divList">
+        <b>@Html.DisplayNameFor(q => q.Name)</b>
+    </div>
+    <div class="@divList">
+        @Html.DisplayTextFor(q => q.Name)
+    </div>
 </div>
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.Model)</b>
-    @Html.DisplayTextFor(q => q.Model)
+<div class="row">
+    <div class="@divList">
+        <b>@Html.DisplayNameFor(q => q.Model)</b>
+    </div>
+    <div class="@divList">
+        @Html.DisplayTextFor(q => q.Model)
+    </div>
 </div>
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.Brand)</b>
-    @Html.DisplayTextFor(q => q.Brand)
+<div class="row">
+    <div class="@divList">
+        <b>@Html.DisplayNameFor(q => q.Brand)</b>
+    </div>
+    <div class="@divList">
+        @Html.DisplayTextFor(q => q.Brand)
+    </div>
 </div>
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.Manufacturer)</b>
-    @Html.DisplayTextFor(q => q.Manufacturer)
+<div class="row">
+    <div class="@divList">
+        <b>@Html.DisplayNameFor(q => q.Manufacturer)</b>
+    </div>
+    <div class="@divList">
+        @Html.DisplayTextFor(q => q.Manufacturer)
+    </div>
 </div>
 
 <hr />
 
 <h5>Technical product info</h5>
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.OutputPower)</b>
-    @Html.DisplayTextFor(q => q.OutputPower)
+<div class="row">
+    <div class="@divList">
+        <b>@Html.DisplayNameFor(q => q.OutputPower)</b>
+    </div>
+    <div class="@divList">
+        @Html.DisplayTextFor(q => q.OutputPower)
+    </div>
 </div>
 
 @for (int i = 0; i < Model.Frequencies.Count; i++)
 {
     <div class="row">
-        <div class="col">
-            @Html.DisplayNameFor(q => @Model.Frequencies[i].StartRange)
+        <div class="@divList">
+            <b>@Html.DisplayNameFor(q => @Model.Frequencies[i].StartRange)</b>
+        </div>
+        <div class="@divList">
             @Html.DisplayTextFor(q => @Model.Frequencies[i].StartRange)
+            @Html.DisplayTextFor(q => @Model.Frequencies[i].FrequencyUnit)
         </div>
 
-        <div class="col">
-            @Html.DisplayNameFor(q => @Model.Frequencies[i].EndRange)
+        <div class="col-1">
+            <b>@Html.DisplayNameFor(q => @Model.Frequencies[i].EndRange)</b>
+        </div>
+        <div class="@divList">
             @Html.DisplayTextFor(q => @Model.Frequencies[i].EndRange)
-        </div>
-
-        <div class="col">
-            <b>@Html.DisplayNameFor(q => @Model.Frequencies[i].FrequencyUnit)</b>
             @Html.DisplayTextFor(q => @Model.Frequencies[i].FrequencyUnit)
         </div>
     </div>
 }
 
 <div class="row">
-    <div class="col">
+    <div class="@divList">
         <b>@Html.DisplayNameFor(q => @Model.AntennaGain.Amount)</b>
-        @Html.DisplayTextFor(q => @Model.AntennaGain.Amount)
     </div>
-
-    <div class="col">
-        <b>@Html.DisplayNameFor(q => @Model.AntennaGain.AntennaGainUnit)</b>
+    <div class="@divList">
+        @Html.DisplayTextFor(q => Model.AntennaGain.Amount)
         @Html.DisplayTextFor(q => @Model.AntennaGain.AntennaGainUnit)
     </div>
 </div>
@@ -88,22 +111,37 @@
 
 <h5>Additional product info</h5>
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.OtherInformation)</b>
-    @Html.DisplayTextFor(q => q.OtherInformation)
+<div class="row">
+    <div class="@divList">
+        <b>@Html.DisplayNameFor(q => q.OtherInformation)</b>
+    </div>
+    <div class="@divList">
+        @Html.DisplayTextFor(q => q.OtherInformation)
+    </div>
 </div>
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.PathToFile)</b>
-    @Html.DisplayTextFor(q => q.PathToFile)
+<div class="row">
+    <div class="@divList">
+        <b>@Html.DisplayNameFor(q => q.PathToFile)</b>
+    </div>
+    <div class="col-lg">
+        @Html.DisplayTextFor(q => q.PathToFile)
+    </div>
 </div>
+
 <hr />
 
-@Html.ActionLink("Go back", "GetSubmittedProductsAndUsers", "Admin")
-@Html.ActionLink("Delete", "DeleteProduct", "Admin", new {productId = @Model.Id})
-@Html.ActionLink("Confirm and go ahead", "AcceptProduct", "Admin", new {productId = @Model.Id})
-@Html.ActionLink("Edit", "EditProduct", "Admin", new {productId = @Model.Id})
-
-@*//form for leaving comments*@
-@*@using (Html.)*@
-@*text area*@*
+<div class="row">
+    <div class="col-2">
+        @Html.ActionLink("Go back", "GetSubmittedProductsAndUsers", "Admin", null, new {@class="btn btn-outline-info"})
+    </div>
+    <div class="col-2">
+        @Html.ActionLink("Delete", "DeleteProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-danger"})
+    </div>
+    <div class="col-3">
+        @Html.ActionLink("Confirm and go ahead", "AcceptProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-success"})
+    </div>
+    <div class="col-4">
+        @Html.ActionLink("Edit", "EditProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-outline-primary"})
+    </div>
+</div>

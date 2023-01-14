@@ -6,10 +6,10 @@ namespace ApplicationPortal.Models
     {
         public int ProductId { get; set; }
         
-        [Display(Name = "Additional information about the product")]
+        [Display(Name = "Additional information about the product (if any)")]
         public string? OtherInformation { get; set; }
 
-        [Required(ErrorMessage = "Please provide the link to the documents")]
+        [Required(ErrorMessage = "Please provide link to the documents")]
         [Display(Name = "Path to file")]
         [Url]
         public string PathToFile { get; set; }

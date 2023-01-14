@@ -6,42 +6,55 @@
 @using (Html.BeginForm(FormMethod.Post, new { @class = "form-group" }))
 {
     @Html.HiddenFor(q => q.ProductId)
+    <div class="form-text text-muted col-lg">@Html.ValidationSummary(false)</div>
 
     <div>
         @Html.LabelFor(q => q.Name, new {@class="col-form-label col-sm-4"})
-        @Html.TextBoxFor(q => q.Name, new {@class="form-control col-sm-4"})
-        @Html.ValidationMessageFor(q => q.Name, "Please insert name of product", new {@class = "form-text text-muted"})
+        <div class="form-floating">
+            @Html.TextBoxFor(q => q.Name, new {@class="form-control col-sm-4"})
+            <label for="Name">Please insert product name</label>
+        </div>
+        @*@Html.ValidationMessageFor(q => q.Name, null, new {@class = "form-text text-muted"})*@
     </div>
 
     <div>
         @Html.LabelFor(q => q.Brand, new {@class="col-form-label col-sm-4"})
-        @Html.TextBoxFor(q => q.Brand, new {@class="form-control col-sm-4"})
-        @Html.ValidationMessageFor(q => q.Brand, "Please insert brand of product", new {@class = "form-text text-muted"})
+        <div class="form-floating">
+            @Html.TextBoxFor(q => q.Brand, new {@class="form-control col-sm-4"})
+            <label for="Brand">Please insert trademark/brand</label>
+            @*@Html.ValidationMessageFor(q => q.Brand, "Please insert brand of product", new {@class = "form-text text-muted"}) *@
+        </div>
     </div>
 
     <div>
         @Html.LabelFor(q => q.Model, new {@class="col-form-label col-sm-4"})
-        @Html.TextBoxFor(q => q.Model, new {@class="form-control col-sm-4"})
-        @Html.ValidationMessageFor(q => q.Model, "Please insert model of product", new {@class = "form-text text-muted"})
+        <div class="form-floating">
+            @Html.TextBoxFor(q => q.Model, new {@class="form-control col-sm-4"})
+            <label for="Model">Please insert model</label>
+            @*@Html.ValidationMessageFor(q => q.Model, "Please insert model of product", new {@class = "form-text text-muted"})*@
+        </div>
     </div>
 
     <div>
         @Html.LabelFor(q => q.Manufacturer, new {@class="col-form-label col-sm-4"})
-        @Html.TextBoxFor(q => q.Manufacturer, new {@class="form-control col-sm-4"})
-        @Html.ValidationMessageFor(q => q.Manufacturer, "Please insert manufacturer of product", new {@class = "form-text text-muted"})
+        <div class="form-floating">
+            @Html.TextBoxFor(q => q.Manufacturer, new {@class="form-control col-sm-4"})
+            <label for="Manuacturer">Please insert  manufacturer</label>
+            @*            @Html.ValidationMessageFor(q => q.Manufacturer, "Please insert manufacturer of product", new {@class = "form-text text-muted"})
+        *@
+        </div>
     </div>
 
     if (@ViewBag.ShowApplyChanges == true)
     {
-        <button class="btn btn-primary mt-2" type="submit" name="action" value="submitEditedInfo">Apply changes</button>
+        <button class="btn btn-primary mt-2 w-25" type="submit" name="action" value="submitEditedInfo">Apply changes</button>
     }
 
     else
     {
-        <button type="submit" class="btn btn-outline-success mt-2">Next</button>
-        @*        <button>Next</button>*@
+        <button type="submit" class="btn btn-outline-success w-25 mt-2">Next</button>
     }
+
+    @Html.ActionLink("Save for later submission", "GetSubmittedProducts", "Product", null, new {@class = "btn btn-outline-warning w-25 mt-2"})
 }
-<div class="mt-2">
-    @Html.ActionLink("Save for later submission", "GetSubmittedProducts", "Product", @Model, new {@class = "btn btn-outline-warning"})
-</div>
+

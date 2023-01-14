@@ -1,68 +1,81 @@
 ﻿@using ApplicationPortal.Enums
 @model TechProductViewModel
 
+<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">Technical information</h1>
+<p class="lead mark mb-3 text-dark">Please indicate technical information of product</p>
+<hr />
 
-@using (Html.BeginForm(FormMethod.Post))
+@using (Html.BeginForm(FormMethod.Post, new { @class = "form-group" }))
 {
-    @Html.ValidationSummary(false)
     @Html.HiddenFor(q => q.ProductId)
+    <div class="form-text text-muted col-lg">@Html.ValidationSummary(false)</div>
 
     <div>
-        @Html.LabelFor(q => q.OutputPower): 
-        @Html.EditorFor(q => q.OutputPower)
-        @Html.ValidationMessageFor(q => q.OutputPower)
+        @Html.LabelFor(q => q.OutputPower, new {@class="col-form-label col-lg"})
+        <div class="form-floating">
+            @Html.TextBoxFor(q => q.OutputPower, new {@class="form-control col-sm-4 mb-3"})
+            <label for="OutputPower">Max output power</label>
+            @*@Html.ValidationMessageFor(q => q.OutputPower, "Please insert max output power (dbm)", new {@class = "form-text text-muted"})*@
+        </div>
     </div>
 
     @for (int i = 0; i < Model.Frequencies.Count; i++)
     {
-        
         <div class="row">
             <div class="col">
-                @Html.LabelFor(q => @Model.Frequencies[i].StartRange)
-                @Html.EditorFor(q => @Model.Frequencies[i].StartRange)
-                @Html.ValidationMessageFor(q => @Model.Frequencies[i].StartRange)
-                @*@Html.TextBoxFor(q => @Model.Frequencies[i].StartRange)*@
+                @Html.LabelFor(q => @Model.Frequencies[i].StartRange, new {@class="col-form-label col-lg mt-1"})
+                <div class="form-floating">
+                    @Html.TextBoxFor(q => @Model.Frequencies[i].StartRange, new {@class="form-control col-sm-4 mb-2"})
+                    <label for="@Model.Frequencies[i].StartRange">Receiving frequency</label>
+                    @*@Html.ValidationMessageFor(q => @Model.Frequencies[i].StartRange, "Please insert frequency", new {@class = "form-text text-muted"})*@
+                </div>
             </div>
 
             <div class="col">
-                @Html.LabelFor(q => @Model.Frequencies[i].EndRange)
-                @Html.EditorFor(q => @Model.Frequencies[i].EndRange)
-        @Html.ValidationMessageFor(q => @Model.Frequencies[i].EndRange)
+                @Html.LabelFor(q => @Model.Frequencies[i].EndRange, new {@class="col-form-label col-lg mt-1"})
+                <div class="form-floating">
+                    @Html.TextBoxFor(q => @Model.Frequencies[i].EndRange, new {@class="form-control col-sm-4 mb-2"})
+                    <label for="@Model.Frequencies[i].EndRange">Transmitting frequency</label>
+                    @*                @Html.ValidationMessageFor(q => @Model.Frequencies[i].EndRange, "Please insert frequency", new {@class = "form-text text-muted"})
+            *@
+                </div>
             </div>
 
-            <div class="col">
-                @Html.LabelFor(q => @Model.Frequencies[i].FrequencyUnit)
-                @Html.DropDownListFor(q => @Model.Frequencies[i].FrequencyUnit, Html.GetEnumSelectList<FrequencyUnit>())
+            <div class="col-2">
+                @Html.LabelFor(q => @Model.Frequencies[i].FrequencyUnit, new {@class="col-form-label col-lg mt-1"})
+                @Html.DropDownListFor(q => @Model.Frequencies[i].FrequencyUnit, Html.GetEnumSelectList<FrequencyUnit>(), new {@class="form-select col-sm-4 mt-4"})
                 @Html.ValidationMessageFor(q => @Model.Frequencies[i].FrequencyUnit)
             </div>
         </div>
     }
-    <button type="submit" class="btn btn-light" name="action" value="addNewFrequency">Add new frequency</button>
+    <button type="submit" class="btn btn-outline-primary" name="action" value="addNewFrequency">Add new frequency</button>
     <button type="submit" class="btn btn-secondary" name="action" value="removeFrequency">Remove frequency</button>
-    <hr />
 
     <div class="row">
         <div class="col">
-            @Html.LabelFor(q => @Model.AntennaGain.Amount)
-            @Html.TextBoxFor(q => @Model.AntennaGain.Amount)            
-            @Html.ValidationMessageFor(q => @Model.AntennaGain.Amount)
-        @*@Html.ValidationMessageFor(q => q.OutputPower)*@
+            @Html.LabelFor(q => @Model.AntennaGain.Amount, new {@class="col-form-label col-lg mt-3"})
+            <div class="form-floating">
+                @Html.TextBoxFor(q => @Model.AntennaGain.Amount, new {@class="form-control col-sm-4 mb-2"})
+                <label for="@Model.AntennaGain.Amount">Max antenna gain value</label>
+                @*            @Html.ValidationMessageFor(q => @Model.AntennaGain.Amount, "Please insert correct max antenna gain value", new {@class = "form-text text-muted"})
+            *@
+            </div>
         </div>
 
-        <div class="col">
-            @Html.LabelFor(q => @Model.AntennaGain.AntennaGainUnit)
-            @Html.DropDownListFor(q => @Model.AntennaGain.AntennaGainUnit, Html.GetEnumSelectList<AntennaGainUnit>())
-            @Html.ValidationMessageFor(q => @Model.AntennaGain.AntennaGainUnit)     
+        <div class="col-2">
+            @Html.LabelFor(q => @Model.AntennaGain.AntennaGainUnit, new {@class="col-form-label col-lg mt-3"})
+            @Html.DropDownListFor(q => @Model.AntennaGain.AntennaGainUnit, Html.GetEnumSelectList<AntennaGainUnit>(), new {@class="form-select col-sm-4 mt-4"})
+            @Html.ValidationMessageFor(q => @Model.AntennaGain.AntennaGainUnit)
         </div>
     </div>
 
     if (ViewBag.ShowApplyChanges == true)
     {
-        <button type="submit" class = "btn btn-outline-primary" name="action" value="submitEditedTechnicalInfo">Apply changes</button>
+        <button type="submit" class="btn btn-primary mt-2 w-25" name="action" value="submitEditedTechnicalInfo">Apply changes</button>
     }
     else
     {
-        <button type="submit" class ="btn btn-outline-success" name="action" value="goToNextPage">Next</button>
+        <button type="submit" class="btn btn-outline-success mt-2 w-25" name="action" value="goToNextPage">Next</button>
     }
-    
+        @Html.ActionLink("Save for later submission", "GetSubmittedProducts", "Product", null, new {@class = "btn btn-outline-warning w-25 mt-2"})
 }

@@ -1,30 +1,42 @@
 ﻿@model ExtraProductViewModel
 
-@using (Html.BeginForm(FormMethod.Post))
+
+<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">Additional information</h1>
+<p class="lead mark mb-3 text-dark">Please indicate extra information of product</p>
+<hr />
+
+@using (Html.BeginForm(FormMethod.Post, new { @class = "form-group" }))
 {
-    @Html.ValidationSummary(false)
     @Html.HiddenFor(q => q.ProductId)
+    <div class="form-text text-muted col-lg">@Html.ValidationSummary(false)</div>
 
     <div>
-        @Html.LabelFor(q => q.OtherInformation): 
-        @Html.TextBoxFor(q => q.OtherInformation)
-        @Html.ValidationMessageFor(q => q.OtherInformation)
+        @Html.LabelFor(q => q.OtherInformation, new {@class="col-form-label col-lg"})
+        <div class="form-floating">
+            @Html.TextAreaFor(q => q.OtherInformation, new {@class="form-control col-sm-4"})
+            <label for="OtherInformation">Please indicate extra info (if any)</label>
+            @*@Html.ValidationMessageFor(q => q.OtherInformation, "Please indicate extra info (if any)", new {@class = "form-text text-muted"})*@
+        </div>
     </div>
 
     <div>
-        @Html.LabelFor(q => q.PathToFile): 
-        @Html.TextBoxFor(q => q.PathToFile)
-        @Html.ValidationMessageFor(q => q.PathToFile)
+        @Html.LabelFor(q => q.PathToFile, new {@class="col-form-label col-lg"})
+        <div class="form-floating">
+            @Html.TextBoxFor(q => q.PathToFile, new {@class="form-control col-sm-4"})
+            @*@Html.ValidationMessageFor(q => q.PathToFile, null, new {@class = "form-text text-muted"})*@
+            <label for="PathToFile">Link to the technical file</label>
+        </div>
+        @*"Please attach link to the documents"*@
     </div>
 
 
     if (ViewBag.ShowApplyChanges == true)
     {
-        <button type="submit" class="btn btn-outline-success" name="action" value="submitEditedExtraInfo">Apply changes</button>
-    // ==  <button type="submit" class="btn-outline-success"?
+        <button type="submit" class="btn btn-outline-success mt-2 w-25" name="action" value="submitEditedExtraInfo">Apply changes</button>
     }
     else
     {
-        <button>Verify product information</button>
+        <button type="submit" class="btn btn-primary mt-2 w-25" name="action" value="goToNextPage">Verify product information</button>
     }
+    @Html.ActionLink("Save for later submission", "GetSubmittedProducts", "Product", null, new {@class = "btn btn-outline-warning mt-2 w-25"})
 }

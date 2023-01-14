@@ -9,7 +9,7 @@ namespace ApplicationPortal.Models
         [Required]       
         public double Amount { get; set; }
 
-        [Display(Name = "Antenna gain unit:")]
+        [Display(Name = " ")]
         [Required]
         public AntennaGainUnit AntennaGainUnit { get; set; }
     }

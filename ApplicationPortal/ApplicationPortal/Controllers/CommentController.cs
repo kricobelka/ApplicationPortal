@@ -9,7 +9,7 @@ namespace ApplicationPortal.Controllers
     public class CommentController : Controller
     {
         private readonly CommentService _commentService;
-        
+
         private readonly UserManager<User> _userManager;
 
         public CommentController(CommentService commentService, UserManager<User> userManager)
@@ -29,13 +29,14 @@ namespace ApplicationPortal.Controllers
         {
             ViewBag.IsAdmin = isAdmin;
 
-            //bool value засунуть во вь.бэг, на вюьхе достват значение вьюбэга )isadmin) if isadmin == true redirect to adminproduct info, false - userproductinfo
+            //bool value засунуть во вь.бэг, на вюьхе достват значение вьюбэга (isadmin) if isadmin == true redirect to adminproduct info, false - userproductinfo
             //create modelresponse with productId and return to View
             var userId = _userManager.GetUserId(User);
 
             var user = await _userManager.FindByIdAsync(userId);
 
-            return View(new CommentViewModelResponse
+
+            return View(new CommentViewModelRequest
             {
                 ProductId = productId,
                 UserEmail = user.Email,
@@ -48,9 +49,9 @@ namespace ApplicationPortal.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAComment(CommentViewModelRequest modelRequest, bool isAdmin)
         {
-            if (!ModelState.IsValid)
+            var userId = _userManager.GetUserId(User);
+            if (ModelState.IsValid)
             {
-                var userId = _userManager.GetUserId(User);
 
                 //bool == true, когда админ оставляет комменты на админ-
                 //false, когда юзер будет оставлять комменты на своей части
@@ -63,7 +64,17 @@ namespace ApplicationPortal.Controllers
                 return RedirectToAction("ViewApplicationNotSubmitted", "Product", new { ProductId = modelRequest.ProductId });
             }
 
-            return View(modelRequest);
+            var user = await _userManager.FindByIdAsync(userId);
+
+            return View(new CommentViewModelRequest
+            {
+                ProductId = modelRequest.ProductId,
+                UserEmail = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Text = modelRequest.Text,
+                CreatedDate = DateTime.Now,
+            });
         }
     }
 }
