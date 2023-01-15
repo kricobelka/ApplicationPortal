@@ -1,7 +1,7 @@
 ﻿@model GenProductViewModel
 
 <h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">General information</h1>
-<p class="lead mark mb-3 text-dark">Please indicate general information of product</p>
+<p class="lead mark text-dark">Please indicate general information of product</p>
 <hr />
 @using (Html.BeginForm(FormMethod.Post, new { @class = "form-group" }))
 {
@@ -38,8 +38,8 @@
     <div>
         @Html.LabelFor(q => q.Manufacturer, new {@class="col-form-label col-sm-4"})
         <div class="form-floating">
-            @Html.TextBoxFor(q => q.Manufacturer, new {@class="form-control col-sm-4"})
-            <label for="Manuacturer">Please insert  manufacturer</label>
+            @Html.TextBoxFor(q => q.Manufacturer, new {@class="form-control col-sm-4 mb-2"})
+            <label for="Manuacturer" >Please insert  manufacturer</label>
             @*            @Html.ValidationMessageFor(q => q.Manufacturer, "Please insert manufacturer of product", new {@class = "form-text text-muted"})
         *@
         </div>
@@ -52,9 +52,8 @@
 
     else
     {
-        <button type="submit" class="btn btn-outline-success w-25 mt-2">Next</button>
+        <button type="submit" class="btn btn-outline-primary w-25 mt-2">Next</button>
     }
-
     @Html.ActionLink("Save for later submission", "GetSubmittedProducts", "Product", null, new {@class = "btn btn-outline-warning w-25 mt-2"})
 }
 

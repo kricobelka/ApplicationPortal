@@ -22,13 +22,12 @@
     <div>
         @Html.LabelFor(q => q.PathToFile, new {@class="col-form-label col-lg"})
         <div class="form-floating">
-            @Html.TextBoxFor(q => q.PathToFile, new {@class="form-control col-sm-4"})
+            @Html.TextBoxFor(q => q.PathToFile, new {@class="form-control mb-2 col-sm-4"})
             @*@Html.ValidationMessageFor(q => q.PathToFile, null, new {@class = "form-text text-muted"})*@
             <label for="PathToFile">Link to the technical file</label>
         </div>
         @*"Please attach link to the documents"*@
     </div>
-
 
     if (ViewBag.ShowApplyChanges == true)
     {
@@ -38,5 +37,6 @@
     {
         <button type="submit" class="btn btn-primary mt-2 w-25" name="action" value="goToNextPage">Verify product information</button>
     }
+
     @Html.ActionLink("Save for later submission", "GetSubmittedProducts", "Product", null, new {@class = "btn btn-outline-warning mt-2 w-25"})
 }

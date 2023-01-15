@@ -29,7 +29,6 @@ namespace ApplicationPortal.Controllers
             return View(allProducts);
         }
 
-
         public async Task<IActionResult> ViewSubmittedProduct(int productId)
         {
             var product = await _productService.GetProductById(productId);

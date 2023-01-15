@@ -242,11 +242,6 @@ namespace ApplicationPortal.Controllers
                 return await SubmitProduct(productId);
             }
 
-            //else if (action == "editProduct")
-            //{
-            //    return await EditProduct(productId);
-            //}
-
             else if (action == "cancelProduct")
             {
                 return await CancelProduct(productId);
@@ -255,8 +250,7 @@ namespace ApplicationPortal.Controllers
             else if (action == "saveProduct")
             {
                 return await SaveDraftAndRedirectToProducts(productId);
-            }
-            //is productviewmodel necessary as a parameter and can I return View()?
+            }     
             return View();
         }
 
@@ -264,7 +258,14 @@ namespace ApplicationPortal.Controllers
         {
             var product = await _productService.GetProductById(productId);
             await _productService.SubmitProduct(productId);
-            TempData["submitProduct"] = $"The product {product.Name}, {product.Model} has been submitted under Ref.No. {productId}";
+
+            if (product.Status > Enums.ProductStatus.ExtraInfoSubmitted)
+            {
+                TempData["submitProduct"] = $"The product {product.Name}, {product.Model} has been submitted under Ref.No. {productId}";
+                return RedirectToAction("GetSubmittedProducts", "Product");
+            }
+
+            TempData["submitFailed"] = $"Error. You should fill in missing product info\nPlease click \"View\" for {product.Name}";
             return RedirectToAction("GetSubmittedProducts", "Product");
         }
 
@@ -310,12 +311,15 @@ namespace ApplicationPortal.Controllers
 
         public async Task<IActionResult> SubmitSavedProduct(int productId)
         {
-            //if (ModelState.IsValid)
-            //{
             await _productService.AcceptProduct(productId);
-            TempData["submitProduct"] = $"The product has been submitted under Ref.No.{productId}";
+            var product = await _productService.GetProductById(productId);
+            if (product.Status > Enums.ProductStatus.ExtraInfoSubmitted)
+            {
+                TempData["submitProduct"] = $"The product {product.Name}, {product.Model} has been submitted under Ref.No. {productId}";
+                return RedirectToAction("GetSubmittedProducts", "Product");
+            }
+            TempData["submitFailed"] = $"Error. You should fill in missing product info. \t Please click \"View\" for {product.Name}";
             return RedirectToAction("GetSubmittedProducts", "Product");
-            //return View();
         }
 
         public async Task<IActionResult> EditNotSubmittedProduct(int productId)

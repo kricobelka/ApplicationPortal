@@ -4,10 +4,11 @@
     ViewBag.Title = "Registered companies";
 }
 
-<p class="h3 text-bg-primary align-content-md-center text-lg-center mt-5 mb-5 mark p-2">Companies registered on the Portal
-<p />
+<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">Companies registered on the Portal</h1>
 
-<table class="table">
+<p class="lead text-dark mark">Here you can view/delete/edit companies registered on the portal.</p>
+
+<table class="table table-striped">
     <thead class="table-primary">
         <tr class="text-center">
             <th>@Html.DisplayNameFor(q => q.CompanyId)</th>
@@ -22,7 +23,7 @@
     <tbody>
             @foreach (var company in Model)
             {
-            <tr class="list-group-item-action">
+            <tr class="list-group-item-action text-center">
                 <td>@company.CompanyId</td>
                 <td>@company.CompanyName</td>
                 <td>@company.Address</td>

@@ -1,6 +1,8 @@
 ﻿@page
 @using ApplicationPortal.Data.Entities
 @using ApplicationPortal.Enums
+@using ApplicationPortal.Data
+
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
@@ -19,11 +21,6 @@
                 <label asp-for="Input.Email"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-            <div>
-                @Html.LabelFor(q => @Model.Input.CompanyId)
-                @*to-do add css classes*@
-                @Html.DropDownListFor(q => @Model.Input.CompanyId, Model.Companies/*, new {f = "", f}*/)
-            </div>
             <div class="form-floating">
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="Input.Password"></label>
@@ -33,6 +30,10 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="Input.ConfirmPassword"></label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div>
+                @*@Html.LabelFor(q => @Model.Input.CompanyId)*@
+                @Html.DropDownListFor(q => @Model.Input.CompanyId, Model.Companies, "Company", new {@class = "form-select form-select-sm fs-6"})
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>

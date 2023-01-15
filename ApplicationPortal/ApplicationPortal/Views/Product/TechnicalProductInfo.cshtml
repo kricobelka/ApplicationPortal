@@ -48,8 +48,12 @@
             </div>
         </div>
     }
+    
+    <div>
     <button type="submit" class="btn btn-outline-primary" name="action" value="addNewFrequency">Add new frequency</button>
+    &nbsp 
     <button type="submit" class="btn btn-secondary" name="action" value="removeFrequency">Remove frequency</button>
+    </div>
 
     <div class="row">
         <div class="col">
@@ -75,7 +79,7 @@
     }
     else
     {
-        <button type="submit" class="btn btn-outline-success mt-2 w-25" name="action" value="goToNextPage">Next</button>
+        <button type="submit" class="btn btn-primary mt-2 w-25" name="action" value="goToNextPage">Next</button>
     }
         @Html.ActionLink("Save for later submission", "GetSubmittedProducts", "Product", null, new {@class = "btn btn-outline-warning w-25 mt-2"})
 }

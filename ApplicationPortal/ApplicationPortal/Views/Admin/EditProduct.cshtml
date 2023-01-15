@@ -1,7 +1,7 @@
 ﻿@using ApplicationPortal.Enums
 @model ProductViewModel
 
-<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">Editing of product No. @Model.Id</h1>
+<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">Editing of product # @Model.Id</h1>
 <p class="lead mark mb-3 text-dark">Please edit product if necessary</p>
 <hr />
 
@@ -85,8 +85,12 @@
             </div>
         </div>
     }
+
+    <div>
     <button type="submit" class="btn btn-outline-primary " name="action" value="addNewFrequency">Add new frequency</button>
+    &nbsp
     <button type="submit" class="btn btn-secondary" name="action" value="removeFrequency">Remove frequency</button>
+    </div>
 
     <div class="row">
         <div class="col">

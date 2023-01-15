@@ -29,7 +29,7 @@ namespace ApplicationPortal.Services
                     LastName = q.User.LastName,
                     UserEmail = q.User.Email,
                     Text = q.Text,
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = q.CreatedDate,
                 }).ToListAsync();
 
             return comments;

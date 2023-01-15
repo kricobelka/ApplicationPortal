@@ -9,6 +9,7 @@
 <i class="alert-success">@TempData["cancelProduct"]</i>
 <i class="alert-success">@TempData["submitProduct"]</i>
 <i class="alert-success">@TempData["saveProduct"]</i>
+<i class="alert-danger">@TempData["submitFailed"]</i>
 
 <h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">My products</h1>
 
@@ -29,8 +30,8 @@
     </thead>
     <tbody>
 
-            @foreach (var product in Model)
-            {
+        @foreach (var product in Model)
+        {
             <tr class="text-center list-group-item-action">
                 <td>@product.Id</td>
                 <td>@product.Name</td>
@@ -39,24 +40,24 @@
                 <td>@product.Status</td>
                 <td>@Html.ActionLink("View", "ViewApplicationNotSubmitted", "Product", new {productId = product.Id}, new {@class = "btn btn-outline-primary"})</td>
                 <td>
-                        @if (product.Status < ProductStatus.FinallySubmitted)
-                        {
-                            @Html.ActionLink("Cancel", "CancelNotSubmittedApplication", "Product", new {productId = product.Id}, new {@class = "btn btn-danger btn .text-nowrap"})
-                        }
+                    @if (product.Status < ProductStatus.FinallySubmitted)
+                    {
+                        @Html.ActionLink("Cancel", "CancelNotSubmittedApplication", "Product", new {productId = product.Id}, new {@class = "btn btn-danger btn .text-nowrap"})
+                    }
                 </td>
                 <td>
-                        @if (product.Status < ProductStatus.FinallySubmitted)
-                        {
-                            @Html.ActionLink("Submit", "SubmitSavedProduct", "Product", new { productId = product.Id }, new {@class="btn btn-success"})
-                        }
+                    @if (product.Status < ProductStatus.FinallySubmitted)
+                    {
+                        @Html.ActionLink("Submit", "SubmitSavedProduct", "Product", new { productId = product.Id }, new {@class="btn btn-success"})
+                    }
                 </td>
             </tr>
-            }
+        }
     </tbody>
 </table>
 
-<div>
-        @Html.ActionLink("Submit a new product", "GetUserAndCompanyInfo", "Product", null, new {@class = "btn btn-primary mb-4"})
-</div>
-
 <div><i>If you have another product for approval, please submit a new product.</i></div>
+
+<div>
+    @Html.ActionLink("Submit a new product", "GetUserAndCompanyInfo", "Product", null, new {@class = "btn btn-primary mt-4"})
+</div>

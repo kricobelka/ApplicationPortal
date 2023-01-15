@@ -1,60 +1,97 @@
 ﻿@model UserViewModelResponse
 
-<h5>Here you can edit your user profile</h5>
+@{
+    ViewBag.Title = "Edit user profile";
+    var divList = "col-5";
+}
 
-@using (@Html.BeginForm("EditUserProfile", "User", FormMethod.Post))
+<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">Edit user profile</h1>
+
+<p class="lead text-dark mark">Here you can edit your user credentials.</p>
+
+@using (@Html.BeginForm("EditUserProfile", "User", FormMethod.Post, new { @class = "form-group" }))
 {
-    @* поймет ли чтоюзерайди? раз мы доставлали его с identity?*@
     @Html.HiddenFor(q => User.Identity.IsAuthenticated)
-    @Html.ValidationSummary(false)
+    <div class="form-text text-muted col-lg">@Html.ValidationSummary(false)</div>
 
-    <div>
-        @Html.LabelFor(q => q.FirstName):
-        @Html.TextBoxFor(q => q.FirstName)
-        @Html.ValidationMessageFor(q => q.FirstName)
+    <div class="@divList">
+        @Html.LabelFor(q => q.FirstName, new {@class="col-form-label"})
+        <div class="form-floating">
+            @Html.TextBoxFor(q => q.FirstName, new {@class="form-control"})
+            <label for="FirstName">Please type your first name</label>
+        </div>
     </div>
 
-    <div>
-        @Html.LabelFor(q => q.LastName):
-        @Html.TextBoxFor(q => q.LastName)
-        @Html.ValidationMessageFor(q => q.LastName)
+    <div class="@divList">
+        @Html.LabelFor(q => q.LastName, new {@class="col-form-label"})
+        <div class="form-floating">
+            @Html.TextBoxFor(q => q.LastName, new {@class="form-control"})
+            <label for="LastName">Please type your last name</label>
+        </div>
     </div>
 
-    <div>
-        @Html.LabelFor(q => q.UserEmail):
-        @Html.TextBoxFor(q => q.UserEmail)
-        @Html.ValidationMessageFor(q => q.UserEmail)
+    <div class="@divList">
+        @Html.LabelFor(q => q.UserEmail, new {@class="col-form-label"})
+        <div class="form-floating">
+            @Html.TextBoxFor(q => q.UserEmail, new {@class="form-control"})
+            <label for="UserEmail">Please type your email</label>
+        </div>
     </div>
 
-    <div>
-        @Html.LabelFor(q => q.BirthDate):
-        @Html.TextBoxFor(q => q.BirthDate)
-        @Html.ValidationMessageFor(q => q.BirthDate)
+    <div class="@divList">
+        @Html.LabelFor(q => q.BirthDate, new {@class="col-form-label"})
+        <div class="form-floating">
+            @Html.TextBoxFor(q => q.BirthDate, new {@class="form-control"})
+            <label for="BirthDate">Please point out your birthdate</label>
+        </div>
     </div>
 
-    <div>
-        @Html.LabelFor(q => q.Phone):
-        @Html.TextBoxFor(q => q.Phone)
-        @Html.ValidationMessageFor(q => q.Phone)
+    <div class="@divList">
+        @Html.LabelFor(q => q.Phone, new {@class="col-form-label"})
+        <div class="form-floating">
+            @Html.TextBoxFor(q => q.Phone, new {@class="form-control"})
+            <label for="Phone">Please type mobile phone</label>
+        </div>
     </div>
 
-    <div>
-        @Html.DisplayNameFor(q => q.Company.CompanyName):
-        @Html.DisplayTextFor(q => q.Company.CompanyName)
-        @Html.HiddenFor(q => q.Company.CompanyName)
-    </div>
+    @if (@Model.Company?.CompanyName != null)
+    {
+        <div class="@divList mt-2">
+            @Html.DisplayName("Company name")
+            @Html.TextBoxFor(q => q.Company.CompanyName, new {@class="form-control"})
+            <input class="form-control col-form-label mt-2" type="text" placeholder="@Model.Company.CompanyName" readonly>
+            @Html.HiddenFor(q => q.Company.CompanyName)
+        </div>
+    }
+
+    @if (@Model.Company?.Address != null)
+    {
+        <div class="@divList">
+            @Html.LabelFor(q => q.Company.Address, "Company address", new {@class="col-form-label"})
+            <div class="form-floating">
+                @Html.TextAreaFor(q => q.Company.Address, new {@class="form-control"})
+                <label for="@Model.Company.Address">Please indicate company address</label>
+                @Html.HiddenFor(q => q.Company.Address)
+            </div>
+        </div>
+    }
+
+    @if (@Model.Company?.BusinessId != null)
+    {
+        <div class="@divList">
+            @Html.LabelFor(q => q.Company.BusinessId, "Business license number/ registration number",  new {@class="col-form-label"})
+            <div class="form-floating">
+                @Html.TextBoxFor(q => q.Company.BusinessId, new {@class="form-control"})
+                <label for="@Model.Company.BusinessId">Please indicate company reg.no.</label>
+                @Html.HiddenFor(q => q.Company.BusinessId)
+
+            </div>
+        </div>
+    }
 
     <div>
-        @Html.LabelFor(q => q.Company.Address):
-        @Html.TextBoxFor(q => q.Company.Address)
-        @Html.ValidationMessageFor(q => q.Company.Address)
-
+        <button type="submit" class="btn btn-success mt-3 w-25">Apply changes</button>
+        &nbsp &nbsp &nbsp &nbsp
+        @Html.ActionLink("Back to user profile", "GetUserProfile", "User", new { userId = @Model.UserId}, new {@class = "mt-3 btn btn-secondary"})
     </div>
-    <div>
-        @Html.LabelFor("Business license number/ registration number")
-        @Html.TextBoxFor(q => q.Company.BusinessId)
-        @Html.ValidationMessageFor(q => q.Company.BusinessId)
-    </div>
-
-    <button type="submit" class ="btn btn-success">Apply changes</button>
 }

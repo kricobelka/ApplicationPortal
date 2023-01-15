@@ -4,6 +4,7 @@ namespace ApplicationPortal.Models
 {
     public class CompanyViewModel
     {
+        
         [Display(Name = "Reference no.")]
         public int CompanyId { get; set; }
 

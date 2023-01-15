@@ -2,125 +2,189 @@
 
 @model ProductViewModel
 
-<h5>General product info of @Model.Id</h5>
-
 @{
+    ViewBag.Title = "Product information";
     var comments = ViewBag.Comments as List<CommentViewModelResponse>;
     var divList = "col-2";
 }
 
+<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">Product information # @Model.Id</h1>
+
+@if (Model.Status < ProductStatus.FinallySubmitted)
+{
+    <p class="lead text-dark mark">Please click "Continue to fill in" to apply for product registration.</p>
+}
+
 @if (comments.Count() != 0)
 {
-    <br />
-    <p>Comments left for the product No. @Model.Id:</p>
-    <ul>
+    <p class="lead mark text-dark">Comments left for the product No. @Model.Id</p>
 
-        @foreach (var comment in comments)
-        {
-            <li>
-                <div>@comment.Text</div>
-                @comment.UserEmail
-                @comment.CreatedDate
-            </li>
-        }
-    </ul>
-
-    @Html.ActionLink("Add a comment", "CreateAComment", "Comment", new { productId = @Model.Id, isAdmin = false }, new {@class ="btn btn-outline-info"})
-    <br />
-    @if (Model.Status == ProductStatus.FinallySubmitted)
-    {
-        @Html.ActionLink("Edit product", "EditNotSubmittedProduct", "Product", new { productId = @Model.Id}, new {@class = "btn btn-primary"/* @style = "color:white"*/})
-    }
-}
-<hr />
-
-<div>
-    @Html.DisplayNameFor(q => q.Name)
-    @Html.DisplayTextFor(q => q.Name)
-</div>
-
-<div>
-    @Html.DisplayNameFor(q => q.Model)
-    @Html.DisplayTextFor(q => q.Model)
-</div>
-
-<div>
-    @Html.DisplayNameFor(q => q.Brand)
-    @Html.DisplayTextFor(q => q.Brand)
-</div>
-
-<div>
-    @Html.DisplayNameFor(q => q.Manufacturer)
-    @Html.DisplayTextFor(q => q.Manufacturer)
-</div>
-
-<hr />
-
-<h5>Technical product info</h5>
-
-<div>
-    @Html.DisplayNameFor(q => q.OutputPower)
-    @Html.DisplayTextFor(q => q.OutputPower)
-</div>
-
-@for (int i = 0; i < Model.Frequencies.Count; i++)
-{
     <div class="row">
-        <div class="@divList">
-            <b>@Html.DisplayNameFor(q => @Model.Frequencies[i].StartRange)</b>
-        </div>
-        <div class="@divList">
-            @Html.DisplayTextFor(q => @Model.Frequencies[i].StartRange)
-            @Html.DisplayTextFor(q => @Model.Frequencies[i].FrequencyUnit)
-        </div>
-
-        <div class="col-1">
-            <b>@Html.DisplayNameFor(q => @Model.Frequencies[i].EndRange)</b>
-        </div>
-        <div class="@divList">
-            @Html.DisplayTextFor(q => @Model.Frequencies[i].EndRange)
-            @Html.DisplayTextFor(q => @Model.Frequencies[i].FrequencyUnit)
-        </div>
+        <ul>
+            @foreach (var comment in comments)
+            {
+                <li class="list-group-item list-group-item-action">
+                    <div><i>Comment:</i> @comment.Text</div>
+                    <div><i>Left by: </i> @comment.UserEmail</div>
+                    @*<div class="mb-1"><i>On</i> @comment.CreatedDate</div>*@
+                </li>
+            }
+        </ul>
     </div>
+
+    <div>
+        @Html.ActionLink("Add a new comment", "CreateAComment", "Comment", new { productId = @Model.Id, isAdmin = false }, new {@class ="btn btn-outline-warning"})
+
+        &nbsp &nbsp
+
+        @if (Model.Status == ProductStatus.FinallySubmitted)
+        {
+            @Html.ActionLink("Edit product", "EditNotSubmittedProduct", "Product", new { productId = @Model.Id}, new {@class = "btn btn-outline-primary"})
+        }
+    </div>
+    <hr />
 }
+
+
+<h5 class="p-2 border mb-2 text-light bg-primary">General product info</h5>
 
 <div class="row">
-    <div class="@divList">
-        <b>@Html.DisplayNameFor(q => @Model.AntennaGain.Amount)</b>
-    </div>
-    <div class="@divList">
-        @Html.DisplayTextFor(q => Model.AntennaGain.Amount)
-        @Html.DisplayTextFor(q => @Model.AntennaGain.AntennaGainUnit)
-    </div>
+    <ul>
+        <li class="list-group-item list-group-item-action">
+            <div class="row">
+                <div class="@divList">
+                    <b>@Html.DisplayNameFor(q => q.Name)</b>
+                </div>
+                <div class="@divList">
+                    @Html.DisplayTextFor(q => q.Name)
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item list-group-item-action">
+            <div class="row">
+                <div class="@divList">
+                    <b>@Html.DisplayNameFor(q => q.Model)</b>
+                </div>
+                <div class="@divList">
+                    @Html.DisplayTextFor(q => q.Model)
+                </div>
+            </div>
+        <li class="list-group-item list-group-item-action">
+            <div class="row">
+                <div class="@divList">
+                    <b>@Html.DisplayNameFor(q => q.Brand)</b>
+                </div>
+                <div class="@divList">
+                        @Html.DisplayTextFor(q => q.Brand)
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item list-group-item-action">
+            <div class="row">
+                <div class="@divList">
+                    <b>@Html.DisplayNameFor(q => q.Manufacturer)</b>
+                </div>
+                <div class="@divList">
+                        @Html.DisplayTextFor(q => q.Manufacturer)
+                </div>
+            </div>
+        </li>
+    </ul>
 </div>
 
-<hr />
+<h5 class="p-2 border mb-2 text-light bg-primary">Technical product info</h5>
 
-<h5>Additional product info</h5>
+<div class="row">
+    <ul>
+        <li class="list-group-item list-group-item-action">
+            <div class="row">
+                <div class="@divList">
+                    <b>@Html.DisplayNameFor(q => q.OutputPower)</b>
+                </div>
+                <div class="@divList">
+                    @Html.DisplayTextFor(q => q.OutputPower)
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item list-group-item-action">
 
-<div>
-    @Html.DisplayNameFor(q => q.OtherInformation)
-    @Html.DisplayTextFor(q => q.OtherInformation)
+            @for (int i = 0; i < Model.Frequencies.Count; i++)
+            {
+                <div class="row">
+                    <div class="@divList">
+                        <b>@Html.DisplayNameFor(q => @Model.Frequencies[i].StartRange)</b>
+                    </div>
+                    <div class="@divList">
+                        @Html.DisplayTextFor(q => @Model.Frequencies[i].StartRange)
+                        <i>@Html.DisplayTextFor(q => @Model.Frequencies[i].FrequencyUnit)</i>
+                    </div>
+
+                    <div class="col-1">
+                        <b>@Html.DisplayNameFor(q => @Model.Frequencies[i].EndRange)</b>
+                    </div>
+                    <div class="@divList">
+                        @Html.DisplayTextFor(q => @Model.Frequencies[i].EndRange)
+                        <i>@Html.DisplayTextFor(q => @Model.Frequencies[i].FrequencyUnit)</i>
+                    </div>
+                </div>
+            }
+        </li>
+        <li class="list-group-item list-group-item-action">
+
+            <div class="row">
+                <div class="@divList">
+                    <b>@Html.DisplayNameFor(q => @Model.AntennaGain.Amount)</b>
+                </div>
+                <div class="@divList">
+                    @Html.DisplayTextFor(q => Model.AntennaGain.Amount)
+                    <i>@Html.DisplayTextFor(q => @Model.AntennaGain.AntennaGainUnit)</i>
+                </div>
+            </div>
+        </li>
+    </ul>
 </div>
 
-<div>
-    @Html.DisplayNameFor(q => q.PathToFile)
-    @Html.DisplayTextFor(q => q.PathToFile)
-</div>
-<hr />
+<h5 class="p-2 border mb-2 text-light bg-primary">Additional product info</h5>
 
-@Html.ActionLink("Go back", "GetSubmittedProducts", "Product", @Model, new {@class="btn btn-outline-info"})
+<div class="row">
+    <ul>
+        <li class="list-group-item list-group-item-action">
+            <div class="row">
+                <div class="@divList">
+                    <b>@Html.DisplayNameFor(q => q.OtherInformation)</b>
+                </div>
+                <div class="@divList">
+                    @Html.DisplayTextFor(q => q.OtherInformation)
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item list-group-item-action">
+            <div class="row">
+                <div class="@divList">
+                    <b>@Html.DisplayNameFor(q => q.PathToFile)</b>
+                </div>
+                <div class="col-lg">
+                    @Html.DisplayTextFor(q => q.PathToFile)
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+@Html.ActionLink("Go back", "GetSubmittedProducts", "Product", @Model, new {@class="btn btn-secondary"})
+        &nbsp &nbsp
 
 @if (Model.Status < ProductStatus.FinallySubmitted)
 {
     @Html.ActionLink("Cancel application", "CancelNotSubmittedApplication", "Product", new {productId = @Model.Id}, new {@class="btn btn-danger"})
 }
-@TempData["cancelProduct"]
+        &nbsp &nbsp
 
 @if (Model.Status <= ProductStatus.ExtraInfoSubmitted)
 {
-    @Html.ActionLink("Continue to fill in", "EditNotSubmittedProduct", "Product", new {productId = @Model.Id}, new {@class="btn btn-outline-success"})
+    @Html.ActionLink("Continue to fill in", "EditNotSubmittedProduct", "Product", new {productId = @Model.Id}, new {@class="btn btn-primary"})
 }
+        &nbsp &nbsp
 
 @if (Model.Status == ProductStatus.ExtraInfoSubmitted)
 {

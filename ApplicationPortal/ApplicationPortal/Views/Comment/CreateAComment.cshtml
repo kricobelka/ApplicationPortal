@@ -51,7 +51,7 @@
             </div>
         </div>
     }
-@*
+
     <div class="row">
         <div class="@divList">
             @Html.DisplayNameFor(q => q.CreatedDate):
@@ -59,17 +59,17 @@
         <div class="@divList">
             @Html.DisplayTextFor(q => q.CreatedDate)
         </div>
-    </div>*@
+    </div>
 
     <button type="submit" class="btn btn-primary @divList mt-2">Leave a comment</button>
 
     @if (ViewBag.IsAdmin == true)
     {
-        @Html.ActionLink("Go back", "ViewSubmittedProduct", "Admin", new {ProductId = @Model.ProductId}, new {@class="btn btn-outline-secondary col mt-2"})
+        @Html.ActionLink("Go back", "ViewSubmittedProduct", "Admin", new {ProductId = @Model.ProductId}, new {@class="btn btn-outline-secondary mt-2 col ms-3"})
     }
     else
     {
-        @Html.ActionLink("Go back", "ViewApplicationNotSubmitted", "Product", new {ProductId = @Model.ProductId}, new {@class="btn btn-outline-secondary col mt-2"})
+        @Html.ActionLink("Go back", "ViewApplicationNotSubmitted", "Product", new {ProductId = @Model.ProductId}, new {@class="btn btn-outline-secondary col mt-2 ms-3"})
     }
 }
 
