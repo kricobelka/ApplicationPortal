@@ -6,10 +6,65 @@
     ViewBag.Title = "My products";
 }
 
-<i class="alert-success">@TempData["cancelProduct"]</i>
-<i class="alert-success">@TempData["submitProduct"]</i>
-<i class="alert-success">@TempData["saveProduct"]</i>
-<i class="alert-danger">@TempData["submitFailed"]</i>
+@if (@TempData["submitFailed"] != null)
+{
+    <div class="toast fade show" id="test-toast" data-bs-autohide="true" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1000">
+        <div class="toast-header">
+            <strong class="me-auto">Notification</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <div class="alert alert-danger" role="alert">
+                <span><i>@TempData["submitFailed"]</i></span>
+            </div>
+        </div>
+    </div>
+}
+
+@if (@TempData["saveProduct"] != null)
+{
+    <div class="toast fade show" id="test-toast" data-bs-autohide="true" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1000">
+        <div class="toast-header">
+            <strong class="me-auto">Notification</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <div class="alert alert-success" role="alert">
+                <span><i>@TempData["saveProduct"]</i></span>
+            </div>
+        </div>
+    </div>
+}
+
+@if(@TempData["cancelProduct"] != null)
+{ 
+<div class="toast fade show" id="test-toast" data-bs-autohide="true" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1000">
+        <div class="toast-header">
+            <strong class="me-auto">Notification</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <div class="alert alert-success" role="alert">
+                <span><i>@TempData["cancelProduct"]</i></span>
+            </div>
+        </div>
+    </div>
+}
+
+@if(@TempData["submitProduct"] != null)
+{
+    <div class="toast fade show" id="test-toast" data-bs-autohide="true" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1000">
+        <div class="toast-header">
+            <strong class="me-auto">Notification</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <div class="alert alert-success" role="alert">
+                <span><i>@TempData["submitProduct"]</i></span>
+            </div>
+        </div>
+    </div>
+}
 
 <h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">My products</h1>
 
@@ -61,3 +116,10 @@
 <div>
     @Html.ActionLink("Submit a new product", "GetUserAndCompanyInfo", "Product", null, new {@class = "btn btn-primary mt-4"})
 </div>
+
+<script type="text/javascript">
+    let toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    let toastList = toastElList.map(function(toastEl) {
+        return new bootstrap.Toast(toastEl, option)
+    });
+</script>

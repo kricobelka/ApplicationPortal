@@ -12,11 +12,12 @@
     <link href="https://raw.githack.com/ttskch/select2-bootstrap4-theme/master/dist/select2-bootstrap4.css" rel="stylesheet">
     *@
 </head>
-<body class="backgroundImage">
+<body>
     <header>
         <nav class="navbar sticky-top navbar fixed-top navbar-expand-md navbar-toggleable-md navbar-dark bg-primary lh-lg">
             @*            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            *@            <div class="container-fluid">
+            *@
+            <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Application Portal</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     @*                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"*@
@@ -76,14 +77,16 @@
             </div>
         </nav>
     </header>
-    <div class="container mt-3">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="bg-image">
+        <div class="container pt-3">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
     </div>
-@*    <footer class="border-top footer text-muted">*@
-        <footer class="footer fixed-bottom text-muted">
-        <div class="container">
+    @*    <footer class="border-top footer text-muted">*@
+    <footer class="text-muted bg-primary">
+        <div class="container bg-primary text-light">
             &copy;  Application Portal 2022-2023 <br />
         </div>
     </footer>
