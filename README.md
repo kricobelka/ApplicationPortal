@@ -12,7 +12,7 @@ How to launch a project:
 4) When the app is successfully opened, please find "Terminal" in the Search panel
 5) once powershell/terminal is opened, please write the following: dotnet ef database update 
 in the same terminal
-7) click on green tringle to launch an app and check the app is working.
+7) click on green triangle to launch the app and check the app it's working.
 
 
 If any questions, feel free to contact via hijikataanya@gmail.com
