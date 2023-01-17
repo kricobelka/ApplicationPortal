@@ -1,30 +1,44 @@
 ﻿@model CompanyViewModel
 
-<h5>Page for adding a new company</h5>
-
-@using (Html.BeginForm(FormMethod.Post))
-{
-    @Html.ValidationSummary(false)
-
-    <div>
-        @Html.LabelFor(q => q.CompanyName): 
-        @Html.EditorFor(q => q.CompanyName)
-        @Html.ValidationMessageFor(q => q.CompanyName)
-    </div>
-
-    <div>
-        @Html.LabelFor(q => q.Address): 
-        @Html.EditorFor(q => q.Address)
-        @Html.ValidationMessageFor(q => q.Address)
-    </div>
-
-    <div>
-        @Html.LabelFor(q => q.BusinessId): 
-        @Html.EditorFor(q => q.BusinessId)
-        @Html.ValidationMessageFor(q => q.BusinessId)
-    </div>
-
-    <button>Submit</button>
+@{
+    ViewBag.Title = "Adding new company";
 }
 
-@Html.ActionLink("Registered companies", "GetAvailableCompanies", "Company")
+<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mt-2 mb-5">Adding new company</h1>
+<p class="lead mark text-dark">You can add a new company here</p>
+<hr />
+
+@using (Html.BeginForm(FormMethod.Post, new { @class = "form-group" }))
+{
+    <div class="form-text text-muted col-lg">@Html.ValidationSummary(false)</div>
+
+    <div>
+        @Html.LabelFor(q => q.CompanyName, new {@class="col-form-label col-lg"}):
+        <div class="form-floating">
+            @Html.TextBoxFor(q => q.CompanyName, new {@class="form-control col-sm-4 mb-3"})
+            <label for="CompanyName">Registered company name</label>
+        </div>
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.Address, new {@class="col-form-label col-lg"}):
+        <div class="form-floating">
+            @Html.TextBoxFor(q => q.Address, new {@class="form-control col-sm-4 mb-3"})
+            <label for="Address">Registered address</label>
+        </div>
+    </div>
+
+    <div>
+        @Html.LabelFor(q => q.BusinessId, new {@class="col-form-label col-lg"}):
+        <div class="form-floating">
+            @Html.TextBoxFor(q => q.BusinessId, new {@class="form-control col-sm-4 mb-3"})
+            <label for="BusinessId">Company registration no.</label>
+        </div>
+    </div>
+
+   <div class="d-flex justify-content-between mt-2">
+        <button type="submit" class="btn btn-primary w-25">Add company</button>
+
+        @Html.ActionLink("Registered companies", "GetAvailableCompanies", "Company",null, new {@class="btn btn-outline-warning w-25"})
+    </div>
+}

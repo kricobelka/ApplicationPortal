@@ -11,7 +11,7 @@
 
 @if (comments.Count() != 0)
 {
-    <p class="lead mark text-dark">Comments left for the product No. @Model.Id</p>
+    <p class="lead mark text-dark">Comments left for the product # @Model.Id</p>
 
     <div class="row">
         <ul>
@@ -155,20 +155,14 @@
     </ul>
 </div>
 
-@*<div class="row">
-    <div class="@divList">*@
-@Html.ActionLink("Go back", "GetSubmittedProductsAndUsers", "Admin", null, new {@class="btn btn-outline-secondary"})
-@*    </div>*@
-    &nbsp &nbsp
-@*   <div class="@divList">*@
-@Html.ActionLink("Accept", "AcceptProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-outline-success"})
-@*    </div>*@
-    &nbsp &nbsp
-@*   <div class="@divList">*@
-@Html.ActionLink("Edit", "EditProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-outline-primary"})
-@*    </div>*@
-    &nbsp &nbsp
-@*@*    <div class="@divList">*@
-@Html.ActionLink("Delete", "DeleteProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-outline-danger"})
-@*    </div>*@
-@*</div>*@
+<div class="d-flex justify-content-around">
+@Html.ActionLink("Go back", "GetSubmittedProductsAndUsers", "Admin", null, new {@class="btn btn-outline-secondary w-25"})
+
+@Html.ActionLink("Accept", "AcceptProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-outline-success w-25 ms-3"})
+
+@Html.ActionLink("Edit", "EditProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-outline-primary w-25 ms-3"})
+
+   @* &nbsp &nbsp*@
+
+@Html.ActionLink("Delete", "DeleteProduct", "Admin", new {productId = @Model.Id}, new {@class="btn btn-outline-danger w-25 ms-3"})
+</div>

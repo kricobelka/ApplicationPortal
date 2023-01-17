@@ -5,7 +5,7 @@ namespace ApplicationPortal.Models
 {
     public class ProductViewModel
     {
-        [Display(Name = "Ref. no.:")]
+        [Display(Name = "Ref. #:")]
         public int Id { get; set; }
 
         //adding username

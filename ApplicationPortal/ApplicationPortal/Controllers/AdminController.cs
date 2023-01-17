@@ -43,62 +43,70 @@ namespace ApplicationPortal.Controllers
             //var product = await _productService.GetProductById(productId);
             //можно ли вызывать cancelrpdocut в этом случае? (он ничего не возвращает)
             await _productService.CancelProduct(productId);
-            
+            TempData["cancelProductByAdmin"] = $"The product with Ref # {productId} has been removed";
+
             return RedirectToAction("GetSubmittedProductsAndUsers", "Admin");
         }
 
         // можно ил сделать как-нить без добавления appcontext DI?
         public async Task<IActionResult> AcceptProduct(int productId)
         {
+            var product = await _productService.GetProductById(productId);
             await _productService.AcceptProduct(productId);
+
+            if (product.Status == Enums.ProductStatus.FinallySubmitted)
+            {
+                TempData["submitProductByAdmin"] = $"The product {product.Name}, {product.Model}, Ref. # {productId}has been approved by admin.";
+                return RedirectToAction("GetSubmittedProductsAndUsers", "Admin");
+            }
             return RedirectToAction("GetSubmittedProductsAndUsers", "Admin");
         }
 
-        //вместо нео можно добавить комменты, юзер будет сам исправлять, админ нет
-        //если нет, в один метод добавлять все модели и вызыывать методы?
-        [HttpGet]
-        public async Task<IActionResult> EditProduct(int productId)
-        {
-            var product = await _productService.GetProductById(productId);
-            if (product.Frequencies.Any() == false)
+            //вместо нео можно добавить комменты, юзер будет сам исправлять, админ нет
+            //если нет, в один метод добавлять все модели и вызыывать методы?
+            [HttpGet]
+            public async Task<IActionResult> EditProduct(int productId)
             {
-                product.Frequencies.Add(new FrequencyViewModel());
+                var product = await _productService.GetProductById(productId);
+                if (product.Frequencies.Any() == false)
+                {
+                    product.Frequencies.Add(new FrequencyViewModel());
+                }
+                return View(product);
             }
-            return View(product);
+
+            [HttpPost]
+            public async Task<IActionResult> EditProduct(ProductViewModel product, string action)
+            {
+                if (action == "addNewFrequency")
+                {
+                    if (product.Frequencies.Count > 10)
+                    {
+                        ModelState.AddModelError("", "The number of frequency models must be no more than 10");
+                        return View(product);
+                    }
+
+                    product.Frequencies.Add(new FrequencyViewModel());
+                    return View(product);
+                }
+
+                if (action == "removeFrequency")
+                {
+                    if (product.Frequencies.Count < 1)
+                    {
+                        ModelState.AddModelError("", "There must be at least one frequency");
+                        return View(product);
+                    }
+                    var frequencyAddedLast = product.Frequencies.Last();
+                    product.Frequencies.Remove(frequencyAddedLast);
+
+                    return View(product);
+                }
+
+                await _productService.EditProductFullInfo(product);
+
+                return RedirectToAction("ViewSubmittedProduct", new { productId = product.Id });
+            }
+            #endregion
         }
-
-        [HttpPost]
-        public async Task<IActionResult> EditProduct(ProductViewModel product, string action)
-        {
-            if (action == "addNewFrequency")
-            {
-                if (product.Frequencies.Count > 10)
-                {
-                    ModelState.AddModelError("", "The number of frequency models must be no more than 10");
-                    return View(product);
-                }
-
-                product.Frequencies.Add(new FrequencyViewModel());
-                return View(product);
-            }
-
-            if (action == "removeFrequency")
-            {
-                if (product.Frequencies.Count < 1)
-                {
-                    ModelState.AddModelError("", "There must be at least one frequency");
-                    return View(product);
-                }
-                var frequencyAddedLast = product.Frequencies.Last();
-                product.Frequencies.Remove(frequencyAddedLast);
-
-                return View(product);
-            }
-
-            await _productService.EditProductFullInfo(product);
-            
-            return RedirectToAction("ViewSubmittedProduct", new {productId = product.Id});
-        } 
-        #endregion
     }
-}

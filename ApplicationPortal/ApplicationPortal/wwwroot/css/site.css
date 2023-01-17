@@ -66,10 +66,10 @@ html {
   min-height: 100%;
 }
 
-/*body {*/
+body {
  /* / Margin bottom by footer height */
-/*margin-bottom: 60px;
-}*/
+margin-bottom: 60px;
+}
 
 /*.bg-image {
     background-image: url("https://mdbootstrap.com/img/new/fluid/city/018.jpg");
@@ -78,4 +78,9 @@ html {
 
 footer{
     min-height: 5px    
+}
+
+.img-fluid {
+    max-width: auto;
+    height: auto;
 }

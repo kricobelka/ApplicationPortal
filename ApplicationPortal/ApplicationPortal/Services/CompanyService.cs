@@ -10,7 +10,7 @@ namespace ApplicationPortal.Services
 {
     public class CompanyService
     {
-        private readonly ApplicationDbContext _context;     
+        private readonly ApplicationDbContext _context;
 
         public CompanyService(ApplicationDbContext context)
         {
@@ -73,7 +73,7 @@ namespace ApplicationPortal.Services
             companyForEdit.BusinessId = model.BusinessId;
 
             await _context.SaveChangesAsync();
-            return FullCompanyMap(companyForEdit);           
+            return FullCompanyMap(companyForEdit);
         }
 
         public async Task<CompanyViewModel> GetCompanyById(int companyId)

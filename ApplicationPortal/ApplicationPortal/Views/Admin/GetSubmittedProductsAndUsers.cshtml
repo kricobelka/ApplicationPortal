@@ -10,11 +10,35 @@
 
 <p class="lead text-dark mark">Here you can view/delete/confirm/edit products submitted/not submitted.</p>
 
-    @*<style>
-    th {
-        font-style: normal
-    }
-</style>*@
+@if(@TempData["cancelProductByAdmin"] != null)
+{ 
+<div class="toast fade show" id="test-toast" data-bs-autohide="true" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1000">
+        <div class="toast-header">
+            <strong class="me-auto">Notification</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <div class="alert alert-success" role="alert">
+                <span><i>@TempData["cancelProductByAdmin"]</i></span>
+            </div>
+        </div>
+    </div>
+}
+
+@if(@TempData["submitProductByAdmin"] != null)
+{
+    <div class="toast fade show" id="test-toast" data-bs-autohide="true" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1000">
+        <div class="toast-header">
+            <strong class="me-auto">Notification</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <div class="alert alert-success" role="alert">
+                <span><i>@TempData["submitProductByAdmin"]</i></span>
+            </div>
+        </div>
+    </div>
+}
 
 <table class="table table-striped">
     <thead class="table-primary">
@@ -46,8 +70,11 @@
                     <td>@product.Status</td>
                     <td>@Html.ActionLink("View", "ViewSubmittedProduct", "Admin", new {productId = product.Id}, new {@class="btn btn-primary"})</td>
                     <td>@Html.ActionLink("Delete", "DeleteProduct", "Admin", new {productId = product.Id}, new {@class="btn btn-outline-danger"})</td>
+                    @if (@product.Status < ProductStatus.ApprovedByAdmin)
+                {
                     <td>@Html.ActionLink("Confirm", "AcceptProduct", "Admin", new {productId = product.Id}, new {@class="btn btn-outline-success"})</td>
                     <td>@Html.ActionLink("Edit", "EditProduct", "Admin", new {productId = product.Id}, new {@class="btn btn-outline-primary"})</td>
+                }
                 </tr>
                 }
             }

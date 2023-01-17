@@ -1,27 +1,60 @@
 ﻿@model CompanyViewModel
 
-<h5>Company info: @Model.CompanyId</h5>
+@{
+    ViewBag.Title = "Company information";
+    var divList = "col-3";
+}
+<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mt-2 mb-5">Company # @Model.CompanyId</h1>
+<p class="lead mark text-dark">Here you can delete/edit company details # @Model.CompanyId</p>
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.CompanyId)</b>: 
-    @Html.DisplayTextFor(q => q.CompanyId)
+<div class="row">
+    <ul>
+        <li class="list-group-item list-group-item-action">
+            <div class="row">
+                <div class="@divList">
+                    <b>@Html.DisplayNameFor(q => q.CompanyId)</b>:
+                </div>
+                <div class="@divList">
+                    @Html.DisplayTextFor(q => q.CompanyId)
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item list-group-item-action">
+            <div class="row">
+                <div class="@divList">
+                    <b>@Html.DisplayNameFor(q => q.CompanyName)</b>:
+
+                </div>
+                <div class="@divList">
+                    @Html.DisplayTextFor(q => q.CompanyName)
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item list-group-item-action">
+            <div class="row">
+                <div class="@divList">
+                    <b>@Html.DisplayNameFor(q => q.Address)</b>:
+                </div>
+                <div class="@divList">
+                    @Html.DisplayTextFor(q => q.Address)
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item list-group-item-action">
+            <div class="row">
+                <div class="@divList">
+                    <b>@Html.DisplayNameFor(q => q.BusinessId)</b>:
+                </div>
+                <div class="@divList">
+                    @Html.DisplayTextFor(q => q.BusinessId)
+                </div>
+            </div>
+        </li>
+    </ul>
 </div>
 
-<div>
-    <b>@Html.DisplayNameFor(q => q.CompanyName)</b>: 
-    @Html.DisplayTextFor(q => q.CompanyName)
+<div class="d-flex justify-content-between">
+@Html.ActionLink("Go back", "GetAvailableCompanies", "Company", null, new {@class = "w-25 btn btn-outline-warning"})
+@Html.ActionLink("Edit company", "EditCompany", "Company", new {companyId = @Model.CompanyId}, new {@class = "w-25 btn btn-primary"})
+@Html.ActionLink("Delete company", "DeleteCompany", "Company", new {companyId = @Model.CompanyId}, new {@class = "w-25 btn btn-danger"})
 </div>
-
-<div>
-    <b>@Html.DisplayNameFor(q => q.Address)</b>: 
-    @Html.DisplayTextFor(q => q.Address)
-</div>
-
-<div>
-    <b>@Html.DisplayNameFor(q => q.BusinessId)</b>: 
-    @Html.DisplayTextFor(q => q.BusinessId)
-</div>
-
-@Html.ActionLink("Go back", "GetAvailableCompanies", "Company")
-@Html.ActionLink("Delete company", "DeleteCompany", "Company", new {companyId = @Model.CompanyId})
-@Html.ActionLink("Edit company", "EditCompany", "Company", new {companyId = @Model.CompanyId})

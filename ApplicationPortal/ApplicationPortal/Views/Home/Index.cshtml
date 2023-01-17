@@ -9,62 +9,30 @@
 <p class="lead text-dark align-content-md-center text-lg-center mark mt-5">Welcome to our Application Portal!</p>
 
 <div class="row mt-4">
-    <div class="col-1"></div>
-    @*<div class="col-6 border-2 border border-secondary">*@
-    <div class="col-5">
-        <ul>
-            <li class="list-group-item">
-                    <i>
-                        The Application Portal is designed for submitting wireless/ terminal equipment for type approval (certification)
-                        in the Republic of Belarus in a simple form.
-                    </i>
-                    <br />
-                <p><i><b>It allows authorised representatives:</b></i></p>
-            </li>
-
-            <li class="list-group-item list-group-item-action">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
-                    <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
-                </svg>To apply for homologation service of wireless/telecommunications equipment which is in the scope of
-                Technical regulation “Means of telecommunication" of the Republic of Belarus("TR 2018/024/BY").
-            </li>
-
-            <li class="list-group-item list-group-item-action">
-
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
-                    <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
-                </svg> To apply electronically by filling in the form for submitting type approval application.
-            </li>
-
-            <li class="list-group-item list-group-item-action">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
-                    <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
-                </svg> To save your time without adressing many e-mails to the corresponding
-                engineer from the certification body.
-            </li>
-            <li class="list-group-item list-group-item-action">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
-                    <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
-                </svg> To monitor the status of the applications submitted and receive comments from the responsible engineer if any and respond directly on the Portal.
-            </li>
-        </ul>
+    <div class="col-7">
+        <div>
+            <img src="images/map.png" class="img-fluid" alt="LetterHead" />
+        </div>
     </div>
-    <div class="col-2"></div>
+    <div class="col-1"></div>
     <div class="col-3">
         <ul>
-            <li class="list-group-item list-group-item-action">
-                <i>To start certification of the products, please register on the Portal by clicking "Register on the right top of the website"</i>
-                @*<br />
-                @Html.ActionLink("Register","Register", null, new {@class = "w-25 btn btn-primary"})*@
+            <li class="list-group-item">
+                <i>Start certification of the products with register/login:"</i>
+                <br />
+                <div class="row">
+                    <div class="col-6">
+                        <a class="nav-link text-light mt-2 btn btn-primary " asp-area="Identity" asp-page="/Account/Register">Register</a>
+                    </div>
+                    <div class="col-6">
+                        <a class="nav-link text-dark mt-2 btn btn-outline-primary" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                    </div>
+                </div>
             </li>
-            <li class="list-group-item list-group-item-action">
+            <li class="list-group-item">
                 <i>To know more about us, please click on:</i>
                 <br />
-                @Html.ActionLink("About us", "AboutUs", "Home", null, new {@class = "btn btn-warning col-lg mt-2"})
+                @Html.ActionLink("About us", "AboutUs", "Home", null, new {@class = "btn btn-outline-warning mt-2 d-flex justify-content-center"})
             </li>
             <li class="list-group-item list-group-item-action">
                 <p>
@@ -94,8 +62,71 @@
     <div class="col-1"></div>
 </div>
 
+<div class="row mt-4">
+    <div class="d-flex align-content-center">
+        <div class="col-7 ">
+            <ul>
+                <li class="list-group-item bg-primary text-light">
+                    <p>
+                        <i>
+                            The Application Portal is designed for submitting wireless/ terminal equipment for type approval (certification)
+                            in the Republic of Belarus in a simple form.
+                        </i>
+                    </p>
+                    <p><i><b>It allows authorised representatives:</b></i></p>
+                </li>
+
+                <li class="list-group-item list-group-item-action">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
+                        <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
+                    </svg>To apply for homologation service of wireless/telecommunications equipment which is in the scope of
+                    Technical regulation “Means of telecommunication" of the Republic of Belarus("TR 2018/024/BY").
+                </li>
+
+                <li class="list-group-item list-group-item-action">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
+                        <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
+                    </svg> To apply electronically by filling in the form for submitting type approval application.
+                </li>
+
+                <li class="list-group-item list-group-item-action">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
+                        <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
+                    </svg> To save your time without adressing many e-mails to the corresponding
+                    engineer from the certification body.
+                </li>
+                <li class="list-group-item list-group-item-action">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
+                        <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
+                    </svg> To monitor the status of the applications submitted and receive comments from the responsible engineer if any and respond directly on the Portal.
+                </li>
+            </ul>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-4">
+            <br /><br /><br /><br /><br />
+            <div>
+                <i class="lead mark d-flex justify-content-center">
+                    Want to register a product?
+                </i>
+                <i class="lead mark d-flex justify-content-center">
+                    Click below to start product registration!
+                </i>
+            </div>
+            <div>
+                @Html.ActionLink("Get started", "GetUserAndCompanyInfo", "Product", null, new {@class = "btn-lg lead btn btn-primary d-flex justify-content-center"})
+            </div>
+        </div>
+    </div>
+</div>
+
 @*@Html.ActionLink("Roles", "GetRoles", "Role")
 
-@Html.ActionLink("CreateRole", "CreateAdminRole", "Role")
+    @Html.ActionLink("CreateRole", "CreateAdminRole", "Role")
 
-@Html.ActionLink("Add Admin Role To User", "AddAdminRoleToUser", "User")*@
+    @Html.ActionLink("Add Admin Role To User", "AddAdminRoleToUser", "User")*@

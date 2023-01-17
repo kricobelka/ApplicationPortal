@@ -259,9 +259,9 @@ namespace ApplicationPortal.Controllers
             var product = await _productService.GetProductById(productId);
             await _productService.SubmitProduct(productId);
 
-            if (product.Status > Enums.ProductStatus.ExtraInfoSubmitted)
+            if (product.Status >= Enums.ProductStatus.ExtraInfoSubmitted)
             {
-                TempData["submitProduct"] = $"The product {product.Name}, {product.Model} has been submitted under Ref.No. {productId}";
+                TempData["submitProduct"] = $"The product {product.Name}, {product.Model} has been submitted under Ref. # {productId}";
                 return RedirectToAction("GetSubmittedProducts", "Product");
             }
 
@@ -315,7 +315,7 @@ namespace ApplicationPortal.Controllers
             var product = await _productService.GetProductById(productId);
             if (product.Status > Enums.ProductStatus.ExtraInfoSubmitted)
             {
-                TempData["submitProduct"] = $"The product {product.Name}, {product.Model} has been submitted under Ref.No. {productId}";
+                TempData["submitProduct"] = $"The product {product.Name}, {product.Model} has been submitted under Ref. # {productId}";
                 return RedirectToAction("GetSubmittedProducts", "Product");
             }
             TempData["submitFailed"] = $"Error. You should fill in missing product info. \t Please click \"View\" for {product.Name}";

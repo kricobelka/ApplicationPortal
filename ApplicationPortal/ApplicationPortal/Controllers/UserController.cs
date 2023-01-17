@@ -26,12 +26,12 @@ namespace ApplicationPortal.Controllers
             _userService = userService;
         }
 
-        public async Task<IActionResult> AddAdminRoleToUser()
-        {
-            var user = await _userManager.FindByNameAsync("hijikataanya@gmail.com");
-            await _userManager.AddToRoleAsync(user, Constants.AdminUserRoles._admin);
-            return RedirectToAction("GetRoles", "Role");
-        }
+        //public async Task<IActionResult> AddAdminRoleToUser()
+        //{
+        //    var user = await _userManager.FindByNameAsync("hijikataanya@gmail.com");
+        //    await _userManager.AddToRoleAsync(user, Constants.AdminUserRoles._admin);
+        //    return RedirectToAction("GetRoles", "Role");
+        //}
 
         //#region userprofile
 
@@ -70,6 +70,21 @@ namespace ApplicationPortal.Controllers
         {
             var userId = _userManager.GetUserId(User);
             return userId;
+        }
+
+        public async Task<IActionResult> AddCompanyToAdmin()
+        {
+            var admin = await _userManager.FindByNameAsync("hijikataanya@gmail.com");
+
+            await _context.Companies.AddAsync(new Company
+            {
+                CompanyName = "Hijiswan Co.Ltd.",
+                Address = "Japan, Kioto, Kanagava, bichiigava St., 5",
+                BusinessId = "Ki7659ha456",
+                Users = new[] { admin }
+            });
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

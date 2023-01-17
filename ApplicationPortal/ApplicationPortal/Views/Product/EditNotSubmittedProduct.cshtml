@@ -1,7 +1,8 @@
 ﻿@using ApplicationPortal.Enums
 @model ProductViewModel
 
-<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">Edit product No. @Model.Id</h1>
+
+<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mb-5">Editing of product # @Model.Id</h1>
 <p class="lead mark mb-3 text-dark">Please edit product if necessary</p>
 <hr />
 
@@ -10,7 +11,7 @@
     @Html.HiddenFor(q => q.Id)
     <div class="form-text text-muted col-lg">@Html.ValidationSummary(false)</div>
 
-    <h5>Product info of Ref.No. @Model.Id</h5>
+    <h5>Product info of Ref. # @Model.Id</h5>
 
     <div>
         @Html.LabelFor(q => q.Name, new {@class="col-form-label col-sm-4"})
@@ -47,7 +48,7 @@
         </div>
     </div>
 
-    <h5>Technical info of Ref.No. @Model.Id</h5>
+    <h5>Technical info of Ref.# @Model.Id</h5>
 
     <div class="form-text text-muted col-lg">@Html.ValidationSummary(false)</div>
 
@@ -113,7 +114,7 @@
         </div>
     </div>
 
-    <h5>Additional info of Ref.No. @Model.Id</h5>
+    <h5>Additional info of Ref. # @Model.Id</h5>
 
     <div class="form-text text-muted col-lg">@Html.ValidationSummary(false)</div>
 
