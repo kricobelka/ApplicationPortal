@@ -31,6 +31,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a>
+                        </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             @if (User.IsInRole("Admin") == false)
@@ -85,8 +88,9 @@
         </div>
     </div>
     @*    <footer class="border-top footer text-muted">*@
-    <footer class="text-muted bg-primary">
-        <div class="container bg-primary text-light">
+
+    <footer class="fixed-bottom footer text-muted align-content-md-end text-lg-end">
+        <div class="container text-dark">
             &copy;  Application Portal 2022-2023 <br />
         </div>
     </footer>

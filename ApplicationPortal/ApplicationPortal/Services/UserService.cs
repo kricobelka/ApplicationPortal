@@ -62,12 +62,12 @@ namespace ApplicationPortal.Services
             user.NormalizedEmail = _userManager.NormalizeEmail(requestModel.UserEmail);
             user.NormalizedUserName = _userManager.NormalizeEmail(requestModel.UserEmail);
            
-            if (user.Company == null)
+            if (user.Company == null/* && user.Email != "hijikataanya@gmail.com"*/)
             {
                 user.Company = new Company()
                 {
-                    Address = requestModel.Company.Address,
-                    BusinessId = requestModel.Company.BusinessId
+                    Address = requestModel.Company?.Address,
+                    BusinessId = requestModel.Company?.BusinessId
                 };
             }
             else

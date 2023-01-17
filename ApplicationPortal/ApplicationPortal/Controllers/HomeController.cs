@@ -23,6 +23,11 @@ namespace ApplicationPortal.Controllers
             return View();
         }
 
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
         //private readonly ApplicationDbContext _context;
 
         // adding different contexts through DI to access the db

@@ -1,7 +1,7 @@
 ﻿@model UserViewModelResponse
 
 @{
-    ViewBag.Title = "Edit user profile";
+    //ViewBag.Title = "Edit user profile";
     var divList = "col-5";
 }
 
@@ -58,7 +58,7 @@
     {
         <div class="@divList mt-2">
             @Html.DisplayName("Company name")
-            @Html.TextBoxFor(q => q.Company.CompanyName, new {@class="form-control"})
+            @*@Html.TextBoxFor(q => q.Company.CompanyName, new {@class="form-control"})*@
             <input class="form-control col-form-label mt-2" type="text" placeholder="@Model.Company.CompanyName" readonly>
             @Html.HiddenFor(q => q.Company.CompanyName)
         </div>
