@@ -281,14 +281,14 @@ namespace ApplicationPortal.Controllers
 
         private async Task<IActionResult> SaveDraftAndRedirectToProducts(int productId)
         {
-            TempData["saveProduct"] = $"The product with {productId} has been saved in the drafts";
+            TempData["saveProduct"] = $"The product Ref. # {productId} has been saved in the drafts";
             return RedirectToAction("GetSubmittedProducts", "Product");
         }
 
         private async Task<IActionResult> CancelProduct(int productId)
         {
             await _productService.CancelProduct(productId);
-            TempData["cancelProduct"] = $"The product with {productId} has been deleted";
+            TempData["cancelProduct"] = $"The product Ref. # {productId} has been deleted";
             return RedirectToAction("GetSubmittedProducts", "Product");
         }
 
@@ -304,7 +304,7 @@ namespace ApplicationPortal.Controllers
         public async Task<IActionResult> CancelNotSubmittedApplication(int productId)
         {
             await _productService.CancelProduct(productId);
-            TempData["cancelProduct"] = $"The product with {productId} has been deleted";
+            TempData["cancelProduct"] = $"The product Ref. #{productId} has been deleted";
 
             return RedirectToAction("GetSubmittedProducts", "Product");
         }
@@ -318,7 +318,7 @@ namespace ApplicationPortal.Controllers
                 TempData["submitProduct"] = $"The product {product.Name}, {product.Model} has been submitted under Ref. # {productId}";
                 return RedirectToAction("GetSubmittedProducts", "Product");
             }
-            TempData["submitFailed"] = $"Error. You should fill in missing product info. \t Please click \"View\" for {product.Name}";
+            TempData["submitFailed"] = $"Error. You should fill in missing product info. \t Please click \"View\" for {product.Name} Ref. # {productId}";
             return RedirectToAction("GetSubmittedProducts", "Product");
         }
 

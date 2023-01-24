@@ -71,10 +71,13 @@ body {
 margin-bottom: 60px;
 }
 
-/*.bg-image {
-    background-image: url("https://mdbootstrap.com/img/new/fluid/city/018.jpg");
+.bg-image {
+    background-image: url("images/secondimg.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    
     height: 100vh;
-}*/
+}
 
 footer{
     min-height: 5px    

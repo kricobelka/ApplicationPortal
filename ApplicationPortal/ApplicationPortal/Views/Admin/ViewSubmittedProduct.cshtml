@@ -25,10 +25,10 @@
             }
         </ul>
     </div>
-
-    @Html.ActionLink("Add a new comment", "CreateAComment", "Comment", new { productId = @Model.Id, isAdmin = true }, new {@class = "btn btn-outline-warning"})
-    <hr />
 }
+
+@Html.ActionLink("Add a new comment", "CreateAComment", "Comment", new { productId = @Model.Id, isAdmin = true }, new {@class = "btn btn-outline-warning"})
+    <hr />
 
 <h5 class="lead mark text-dark">General product info</h5>
 

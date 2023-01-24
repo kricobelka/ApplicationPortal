@@ -56,7 +56,7 @@ namespace ApplicationPortal.Controllers
 
             if (product.Status == Enums.ProductStatus.FinallySubmitted)
             {
-                TempData["submitProductByAdmin"] = $"The product {product.Name}, {product.Model}, Ref. # {productId}has been approved by admin.";
+                TempData["submitProductByAdmin"] = $"The product {product.Name}, {product.Model}, Ref. # {productId} has been approved by admin.";
                 return RedirectToAction("GetSubmittedProductsAndUsers", "Admin");
             }
             return RedirectToAction("GetSubmittedProductsAndUsers", "Admin");

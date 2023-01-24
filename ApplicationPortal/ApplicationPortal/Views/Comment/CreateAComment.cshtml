@@ -6,7 +6,6 @@
 
 <h1 class="display-6 text-bg-primary align-content-md-center text-lg-center text-lg mt-2 mb-5">Comments</h1>
 <p class="lead mark text-dark">Please add a comment for product Ref. # @Model.ProductId if necessary</p>
-<hr />
 
 @using (Html.BeginForm("CreateAComment", "Comment", new { ProductId = @Model.ProductId, isAdmin = ViewBag.IsAdmin }, FormMethod.Post, null, new { @class = "form-group" }))
 {

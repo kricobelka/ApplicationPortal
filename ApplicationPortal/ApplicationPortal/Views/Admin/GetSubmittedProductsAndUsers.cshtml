@@ -6,13 +6,9 @@
     ViewBag.Title = "Products submitted for type approval";
 }
 
-<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center mt-5 mb-5">Products submitted for type approval</h1>
-
-<p class="lead text-dark mark">Here you can view/delete/confirm/edit products submitted/not submitted.</p>
-
 @if(@TempData["cancelProductByAdmin"] != null)
 { 
-<div class="toast fade show" id="test-toast" data-bs-autohide="true" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1000">
+<div class="toast fade show" id="test-toast" data-bs-autohide="true" role="alert"  data-bs-delay="1000">
         <div class="toast-header">
             <strong class="me-auto">Notification</strong>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -39,6 +35,10 @@
         </div>
     </div>
 }
+
+<h1 class="display-6 text-bg-primary align-content-md-center text-lg-center mt-5 mb-5">Products submitted for type approval</h1>
+
+<p class="lead text-dark mark">Here you can view/delete/confirm/edit products submitted/not submitted.</p>
 
 <table class="table table-striped">
     <thead class="table-primary">
